@@ -1,0 +1,320 @@
+--- git commit ---
+c8c5a43767e4632d5a764ad9a531673f4d02979d
+
+
+--- git status ---
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/pawo_10dof/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/pawo_10dof/__pycache__/pawo_10dof_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_a2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_a2/__pycache__/a2_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_as2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_as2/__pycache__/as2_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_g1/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_g1/__pycache__/g1_23dof_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_g1/__pycache__/g1_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_go2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_go2/__pycache__/go2_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_h1_2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_h1_2/__pycache__/h1_2_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_h2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_h2/__pycache__/h2_constants.cpython-310.pyc
+	modified:   src/assets/robots/unitree_r1/__pycache__/__init__.cpython-310.pyc
+	modified:   src/assets/robots/unitree_r1/__pycache__/r1_constants.cpython-310.pyc
+	modified:   src/tasks/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/__pycache__/tracking_env_cfg.cpython-310.pyc
+	modified:   src/tasks/tracking/config/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1_23dof/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/tracking/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/commands.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/metrics.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/observations.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/rewards.cpython-310.pyc
+	modified:   src/tasks/tracking/mdp/__pycache__/terminations.cpython-310.pyc
+	modified:   src/tasks/tracking/rl/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/tracking/rl/__pycache__/runner.cpython-310.pyc
+	modified:   src/tasks/velocity/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/__pycache__/velocity_env_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/a2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/a2/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/a2/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/as2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/as2/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/as2/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1_23dof/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/go2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/go2/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/go2/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h1_2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h1_2/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h1_2/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h2/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h2/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/h2/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/pawo_10dof/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/pawo_10dof/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/pawo_10dof/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/config/r1/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/config/r1/__pycache__/env_cfgs.cpython-310.pyc
+	modified:   src/tasks/velocity/config/r1/__pycache__/rl_cfg.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/curriculums.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/observations.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/rewards.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/terminations.cpython-310.pyc
+	modified:   src/tasks/velocity/mdp/__pycache__/velocity_command.cpython-310.pyc
+	modified:   src/tasks/velocity/rl/__pycache__/__init__.cpython-310.pyc
+	modified:   src/tasks/velocity/rl/__pycache__/runner.cpython-310.pyc
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+--- git diff ---
+diff --git a/src/__pycache__/__init__.cpython-310.pyc b/src/__pycache__/__init__.cpython-310.pyc
+index eb90f34..50eb1c4 100644
+Binary files a/src/__pycache__/__init__.cpython-310.pyc and b/src/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/__pycache__/__init__.cpython-310.pyc b/src/assets/__pycache__/__init__.cpython-310.pyc
+index fef6725..2ebdd40 100644
+Binary files a/src/assets/__pycache__/__init__.cpython-310.pyc and b/src/assets/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/__pycache__/__init__.cpython-310.pyc
+index e62da92..cb4b515 100644
+Binary files a/src/assets/robots/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/pawo_10dof/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/pawo_10dof/__pycache__/__init__.cpython-310.pyc
+index 07db5b6..b9d19d1 100644
+Binary files a/src/assets/robots/pawo_10dof/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/pawo_10dof/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/pawo_10dof/__pycache__/pawo_10dof_constants.cpython-310.pyc b/src/assets/robots/pawo_10dof/__pycache__/pawo_10dof_constants.cpython-310.pyc
+index 22837d1..3e46131 100644
+Binary files a/src/assets/robots/pawo_10dof/__pycache__/pawo_10dof_constants.cpython-310.pyc and b/src/assets/robots/pawo_10dof/__pycache__/pawo_10dof_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_a2/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_a2/__pycache__/__init__.cpython-310.pyc
+index aa200d1..14c971b 100644
+Binary files a/src/assets/robots/unitree_a2/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_a2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_a2/__pycache__/a2_constants.cpython-310.pyc b/src/assets/robots/unitree_a2/__pycache__/a2_constants.cpython-310.pyc
+index f07a1b0..3dafc2f 100644
+Binary files a/src/assets/robots/unitree_a2/__pycache__/a2_constants.cpython-310.pyc and b/src/assets/robots/unitree_a2/__pycache__/a2_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_as2/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_as2/__pycache__/__init__.cpython-310.pyc
+index ac6d6e5..b8d01a3 100644
+Binary files a/src/assets/robots/unitree_as2/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_as2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_as2/__pycache__/as2_constants.cpython-310.pyc b/src/assets/robots/unitree_as2/__pycache__/as2_constants.cpython-310.pyc
+index aeb7dac..7273003 100644
+Binary files a/src/assets/robots/unitree_as2/__pycache__/as2_constants.cpython-310.pyc and b/src/assets/robots/unitree_as2/__pycache__/as2_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_g1/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_g1/__pycache__/__init__.cpython-310.pyc
+index 67dac04..b714bb7 100644
+Binary files a/src/assets/robots/unitree_g1/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_g1/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_g1/__pycache__/g1_23dof_constants.cpython-310.pyc b/src/assets/robots/unitree_g1/__pycache__/g1_23dof_constants.cpython-310.pyc
+index 4813207..f38fbf5 100644
+Binary files a/src/assets/robots/unitree_g1/__pycache__/g1_23dof_constants.cpython-310.pyc and b/src/assets/robots/unitree_g1/__pycache__/g1_23dof_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_g1/__pycache__/g1_constants.cpython-310.pyc b/src/assets/robots/unitree_g1/__pycache__/g1_constants.cpython-310.pyc
+index dfa4b45..e2b08c5 100644
+Binary files a/src/assets/robots/unitree_g1/__pycache__/g1_constants.cpython-310.pyc and b/src/assets/robots/unitree_g1/__pycache__/g1_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_go2/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_go2/__pycache__/__init__.cpython-310.pyc
+index 1d2761b..de3d4b2 100644
+Binary files a/src/assets/robots/unitree_go2/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_go2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_go2/__pycache__/go2_constants.cpython-310.pyc b/src/assets/robots/unitree_go2/__pycache__/go2_constants.cpython-310.pyc
+index b349b2c..6c19e71 100644
+Binary files a/src/assets/robots/unitree_go2/__pycache__/go2_constants.cpython-310.pyc and b/src/assets/robots/unitree_go2/__pycache__/go2_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_h1_2/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_h1_2/__pycache__/__init__.cpython-310.pyc
+index def61d1..4a89f54 100644
+Binary files a/src/assets/robots/unitree_h1_2/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_h1_2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_h1_2/__pycache__/h1_2_constants.cpython-310.pyc b/src/assets/robots/unitree_h1_2/__pycache__/h1_2_constants.cpython-310.pyc
+index 52e89cb..b8e8033 100644
+Binary files a/src/assets/robots/unitree_h1_2/__pycache__/h1_2_constants.cpython-310.pyc and b/src/assets/robots/unitree_h1_2/__pycache__/h1_2_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_h2/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_h2/__pycache__/__init__.cpython-310.pyc
+index b1612d5..61b244b 100644
+Binary files a/src/assets/robots/unitree_h2/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_h2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_h2/__pycache__/h2_constants.cpython-310.pyc b/src/assets/robots/unitree_h2/__pycache__/h2_constants.cpython-310.pyc
+index 95b6875..1030862 100644
+Binary files a/src/assets/robots/unitree_h2/__pycache__/h2_constants.cpython-310.pyc and b/src/assets/robots/unitree_h2/__pycache__/h2_constants.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_r1/__pycache__/__init__.cpython-310.pyc b/src/assets/robots/unitree_r1/__pycache__/__init__.cpython-310.pyc
+index 74afdd4..d14142a 100644
+Binary files a/src/assets/robots/unitree_r1/__pycache__/__init__.cpython-310.pyc and b/src/assets/robots/unitree_r1/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/assets/robots/unitree_r1/__pycache__/r1_constants.cpython-310.pyc b/src/assets/robots/unitree_r1/__pycache__/r1_constants.cpython-310.pyc
+index 69ad9c4..c136cc6 100644
+Binary files a/src/assets/robots/unitree_r1/__pycache__/r1_constants.cpython-310.pyc and b/src/assets/robots/unitree_r1/__pycache__/r1_constants.cpython-310.pyc differ
+diff --git a/src/tasks/__pycache__/__init__.cpython-310.pyc b/src/tasks/__pycache__/__init__.cpython-310.pyc
+index 9cc1152..5ab3d71 100644
+Binary files a/src/tasks/__pycache__/__init__.cpython-310.pyc and b/src/tasks/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/__pycache__/__init__.cpython-310.pyc
+index 04a6d14..bc083b5 100644
+Binary files a/src/tasks/tracking/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/__pycache__/tracking_env_cfg.cpython-310.pyc b/src/tasks/tracking/__pycache__/tracking_env_cfg.cpython-310.pyc
+index da5b34a..796ce18 100644
+Binary files a/src/tasks/tracking/__pycache__/tracking_env_cfg.cpython-310.pyc and b/src/tasks/tracking/__pycache__/tracking_env_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/config/__pycache__/__init__.cpython-310.pyc
+index e3e4484..f2c36a7 100644
+Binary files a/src/tasks/tracking/config/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/config/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/config/g1/__pycache__/__init__.cpython-310.pyc
+index 30c5579..df8dd37 100644
+Binary files a/src/tasks/tracking/config/g1/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/config/g1/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/tracking/config/g1/__pycache__/env_cfgs.cpython-310.pyc
+index d4c89bb..51fe060 100644
+Binary files a/src/tasks/tracking/config/g1/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/tracking/config/g1/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/tracking/config/g1/__pycache__/rl_cfg.cpython-310.pyc
+index ffdfddc..52143e5 100644
+Binary files a/src/tasks/tracking/config/g1/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/tracking/config/g1/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1_23dof/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/config/g1_23dof/__pycache__/__init__.cpython-310.pyc
+index 2ae98b2..d01ced7 100644
+Binary files a/src/tasks/tracking/config/g1_23dof/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/config/g1_23dof/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/tracking/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc
+index e0f7102..d01988c 100644
+Binary files a/src/tasks/tracking/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/tracking/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/tracking/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc
+index 0394dc7..5152ac8 100644
+Binary files a/src/tasks/tracking/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/tracking/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/__init__.cpython-310.pyc
+index 6464730..cf26697 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/commands.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/commands.cpython-310.pyc
+index 22eed1d..a2e4ead 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/commands.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/commands.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/metrics.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/metrics.cpython-310.pyc
+index aef23c2..f013c62 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/metrics.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/metrics.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/observations.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/observations.cpython-310.pyc
+index 23f029b..c9f50c9 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/observations.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/observations.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/rewards.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/rewards.cpython-310.pyc
+index bfea76f..b8661e9 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/rewards.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/rewards.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/mdp/__pycache__/terminations.cpython-310.pyc b/src/tasks/tracking/mdp/__pycache__/terminations.cpython-310.pyc
+index 9cc2d8c..8cca9e3 100644
+Binary files a/src/tasks/tracking/mdp/__pycache__/terminations.cpython-310.pyc and b/src/tasks/tracking/mdp/__pycache__/terminations.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/rl/__pycache__/__init__.cpython-310.pyc b/src/tasks/tracking/rl/__pycache__/__init__.cpython-310.pyc
+index 7e77c1e..e1adae3 100644
+Binary files a/src/tasks/tracking/rl/__pycache__/__init__.cpython-310.pyc and b/src/tasks/tracking/rl/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/tracking/rl/__pycache__/runner.cpython-310.pyc b/src/tasks/tracking/rl/__pycache__/runner.cpython-310.pyc
+index a101f1b..3b08694 100644
+Binary files a/src/tasks/tracking/rl/__pycache__/runner.cpython-310.pyc and b/src/tasks/tracking/rl/__pycache__/runner.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/__pycache__/__init__.cpython-310.pyc
+index 74d8905..8283fa8 100644
+Binary files a/src/tasks/velocity/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/__pycache__/velocity_env_cfg.cpython-310.pyc b/src/tasks/velocity/__pycache__/velocity_env_cfg.cpython-310.pyc
+index 08abc2d..17b6338 100644
+Binary files a/src/tasks/velocity/__pycache__/velocity_env_cfg.cpython-310.pyc and b/src/tasks/velocity/__pycache__/velocity_env_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/__pycache__/__init__.cpython-310.pyc
+index 9990848..fc7e8e1 100644
+Binary files a/src/tasks/velocity/config/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/a2/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/a2/__pycache__/__init__.cpython-310.pyc
+index cb7e35c..ca242c5 100644
+Binary files a/src/tasks/velocity/config/a2/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/a2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/a2/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/a2/__pycache__/env_cfgs.cpython-310.pyc
+index 5218227..b682cc4 100644
+Binary files a/src/tasks/velocity/config/a2/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/a2/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/a2/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/a2/__pycache__/rl_cfg.cpython-310.pyc
+index a4f2b4d..e3dc58f 100644
+Binary files a/src/tasks/velocity/config/a2/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/a2/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/as2/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/as2/__pycache__/__init__.cpython-310.pyc
+index 8e6bbf5..e58a686 100644
+Binary files a/src/tasks/velocity/config/as2/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/as2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/as2/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/as2/__pycache__/env_cfgs.cpython-310.pyc
+index e7009a5..2069381 100644
+Binary files a/src/tasks/velocity/config/as2/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/as2/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/as2/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/as2/__pycache__/rl_cfg.cpython-310.pyc
+index 95e2dd9..1d9c3a0 100644
+Binary files a/src/tasks/velocity/config/as2/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/as2/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/g1/__pycache__/__init__.cpython-310.pyc
+index d4c7689..e7b1b29 100644
+Binary files a/src/tasks/velocity/config/g1/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/g1/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/g1/__pycache__/env_cfgs.cpython-310.pyc
+index abcc0d1..382c031 100644
+Binary files a/src/tasks/velocity/config/g1/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/g1/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/g1/__pycache__/rl_cfg.cpython-310.pyc
+index 3352fbb..1f19080 100644
+Binary files a/src/tasks/velocity/config/g1/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/g1/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1_23dof/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/g1_23dof/__pycache__/__init__.cpython-310.pyc
+index 6b54d44..77faafe 100644
+Binary files a/src/tasks/velocity/config/g1_23dof/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/g1_23dof/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc
+index e586e86..8567d22 100644
+Binary files a/src/tasks/velocity/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/g1_23dof/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc
+index a0bf8c7..d469e26 100644
+Binary files a/src/tasks/velocity/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/g1_23dof/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/go2/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/go2/__pycache__/__init__.cpython-310.pyc
+index 17a9f27..08d4ddf 100644
+Binary files a/src/tasks/velocity/config/go2/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/go2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/go2/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/go2/__pycache__/env_cfgs.cpython-310.pyc
+index 9ae0036..e666891 100644
+Binary files a/src/tasks/velocity/config/go2/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/go2/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/go2/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/go2/__pycache__/rl_cfg.cpython-310.pyc
+index 0d1b159..4df7712 100644
+Binary files a/src/tasks/velocity/config/go2/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/go2/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h1_2/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/h1_2/__pycache__/__init__.cpython-310.pyc
+index c902071..de61781 100644
+Binary files a/src/tasks/velocity/config/h1_2/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/h1_2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h1_2/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/h1_2/__pycache__/env_cfgs.cpython-310.pyc
+index 2b0cba2..dff5cf4 100644
+Binary files a/src/tasks/velocity/config/h1_2/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/h1_2/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h1_2/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/h1_2/__pycache__/rl_cfg.cpython-310.pyc
+index 4a57a6e..a5ebdf3 100644
+Binary files a/src/tasks/velocity/config/h1_2/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/h1_2/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h2/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/h2/__pycache__/__init__.cpython-310.pyc
+index 5cba5bb..b39f598 100644
+Binary files a/src/tasks/velocity/config/h2/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/h2/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h2/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/h2/__pycache__/env_cfgs.cpython-310.pyc
+index dafd7d4..37a72ac 100644
+Binary files a/src/tasks/velocity/config/h2/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/h2/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/h2/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/h2/__pycache__/rl_cfg.cpython-310.pyc
+index 7cc6b82..238bfe9 100644
+Binary files a/src/tasks/velocity/config/h2/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/h2/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/pawo_10dof/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/pawo_10dof/__pycache__/__init__.cpython-310.pyc
+index 0e81019..b404bde 100644
+Binary files a/src/tasks/velocity/config/pawo_10dof/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/pawo_10dof/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/pawo_10dof/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/pawo_10dof/__pycache__/env_cfgs.cpython-310.pyc
+index c23e838..5b58c65 100644
+Binary files a/src/tasks/velocity/config/pawo_10dof/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/pawo_10dof/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/pawo_10dof/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/pawo_10dof/__pycache__/rl_cfg.cpython-310.pyc
+index 7885467..c5fbb58 100644
+Binary files a/src/tasks/velocity/config/pawo_10dof/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/pawo_10dof/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/r1/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/config/r1/__pycache__/__init__.cpython-310.pyc
+index d9ca9d5..00dd235 100644
+Binary files a/src/tasks/velocity/config/r1/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/config/r1/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/r1/__pycache__/env_cfgs.cpython-310.pyc b/src/tasks/velocity/config/r1/__pycache__/env_cfgs.cpython-310.pyc
+index d66eb1c..fa541b9 100644
+Binary files a/src/tasks/velocity/config/r1/__pycache__/env_cfgs.cpython-310.pyc and b/src/tasks/velocity/config/r1/__pycache__/env_cfgs.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/config/r1/__pycache__/rl_cfg.cpython-310.pyc b/src/tasks/velocity/config/r1/__pycache__/rl_cfg.cpython-310.pyc
+index 1ad469a..cefc43f 100644
+Binary files a/src/tasks/velocity/config/r1/__pycache__/rl_cfg.cpython-310.pyc and b/src/tasks/velocity/config/r1/__pycache__/rl_cfg.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/__init__.cpython-310.pyc
+index 2671a73..a4a0b60 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/curriculums.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/curriculums.cpython-310.pyc
+index 0a01747..f8a8a94 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/curriculums.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/curriculums.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/observations.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/observations.cpython-310.pyc
+index 2d402a9..afd3544 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/observations.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/observations.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/rewards.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/rewards.cpython-310.pyc
+index f19d120..ae395f5 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/rewards.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/rewards.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/terminations.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/terminations.cpython-310.pyc
+index 6db49b1..d2ce6a2 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/terminations.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/terminations.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/mdp/__pycache__/velocity_command.cpython-310.pyc b/src/tasks/velocity/mdp/__pycache__/velocity_command.cpython-310.pyc
+index 68f2a01..9828ddd 100644
+Binary files a/src/tasks/velocity/mdp/__pycache__/velocity_command.cpython-310.pyc and b/src/tasks/velocity/mdp/__pycache__/velocity_command.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/rl/__pycache__/__init__.cpython-310.pyc b/src/tasks/velocity/rl/__pycache__/__init__.cpython-310.pyc
+index d32fcf0..52c2ba0 100644
+Binary files a/src/tasks/velocity/rl/__pycache__/__init__.cpython-310.pyc and b/src/tasks/velocity/rl/__pycache__/__init__.cpython-310.pyc differ
+diff --git a/src/tasks/velocity/rl/__pycache__/runner.cpython-310.pyc b/src/tasks/velocity/rl/__pycache__/runner.cpython-310.pyc
+index 0199e2f..465cf53 100644
+Binary files a/src/tasks/velocity/rl/__pycache__/runner.cpython-310.pyc and b/src/tasks/velocity/rl/__pycache__/runner.cpython-310.pyc differ
