@@ -44,3 +44,10 @@ from .unitree_h2.h2_constants import (
 from .unitree_h2.h2_constants import (
   get_h2_robot_cfg as get_h2_robot_cfg,
 )
+
+from .pawo_10dof.pawo_10dof_constants import (
+  get_pawo_robot_cfg as get_h2_robot_cfg,
+)
+from .pawo_10dof.pawo_10dof_constants import (
+  PAWO_ACTION_SCALE as PAWO_ACTION_SCALE,
+)
