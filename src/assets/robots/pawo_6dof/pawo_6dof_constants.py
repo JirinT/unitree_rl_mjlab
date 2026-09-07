@@ -39,19 +39,13 @@ def get_spec() -> mujoco.MjSpec:
 # All 6 joints use the same servo: Hitec D845WP. Hip is pitch-only here --
 # the hip yaw/roll joints (and their servos) from pawo_10dof were removed,
 # see xmls/robot.xml.
-# NOTE: stiffness was 50.0, which combined with effort_limit=4.9 gave an
-# effort/stiffness ratio ~20x smaller than every other robot in this repo
-# (e.g. H1_2 hip/knee ~2.0-2.3), collapsing the derived action scale below
-# to ~0.0245 rad (~1.4 deg) -- far too small to lift a leg. Lowered to bring
-# the ratio back in line (~1.96), giving ~0.49 rad (~28 deg) of usable
-# action range, comparable to H1_2. See pawo_10dof_constants.py.
 PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
   target_names_expr=(
     ".*_hip_pitch.*",
     ".*_knee.*",
     ".*_touch",
   ),
-  stiffness=2.5,
+  stiffness=50.0,
   damping=3.2,
   effort_limit=4.9,
   armature=6e-4,
@@ -117,15 +111,18 @@ def get_pawo_6dof_robot_cfg() -> EntityCfg:
   )
 
 
+# NOTE: deliberately NOT derived as 0.25 * effort_limit / stiffness (the
+# convention used by the other robots in this repo). See the same note in
+# pawo_10dof_constants.py -- `stiffness` needs to stay high (50.0) so the
+# joint can hold a standing pose against gravity, so the action range is
+# set directly here instead, decoupled from holding stiffness.
+PAWO_6DOF_ACTION_RANGE_RAD = 0.4  # ~23 deg per joint; retune once a gait emerges.
 PAWO_6DOF_ACTION_SCALE: dict[str, float] = {}
 for a in PAWO_6DOF_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
-  e = a.effort_limit
-  s = a.stiffness
   names = a.target_names_expr
-  assert e is not None
   for n in names:
-    PAWO_6DOF_ACTION_SCALE[n] = 0.25 * e / s
+    PAWO_6DOF_ACTION_SCALE[n] = PAWO_6DOF_ACTION_RANGE_RAD
 
 
 if __name__ == "__main__":
