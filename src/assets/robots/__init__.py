@@ -51,3 +51,10 @@ from .pawo_10dof.pawo_10dof_constants import (
 from .pawo_10dof.pawo_10dof_constants import (
   PAWO_ACTION_SCALE as PAWO_ACTION_SCALE,
 )
+
+from .pawo_6dof.pawo_6dof_constants import (
+  get_pawo_6dof_robot_cfg as get_pawo_6dof_robot_cfg,
+)
+from .pawo_6dof.pawo_6dof_constants import (
+  PAWO_6DOF_ACTION_SCALE as PAWO_6DOF_ACTION_SCALE,
+)

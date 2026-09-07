@@ -1,0 +1,234 @@
+<?xml version="1.0" ?>
+<mujoco model="pawo_export_mujoco">
+<!-- Set the simulator -->
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <option timestep="0.002" solver="Newton" integrator="implicitfast"/>
+  <default>
+    <default class="pawo_export_mujoco">
+      <joint frictionloss="0.1" armature="0.005" damping="0.5"/>
+      <position kp="50" dampratio="1"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+    </default>
+  </default>
+
+  <worldbody>
+    <camera name="nice_robot_view" pos="2.476 -2.358 1.174" xyaxes="0.685 0.728 0.000 -0.211 0.199 0.957"/>
+    <body name="torso" pos="0 0 0" quat="1 0 0 0" childclass="pawo_export_mujoco">
+      <freejoint name="torso_freejoint"/>
+      <inertial pos="-0.0659757 -0.00229039 0.42294" mass="2.0" fullinertia="0.082167 0.073667 0.014167 0.0 0.0 0.0"/>
+      <geom type="mesh" class="visual" pos="-0.192095 0.00263757 -0.0296418" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_31" material="part_31_material"/>
+      <geom type="mesh" class="collision" pos="-0.192095 0.00263757 -0.0296418" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_31" material="part_31_material"/>
+      <geom type="mesh" class="visual" pos="-0.191992 0.00247173 -0.0296303" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_41" material="part_41_material"/>
+      <geom type="mesh" class="collision" pos="-0.191992 0.00247173 -0.0296303" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_41" material="part_41_material"/>
+      <geom type="mesh" class="visual" pos="-0.191043 0.00236051 -0.0312224" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_19" material="part_19_material"/>
+      <geom type="mesh" class="collision" pos="-0.191043 0.00236051 -0.0312224" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_19" material="part_19_material"/>
+      <geom type="mesh" class="visual" pos="-0.190995 0.00272252 -0.0296588" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_40" material="part_40_material"/>
+      <geom type="mesh" class="collision" pos="-0.190995 0.00272252 -0.0296588" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_40" material="part_40_material"/>
+      <geom type="mesh" class="visual" pos="-0.190995 0.00272252 -0.0296499" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_1" material="part_1_material"/>
+      <geom type="mesh" class="collision" pos="-0.190995 0.00272252 -0.0296499" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_1" material="part_1_material"/>
+      <geom type="mesh" class="visual" pos="-0.191995 0.00272252 -0.0296263" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_33" material="part_33_material"/>
+      <geom type="mesh" class="collision" pos="-0.191995 0.00272252 -0.0296263" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_33" material="part_33_material"/>
+      <geom type="mesh" class="visual" pos="-0.190999 0.00272252 -0.0297934" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_42" material="part_42_material"/>
+      <geom type="mesh" class="collision" pos="-0.190999 0.00272252 -0.0297934" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_42" material="part_42_material"/>
+      <geom type="mesh" class="visual" pos="-0.190999 0.00272252 -0.0297934" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_22" material="part_22_material"/>
+      <geom type="mesh" class="collision" pos="-0.190999 0.00272252 -0.0297934" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_22" material="part_22_material"/>
+      <geom type="mesh" class="visual" pos="-0.191995 0.00272252 -0.0296263" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_13" material="part_13_material"/>
+      <geom type="mesh" class="collision" pos="-0.191995 0.00272252 -0.0296263" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_13" material="part_13_material"/>
+
+      <!-- ==================== FRONT-RIGHT LEG ==================== -->
+      <body name="fr_hip_link" pos="-0.0784082 -0.13724 0.367889" quat="0.708791 0.0114676 0.0115254 0.705232">
+        <!-- pawo_6dof: hip yaw joint removed, fr_hip_link welded rigidly to torso -->
+        <inertial pos="-0.00753629 -0.0276052 -0.044831" mass="0.1" fullinertia="0.0001 0.0001 0.0001 0.0 0.0 0.0"/>
+        <geom type="mesh" class="visual" pos="0.137223 0.0990224 -0.400002" quat="1 -0 0 0" mesh="part_16" material="part_16_material"/>
+        <geom type="mesh" class="collision" pos="0.137223 0.0990224 -0.400002" quat="1 -0 0 0" mesh="part_16" material="part_16_material"/>
+        <geom type="mesh" class="visual" pos="0.137474 0.0989334 -0.399956" quat="1 -0 0 0" mesh="part_3" material="part_3_material"/>
+        <geom type="mesh" class="collision" pos="0.137474 0.0989334 -0.399956" quat="1 -0 0 0" mesh="part_3" material="part_3_material"/>
+
+        <!-- pawo_6dof: hip roll joint removed, fr_hip_roll_link welded rigidly to fr_hip_link -->
+        <body name="fr_hip_roll_link" pos="-0.0259955 0.0126001 -0.0450097" quat="1 0 0 0">
+          <inertial pos="0 0 0" mass="1e-6" fullinertia="1e-10 1e-10 1e-10 0 0 0"/>
+
+          <body name="fr_thigh_link" pos="0 0 0" quat="0.61237244 0.35355339 0.61237244 0.35355339">
+          <!-- <body name="fr_thigh_link" pos="0 0 0" quat="0.5 0.5 0.5 0.5"> -->
+            <joint axis="0 0 1" name="fr_hip_pitch_joint" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="0.044569 -0.0579143 -0.0141905" mass="1.3" fullinertia="0.002 0.002 0.0001 0.0 0.0 0.0"/>
+            <geom type="mesh" class="visual" pos="0.0742717 -0.357325 0.175218" quat="0.491454 -0.508402 -0.491454 -0.508402" mesh="part_7" material="part_7_material"/>
+            <geom type="mesh" class="collision" pos="0.0742717 -0.357325 0.175218" quat="0.491454 -0.508402 -0.491454 -0.508402" mesh="part_7" material="part_7_material"/>
+            <geom type="mesh" class="visual" pos="0.0751739 -0.357507 0.175015" quat="0.492049 -0.507827 -0.492049 -0.507827" mesh="part_25" material="part_25_material"/>
+            <geom type="mesh" class="collision" pos="0.0751739 -0.357507 0.175015" quat="0.492049 -0.507827 -0.492049 -0.507827" mesh="part_25" material="part_25_material"/>
+            <geom type="mesh" class="visual" pos="0.0746153 -0.357682 0.175218" quat="0.491454 -0.508402 -0.491454 -0.508402" mesh="part_12" material="part_12_material"/>
+            <geom type="mesh" class="collision" pos="0.0746153 -0.357682 0.175218" quat="0.491454 -0.508402 -0.491454 -0.508402" mesh="part_12" material="part_12_material"/>
+
+            <body name="fr_calf_link" pos="0.0952116 -0.175877 -0" quat="0. -0.87255024 -0.48852438 0.">
+            <!-- <body name="fr_calf_link" pos="0.0952116 -0.175877 -0" quat="0. -0.99991287 0.0132006 0."> -->
+              <joint axis="0 0 -1" name="fr_knee_joint" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="-0.0400035 0.0644237 -0.0157059" mass="0.6" fullinertia="0.002 0.002 0.0001 0.0 0.0 0.0"/>
+              <geom type="mesh" class="visual" pos="-0.0143118 0.182201 -0.173942" quat="0.5 0.5 0.5 -0.5" mesh="part_51" material="part_51_material"/>
+              <geom type="mesh" class="collision" pos="-0.0143118 0.182201 -0.173942" quat="0.5 0.5 0.5 -0.5" mesh="part_51" material="part_51_material"/>
+              <geom type="mesh" class="visual" pos="-0.0143118 0.182201 -0.173942" quat="0.5 0.5 0.5 -0.5" mesh="part_52" material="part_52_material"/>
+              <geom type="mesh" class="collision" pos="-0.0143118 0.182201 -0.173942" quat="0.5 0.5 0.5 -0.5" mesh="part_52" material="part_52_material"/>
+
+              <!-- <body name="fr_touch_link" pos="-0.0801282 0.138412 0" quat="0. 0.96592583 0.25881905 0."> THIS IS WITH THE FLIPPED FEET!!! -->
+              <body name="fr_touch_link" pos="-0.0801282 0.138412 0" quat="0. 0.25881905 -0.96592583  0.">
+              <!-- <body name="fr_touch_link" pos="-0.0801282 0.138412 0" quat="0 1 0 0"> -->
+                <joint axis="0 0 1" name="fr_touch" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="0.0395417 -0.0140173 0.0153755" mass="0.1" fullinertia="0.0001 0.0001 0.0001 0.0 0.0 0.0"/>
+                <geom type="mesh" class="visual" pos="0.0653564 -0.0442527 0.173938" quat="0.498469 -0.501527 -0.498469 -0.501527" mesh="part_50" material="part_50_material"/>
+                <geom class="collision" type="cylinder" size="0.025 0.095" pos="0.043 -0.01 0.0" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/>
+                <site name="right_foot_site" pos="0.043 0.0 0.0" size="0.025 0.095" type="cylinder" euler="0 1.5708 0" rgba="0 1 0 0"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+
+      <!-- ==================== FRONT-LEFT LEG ==================== -->
+      <body name="fl_hip_link" pos="-0.0784082 0.132753 0.367889" quat="0.708985 0.0114644 0.0115286 0.705036">
+        <!-- pawo_6dof: hip yaw joint removed, fl_hip_link welded rigidly to torso -->
+        <inertial pos="0.00753976 -0.0276079 -0.0448206" mass="0.1" fullinertia="0.0001 0.0001 0.0001 0.0 0.0 0.0"/>
+        <geom type="mesh" class="visual" pos="-0.132773 0.0990197 -0.399991" quat="1 0 -0 -0" mesh="part_4" material="part_4_material"/>
+        <geom type="mesh" class="collision" pos="-0.132773 0.0990197 -0.399991" quat="1 0 -0 -0" mesh="part_4" material="part_4_material"/>
+        <geom type="mesh" class="visual" pos="-0.132024 0.0989307 -0.399945" quat="1 0 0 -0" mesh="part_2" material="part_2_material"/>
+        <geom type="mesh" class="collision" pos="-0.132024 0.0989307 -0.399945" quat="1 0 0 -0" mesh="part_2" material="part_2_material"/>
+
+        <!-- pawo_6dof: hip roll joint removed, fl_hip_roll_link welded rigidly to fl_hip_link -->
+        <body name="fl_hip_roll_link" pos="0.0259993 0.0125974 -0.0449988" quat="1 0 0 0">
+          <inertial pos="0 0 0" mass="1e-6" fullinertia="1e-10 1e-10 1e-10 0 0 0"/>
+
+          <body name="fl_thigh_link" pos="0 0 0" quat="0.34355071 -0.61803957 -0.34355071 0.61803957">
+          <!-- <body name="fl_thigh_link" pos="0 0 0" quat="0.49180491 -0.50806292 -0.49180491  0.50806292"> -->
+            <joint axis="0 0 -1" name="fl_hip_pitch_joint" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="0.0462018 0.0565782 -0.0141903" mass="1.3" fullinertia="0.002 0.002 0.0001 0.0 0.0 0.0"/>
+            <geom type="mesh" class="visual" pos="0.0864163 0.354957 0.169735" quat="0.5 0.5 0.5 -0.5" mesh="part_24" material="part_24_material"/>
+            <geom type="mesh" class="collision" pos="0.0864163 0.354957 0.169735" quat="0.5 0.5 0.5 -0.5" mesh="part_24" material="part_24_material"/>
+            <geom type="mesh" class="visual" pos="0.0854824 0.355473 0.169772" quat="0.500585 0.499414 0.500585 -0.499414" mesh="part_20" material="part_20_material"/>
+            <geom type="mesh" class="collision" pos="0.0854824 0.355473 0.169772" quat="0.500585 0.499414 0.500585 -0.499414" mesh="part_20" material="part_20_material"/>
+            <geom type="mesh" class="visual" pos="0.0848584 0.355177 0.169772" quat="0.500585 0.499414 0.500585 -0.499414" mesh="part_23" material="part_23_material"/>
+            <geom type="mesh" class="collision" pos="0.0848584 0.355177 0.169772" quat="0.500585 0.499414 0.500585 -0.499414" mesh="part_23" material="part_23_material"/>
+
+            <body name="fl_calf_link" pos="0.100713 0.172785 -0" quat="0.0 0.8660254 -0.5 0.0">
+            <!-- <body name="fl_calf_link" pos="0.100713 0.172785 -0" quat="0 1 0 0"> -->
+              <joint axis="0 0 1" name="fl_knee_joint" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="-0.0399309 -0.0644686 -0.0157061" mass="0.6" fullinertia="0.002 0.002 0.0001 0.0 0.0 0.0"/>
+              <geom type="mesh" class="visual" pos="-0.0141068 -0.182217 -0.168496" quat="0.500281 -0.499719 -0.500281 -0.499719" mesh="part_15" material="part_15_material"/>
+              <geom type="mesh" class="collision" pos="-0.0141068 -0.182217 -0.168496" quat="0.500281 -0.499719 -0.500281 -0.499719" mesh="part_15" material="part_15_material"/>
+              <geom type="mesh" class="visual" pos="-0.0141068 -0.182217 -0.168496" quat="0.500281 -0.499719 -0.500281 -0.499719" mesh="part_30" material="part_30_material"/>
+              <geom type="mesh" class="collision" pos="-0.0141068 -0.182217 -0.168496" quat="0.500281 -0.499719 -0.500281 -0.499719" mesh="part_30" material="part_30_material"/>
+
+              <!-- <body name="fl_touch_link" pos="-0.0799724 -0.138502 0.00264211" quat="0. 0.96592583 -0.25881905 0."> THIS IS FOR THE FLIPPED FEET -->
+              <body name="fl_touch_link" pos="-0.0799724 -0.138502 0.00264211" quat=" 0. -0.25881905 -0.96592583  0.">
+              <!-- <body name="fl_touch_link" pos="-0.0799724 -0.138502 0.00264211" quat="0 1 0 0"> -->
+                <joint axis="0 0 -1" name="fl_touch" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="0.0396266 0.0137754 0.0180178" mass="0.1" fullinertia="0.0001 0.0001 0.0001 0.0 0.0 0.0"/>
+                <geom type="mesh" class="visual" pos="0.0656259 0.0438521 0.171134" quat="0.5 0.5 0.5 -0.5" mesh="part_9" material="part_9_material"/>
+                <geom class="collision" type="cylinder" size="0.025 0.095" pos="0.043 0.01 0.0" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/>
+                <site name="left_foot_site" pos="0.043 0.0 0.0" size="0.025 0.095" type="cylinder" euler="0 1.5708 0" rgba="0 1 0 0"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <asset>
+    <mesh file="part_40.stl"/>
+    <mesh file="part_30.stl"/>
+    <mesh file="part_7.stl"/>
+    <mesh file="part_12.stl"/>
+    <mesh file="part_33.stl"/>
+    <mesh file="part_3.stl"/>
+    <mesh file="part_20.stl"/>
+    <mesh file="part_52.stl"/>
+    <mesh file="part_24.stl"/>
+    <mesh file="part_16.stl"/>
+    <mesh file="part_15.stl"/>
+    <mesh file="part_22.stl"/>
+    <mesh file="part_13.stl"/>
+    <mesh file="part_50.stl"/>
+    <mesh file="part_41.stl"/>
+    <mesh file="part_51.stl"/>
+    <mesh file="part_9.stl"/>
+    <mesh file="part_1.stl"/>
+    <mesh file="part_42.stl"/>
+    <mesh file="part_19.stl"/>
+    <mesh file="part_4.stl"/>
+    <mesh file="part_2.stl"/>
+    <mesh file="part_23.stl"/>
+    <mesh file="part_31.stl"/>
+    <mesh file="part_25.stl"/>
+    <material name="part_31_material" rgba="0.494118 0.494118 0.52549 1"/>
+    <material name="part_41_material" rgba="1 1 1 1"/>
+    <material name="part_19_material" rgba="0.494118 0.494118 0.52549 1"/>
+    <material name="part_40_material" rgba="0.494118 0.494118 0.52549 1"/>
+    <material name="part_1_material" rgba="1 1 1 1"/>
+    <material name="part_33_material" rgba="1 1 1 1"/>
+    <material name="part_42_material" rgba="1 1 1 1"/>
+    <material name="part_22_material" rgba="0.494118 0.494118 0.52549 1"/>
+    <material name="part_13_material" rgba="1 0 0 1"/>
+    <material name="part_16_material" rgba="0 0.701961 1 1"/>
+    <material name="part_3_material" rgba="1 1 1 1"/>
+    <material name="part_7_material" rgba="0 0.701961 1 1"/>
+    <material name="part_25_material" rgba="1 0 0 1"/>
+    <material name="part_12_material" rgba="0 0.701961 1 1"/>
+    <material name="part_51_material" rgba="1 1 1 1"/>
+    <material name="part_52_material" rgba="1 1 1 1"/>
+    <material name="part_50_material" rgba="1 1 1 1"/>
+    <material name="part_4_material" rgba="0 0.701961 1 1"/>
+    <material name="part_2_material" rgba="1 1 1 1"/>
+    <material name="part_24_material" rgba="1 0 0 1"/>
+    <material name="part_20_material" rgba="0 0.701961 1 1"/>
+    <material name="part_23_material" rgba="0 0.701961 1 1"/>
+    <material name="part_15_material" rgba="1 1 1 1"/>
+    <material name="part_30_material" rgba="1 1 1 1"/>
+    <material name="part_9_material" rgba="1 1 1 1"/>
+  </asset>
+
+  <equality/>
+
+  <contact>
+    <!-- Exclude all self-collisions -->
+    <exclude body1="torso" body2="fr_hip_link"/>
+    <exclude body1="torso" body2="fr_hip_roll_link"/>
+    <exclude body1="torso" body2="fr_thigh_link"/>
+    <exclude body1="torso" body2="fr_calf_link"/>
+    <exclude body1="torso" body2="fr_touch_link"/>
+    <exclude body1="torso" body2="fl_hip_link"/>
+    <exclude body1="torso" body2="fl_hip_roll_link"/>
+    <exclude body1="torso" body2="fl_thigh_link"/>
+    <exclude body1="torso" body2="fl_calf_link"/>
+    <exclude body1="torso" body2="fl_touch_link"/>
+    <exclude body1="fr_hip_link" body2="fr_hip_roll_link"/>
+    <exclude body1="fr_hip_link" body2="fr_thigh_link"/>
+    <exclude body1="fr_hip_link" body2="fr_calf_link"/>
+    <exclude body1="fr_hip_link" body2="fr_touch_link"/>
+    <exclude body1="fr_hip_roll_link" body2="fr_thigh_link"/>
+    <exclude body1="fr_hip_roll_link" body2="fr_calf_link"/>
+    <exclude body1="fr_hip_roll_link" body2="fr_touch_link"/>
+    <exclude body1="fr_thigh_link" body2="fr_calf_link"/>
+    <exclude body1="fr_thigh_link" body2="fr_touch_link"/>
+    <exclude body1="fr_calf_link" body2="fr_touch_link"/>
+    <exclude body1="fl_hip_link" body2="fl_hip_roll_link"/>
+    <exclude body1="fl_hip_link" body2="fl_thigh_link"/>
+    <exclude body1="fl_hip_link" body2="fl_calf_link"/>
+    <exclude body1="fl_hip_link" body2="fl_touch_link"/>
+    <exclude body1="fl_hip_roll_link" body2="fl_thigh_link"/>
+    <exclude body1="fl_hip_roll_link" body2="fl_calf_link"/>
+    <exclude body1="fl_hip_roll_link" body2="fl_touch_link"/>
+    <exclude body1="fl_thigh_link" body2="fl_calf_link"/>
+    <exclude body1="fl_thigh_link" body2="fl_touch_link"/>
+    <exclude body1="fl_calf_link" body2="fl_touch_link"/>
+    <exclude body1="fr_hip_link" body2="fl_hip_link"/>
+  </contact>
+
+  <sensor>
+    <touch name="sensor_l_foot" site="left_foot_site"/>
+    <touch name="sensor_r_foot" site="right_foot_site"/>
+</sensor>
+
+</mujoco>
