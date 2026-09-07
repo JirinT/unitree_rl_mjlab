@@ -61,7 +61,7 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
 # particular is a guess; PAWO's torso body has no fixed relationship to
 # ground clearance until the legs are posed.
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
-  pos=(0, 0, 0.55),
+  pos=(0, 0, 0.02),
   joint_pos={
     ".*_hip_pitch_joint": 0.,
     ".*_knee_joint": 0.,
