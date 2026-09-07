@@ -37,6 +37,12 @@ def get_spec() -> mujoco.MjSpec:
 ##
 
 # All 10 joints use the same servo: Hitec D845WP.
+# NOTE: stiffness was 50.0, which combined with effort_limit=4.9 gave an
+# effort/stiffness ratio ~20x smaller than every other robot in this repo
+# (e.g. H1_2 hip/knee ~2.0-2.3), collapsing the derived PAWO_ACTION_SCALE
+# below to ~0.0245 rad (~1.4 deg) -- far too small to lift a leg. Lowered to
+# bring the ratio back in line (~1.96), giving ~0.49 rad (~28 deg) of usable
+# action range, comparable to H1_2.
 PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
   target_names_expr=(
     ".*_hip_yaw.*",
@@ -45,7 +51,7 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
     ".*_knee.*",
     ".*_touch",
   ),
-  stiffness=50.0,
+  stiffness=2.5,
   damping=3.2,
   effort_limit=4.9,
   armature=6e-4,
