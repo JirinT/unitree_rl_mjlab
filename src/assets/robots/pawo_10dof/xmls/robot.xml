@@ -21,6 +21,7 @@
     <body name="torso" pos="0 0 0" quat="1 0 0 0" childclass="pawo_export_mujoco">
       <freejoint name="torso_freejoint"/>
       <inertial pos="-0.0659757 -0.00229039 0.42294" mass="2.0" fullinertia="0.082167 0.073667 0.014167 0.0 0.0 0.0"/>
+      <site name="imu" pos="0 0 0" quat="1 0 0 0"/>
       <geom type="mesh" class="visual" pos="-0.192095 0.00263757 -0.0296418" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_31" material="part_31_material"/>
       <geom type="mesh" class="collision" pos="-0.192095 0.00263757 -0.0296418" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_31" material="part_31_material"/>
       <geom type="mesh" class="visual" pos="-0.191992 0.00247173 -0.0296303" quat="0.707013 0.0114965 0.0114965 0.707013" mesh="part_41" material="part_41_material"/>
@@ -234,7 +235,7 @@
     <gyro name="imu_ang_vel" site="imu"/>
     <velocimeter name="imu_lin_vel" site="imu"/>
     <accelerometer name="imu_lin_acc" site="imu"/>
-    <subtreeangmom name="root_angmom" body="torso_link"/>
+    <subtreeangmom name="root_angmom" body="torso"/>
     <touch name="sensor_l_foot" site="left_foot_site"/>
     <touch name="sensor_r_foot" site="right_foot_site"/>
 </sensor>
