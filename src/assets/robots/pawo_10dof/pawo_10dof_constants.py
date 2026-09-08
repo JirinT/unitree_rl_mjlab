@@ -47,7 +47,7 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
   ),
   stiffness=50.0,
   damping=3.2,
-  effort_limit=4.9,
+  effort_limit=10.0, # ATTENTION THE REAL MOTOR HAS ONLY 5 Nm MAX TORQUE
   armature=6e-4,
 )
 
