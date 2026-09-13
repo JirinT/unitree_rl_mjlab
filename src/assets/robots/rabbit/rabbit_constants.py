@@ -83,10 +83,10 @@ HOME_KEYFRAME = EntityCfg.InitialStateCfg(
 ##
 FEET_ONLY_COLLISION = CollisionCfg(
   geom_names_expr=(r"^(left|right)_foot_collision$",),
-  contype=1.0,
-  conaffinity=1.,
-  condim=3.,
-  priority=1.,
+  contype=1,
+  conaffinity=1,
+  condim=3,
+  priority=1,
   friction=(0.6,),
 )
 
