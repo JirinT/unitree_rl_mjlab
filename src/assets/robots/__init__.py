@@ -58,3 +58,10 @@ from .pawo_6dof.pawo_6dof_constants import (
 from .pawo_6dof.pawo_6dof_constants import (
   PAWO_6DOF_ACTION_SCALE as PAWO_6DOF_ACTION_SCALE,
 )
+
+from .rabbit.rabbit_constants import (
+    get_rabbit_robot_cfg as get_rabbit_robot_cfg,
+)
+from .rabbit.rabbit_constants import (
+    RABBIT_ACTION_SCALE as RABBIT_ACTION_SCALE
+)
