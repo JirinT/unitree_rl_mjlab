@@ -66,7 +66,7 @@ RABBIT_ACTUATOR_ARM = BuiltinPositionActuatorCfg(
 ##
 
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
-  pos=(0, 0, 0.9),
+  pos=(0., 0., 0.9),
   joint_pos={
     ".*HipPitch": 0.0,
     ".*Knee": 0.0,
@@ -83,10 +83,10 @@ HOME_KEYFRAME = EntityCfg.InitialStateCfg(
 ##
 FEET_ONLY_COLLISION = CollisionCfg(
   geom_names_expr=(r"^(left|right)_foot_collision$",),
-  contype=1,
-  conaffinity=1,
-  condim=3,
-  priority=1,
+  contype=1.0,
+  conaffinity=1.,
+  condim=3.,
+  priority=1.,
   friction=(0.6,),
 )
 
@@ -110,7 +110,7 @@ def get_rabbit_robot_cfg() -> EntityCfg:
   )
 
 
-RABBIT_ACTION_RANGE_RAD = 1  # 57 deg
+RABBIT_ACTION_RANGE_RAD = 1.0  # 57 deg
 RABBIT_ACTION_SCALE: dict[str, float] = {}
 for a in RABBIT_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
