@@ -22,6 +22,7 @@
       <freejoint name="torso_freejoint"/>
       <!-- <inertial pos="0.102186 -0.163702 0.929631" mass="2.86905" fullinertia="0.138287 0.0999829 0.0488135 9.85582e-05 -0.00364902 0.000208347"/> -->
       <inertial pos="0.102186 -0.163702 0.929631" mass="3.5" fullinertia="0.138287 0.0999829 0.0488135 9.85582e-05 -0.00364902 0.000208347"/>
+      <site name="imu" pos="0 0 0" quat="1 0 0 0"/>
       <!-- Part rbitbase -->
       <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase" material="rbitbase_material"/>
       <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase" material="rbitbase_material"/>
