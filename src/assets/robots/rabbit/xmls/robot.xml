@@ -1,0 +1,493 @@
+<?xml version="1.0" ?>
+<!-- Generated using onshape-to-robot -->
+<!-- Onshape document_id: ed03cf36064484f045f11029 / workspace_id: 3c0f314be41cfc1e0a6a4e37 -->
+<mujoco model="rabbit_humanoid">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <default>
+    <default class="rabbit_humanoid">
+      <joint frictionloss="0.1" armature="0.005"/>
+      <position kp="20" dampratio="1"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+    </default>
+  </default>
+  <worldbody>
+  <camera name="nice_robot_view" pos="2.476 -2.358 1.174" xyaxes="0.685 0.728 0.000 -0.211 0.199 0.957"/>
+    <!-- Link torso -->
+    <body name="torso" pos="0 0 0" quat="1 0 0 0" childclass="rabbit_humanoid">
+      <freejoint name="torso_freejoint"/>
+      <!-- <inertial pos="0.102186 -0.163702 0.929631" mass="2.86905" fullinertia="0.138287 0.0999829 0.0488135 9.85582e-05 -0.00364902 0.000208347"/> -->
+      <inertial pos="0.102186 -0.163702 0.929631" mass="3.5" fullinertia="0.138287 0.0999829 0.0488135 9.85582e-05 -0.00364902 0.000208347"/>
+      <!-- Part rbitbase -->
+      <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase" material="rbitbase_material"/>
+      <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase" material="rbitbase_material"/>
+      <!-- Part rbitbase_2 -->
+      <geom type="mesh" class="visual" pos="-0.0976243 -0.166266 0.626605" quat="0.70701 0 0 0.707203" mesh="rbitbase__2" material="rbitbase__2_material"/>
+      <geom type="mesh" class="collision" pos="-0.0976243 -0.166266 0.626605" quat="0.70701 0 0 0.707203" mesh="rbitbase__2" material="rbitbase__2_material"/>
+      <!-- Part rbitbase_3 -->
+      <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__3" material="rbitbase__3_material"/>
+      <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__3" material="rbitbase__3_material"/>
+      <!-- Part rbitbase_4 -->
+      <geom type="mesh" class="visual" pos="-0.101016 -0.1578 0.62588" quat="0.70701 0 0 0.707203" mesh="rbitbase__4" material="rbitbase__4_material"/>
+      <geom type="mesh" class="collision" pos="-0.101016 -0.1578 0.62588" quat="0.70701 0 0 0.707203" mesh="rbitbase__4" material="rbitbase__4_material"/>
+      <!-- Part rbitbase_5 -->
+      <geom type="mesh" class="visual" pos="-0.10114 -0.161473 0.607072" quat="0.70701 0 0 0.707203" mesh="rbitbase__5" material="rbitbase__5_material"/>
+      <geom type="mesh" class="collision" pos="-0.10114 -0.161473 0.607072" quat="0.70701 0 0 0.707203" mesh="rbitbase__5" material="rbitbase__5_material"/>
+      <!-- Part rbitbase_6 -->
+      <geom type="mesh" class="visual" pos="-0.101166 -0.157903 0.636835" quat="0.70701 0 0 0.707203" mesh="rbitbase__6" material="rbitbase__6_material"/>
+      <geom type="mesh" class="collision" pos="-0.101166 -0.157903 0.636835" quat="0.70701 0 0 0.707203" mesh="rbitbase__6" material="rbitbase__6_material"/>
+      <!-- Part rbitbase_7 -->
+      <geom type="mesh" class="visual" pos="-0.0972992 -0.166545 0.627325" quat="0.70701 0 0 0.707203" mesh="rbitbase__7" material="rbitbase__7_material"/>
+      <geom type="mesh" class="collision" pos="-0.0972992 -0.166545 0.627325" quat="0.70701 0 0 0.707203" mesh="rbitbase__7" material="rbitbase__7_material"/>
+      <!-- Part rbitbase_8 -->
+      <geom type="mesh" class="visual" pos="-0.101016 -0.158099 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__8" material="rbitbase__8_material"/>
+      <geom type="mesh" class="collision" pos="-0.101016 -0.158099 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__8" material="rbitbase__8_material"/>
+      <!-- Part rbitbase_9 -->
+      <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.626216" quat="0.70701 0 0 0.707203" mesh="rbitbase__9" material="rbitbase__9_material"/>
+      <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.626216" quat="0.70701 0 0 0.707203" mesh="rbitbase__9" material="rbitbase__9_material"/>
+      <!-- Part rbitbase_10 -->
+      <geom type="mesh" class="visual" pos="-0.0976243 -0.166266 0.626605" quat="0.70701 0 0 0.707203" mesh="rbitbase__10" material="rbitbase__10_material"/>
+      <geom type="mesh" class="collision" pos="-0.0976243 -0.166266 0.626605" quat="0.70701 0 0 0.707203" mesh="rbitbase__10" material="rbitbase__10_material"/>
+      <!-- Part rbitbase_11 -->
+      <geom type="mesh" class="visual" pos="-0.100514 -0.165723 0.656947" quat="0.70701 0 0 0.707203" mesh="rbitbase__11" material="rbitbase__11_material"/>
+      <geom type="mesh" class="collision" pos="-0.100514 -0.165723 0.656947" quat="0.70701 0 0 0.707203" mesh="rbitbase__11" material="rbitbase__11_material"/>
+      <!-- Part rbitbase_12 -->
+      <geom type="mesh" class="visual" pos="-0.10134 -0.161473 0.606772" quat="0.70701 0 0 0.707203" mesh="rbitbase__12" material="rbitbase__12_material"/>
+      <geom type="mesh" class="collision" pos="-0.10134 -0.161473 0.606772" quat="0.70701 0 0 0.707203" mesh="rbitbase__12" material="rbitbase__12_material"/>
+      <!-- Part rbitbase_13 -->
+      <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__13" material="rbitbase__13_material"/>
+      <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__13" material="rbitbase__13_material"/>
+      <!-- Part rbitbase_14 -->
+      <geom type="mesh" class="visual" pos="-0.0952993 -0.166118 0.627029" quat="0.70701 0 0 0.707203" mesh="rbitbase__14" material="rbitbase__14_material"/>
+      <geom type="mesh" class="collision" pos="-0.0952993 -0.166118 0.627029" quat="0.70701 0 0 0.707203" mesh="rbitbase__14" material="rbitbase__14_material"/>
+      <!-- Part rbitbase_15 -->
+      <geom type="mesh" class="visual" pos="-0.0996243 -0.166119 0.627029" quat="0.70701 0 0 0.707203" mesh="rbitbase__15" material="rbitbase__15_material"/>
+      <geom type="mesh" class="collision" pos="-0.0996243 -0.166119 0.627029" quat="0.70701 0 0 0.707203" mesh="rbitbase__15" material="rbitbase__15_material"/>
+      <!-- Part rbitbase_16 -->
+      <geom type="mesh" class="visual" pos="-0.101072 -0.160679 0.631341" quat="0.70701 0 0 0.707203" mesh="rbitbase__16" material="rbitbase__16_material"/>
+      <geom type="mesh" class="collision" pos="-0.101072 -0.160679 0.631341" quat="0.70701 0 0 0.707203" mesh="rbitbase__16" material="rbitbase__16_material"/>
+      <!-- Part rbitbase_17 -->
+      <geom type="mesh" class="visual" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__17" material="rbitbase__17_material"/>
+      <geom type="mesh" class="collision" pos="-0.101015 -0.161473 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__17" material="rbitbase__17_material"/>
+      <!-- Part rbitbase_18 -->
+      <geom type="mesh" class="visual" pos="-0.10114 -0.161473 0.608072" quat="0.70701 0 0 0.707203" mesh="rbitbase__18" material="rbitbase__18_material"/>
+      <geom type="mesh" class="collision" pos="-0.10114 -0.161473 0.608072" quat="0.70701 0 0 0.707203" mesh="rbitbase__18" material="rbitbase__18_material"/>
+      <!-- Part rbitbase_19 -->
+      <geom type="mesh" class="visual" pos="-0.151016 -0.158113 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__8" material="rbitbase__8_material"/>
+      <geom type="mesh" class="collision" pos="-0.151016 -0.158113 0.625697" quat="0.70701 0 0 0.707203" mesh="rbitbase__8" material="rbitbase__8_material"/>
+      <!-- Part rbitbase_20 -->
+      <geom type="mesh" class="visual" pos="-0.0972992 -0.166545 0.627325" quat="0.70701 0 0 0.707203" mesh="rbitbase__19" material="rbitbase__19_material"/>
+      <geom type="mesh" class="collision" pos="-0.0972992 -0.166545 0.627325" quat="0.70701 0 0 0.707203" mesh="rbitbase__19" material="rbitbase__19_material"/>
+      <!-- Part head -->
+      <geom type="mesh" class="visual" pos="-0.0995535 -0.643988 0.587228" quat="0.70701 0 0 0.707203" mesh="head" material="head_material"/>
+      <geom type="mesh" class="collision" pos="-0.0995535 -0.643988 0.587228" quat="0.70701 0 0 0.707203" mesh="head" material="head_material"/>
+      <!-- Part rbitbase_21 -->
+      <geom type="mesh" class="visual" pos="-0.100514 -0.165723 0.636447" quat="0.70701 0 0 0.707203" mesh="rbitbase__20" material="rbitbase__20_material"/>
+      <geom type="mesh" class="collision" pos="-0.100514 -0.165723 0.636447" quat="0.70701 0 0 0.707203" mesh="rbitbase__20" material="rbitbase__20_material"/>
+      <!-- Link left_hip -->
+      <body name="left_hip" pos="0.0969088 -0.057999 0.59873" quat="0 -0.70701 -0.707203 0">
+        <!-- Joint from torso to left_hip -->
+        <joint axis="0 0 1" name="LeftHipYaw" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="-0.000224789 -0.0185205 0.0639871" mass="0.851126" fullinertia="0.00189776 0.00173246 0.000805442 -2.51413e-07 -5.68852e-07 0.000591029"/>
+        <!-- Part rbitbase_22 -->
+        <geom type="mesh" class="visual" pos="-0.102946 -0.197892 -0.00886706" quat="0 1 0.00013676 -0" mesh="rbitbase__21" material="rbitbase__21_material"/>
+        <geom type="mesh" class="collision" pos="-0.102946 -0.197892 -0.00886706" quat="0 1 0.00013676 -0" mesh="rbitbase__21" material="rbitbase__21_material"/>
+        <!-- Part rbitbase_23 -->
+        <geom type="mesh" class="visual" pos="-0.102946 -0.198028 -0.006" quat="0 1 0.00013676 -0" mesh="rbitbase__22" material="rbitbase__22_material"/>
+        <geom type="mesh" class="collision" pos="-0.102946 -0.198028 -0.006" quat="0 1 0.00013676 -0" mesh="rbitbase__22" material="rbitbase__22_material"/>
+        <!-- Part rbitbase_24 -->
+        <geom type="mesh" class="visual" pos="-0.102366 -0.196105 -0.00634276" quat="0 1 0.00013676 -0" mesh="rbitbase__23" material="rbitbase__23_material"/>
+        <geom type="mesh" class="collision" pos="-0.102366 -0.196105 -0.00634276" quat="0 1 0.00013676 -0" mesh="rbitbase__23" material="rbitbase__23_material"/>
+        <!-- Link left_hip_bottom -->
+        <body name="left_hip_bottom" pos="1.62586e-05 -0.063 0.102467" quat="0.707107 0.707107 9.67041e-05 9.67041e-05">
+          <!-- Joint from left_hip to left_hip_bottom -->
+          <joint axis="0 0 1" name="LeftHipRoll" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="0.0566615 -0.000483218 -0.0177758" mass="0.498183" fullinertia="0.000403738 0.00062857 0.000698766 -7.64066e-06 1.09494e-05 2.26764e-06"/>
+          <!-- Part rbitbase_25 -->
+          <geom type="mesh" class="visual" pos="-0.10342 -0.108343 0.135077" quat="0.707107 0.707107 -0 -0" mesh="rbitbase__24" material="rbitbase__24_material"/>
+          <geom type="mesh" class="collision" pos="-0.10342 -0.108343 0.135077" quat="0.707107 0.707107 -0 -0" mesh="rbitbase__24" material="rbitbase__24_material"/>
+          <!-- Part rbitbase_26 -->
+          <geom type="mesh" class="visual" pos="-0.1 -0.108 0.134085" quat="0.707107 0.707107 -0 -0" mesh="rbitbase__25" material="rbitbase__25_material"/>
+          <geom type="mesh" class="collision" pos="-0.1 -0.108 0.134085" quat="0.707107 0.707107 -0 -0" mesh="rbitbase__25" material="rbitbase__25_material"/>
+          <!-- Link left_thigh -->
+          <body name="left_thigh" pos="0.094 0 -0.0179152" quat="0.707107 0 -0.707107 -0">
+            <!-- Joint from left_hip_bottom to left_thigh -->
+            <joint axis="0 0 1" name="LeftHipPitch" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="-0.0923765 0.159526 0.0180697" mass="0.841915" fullinertia="0.00545214 0.00225244 0.00740326 0.00286457 0.000142736 -0.000249601"/>
+            <!-- Part rbitbase_27 -->
+            <geom type="mesh" class="visual" pos="0.186998 -0.0184243 0.193" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__26" material="rbitbase__26_material"/>
+            <geom type="mesh" class="collision" pos="0.186998 -0.0184243 0.193" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__26" material="rbitbase__26_material"/>
+            <!-- Part rbitbase_28 -->
+            <geom type="mesh" class="visual" pos="0.187024 -0.018549 0.19342" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__27" material="rbitbase__27_material"/>
+            <geom type="mesh" class="collision" pos="0.187024 -0.018549 0.19342" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__27" material="rbitbase__27_material"/>
+            <!-- Link left_shank -->
+            <body name="left_shank" pos="-0.125 0.216506 0.039" quat="0 -0.965926 0.258819 0">
+              <!-- Joint from left_thigh to left_shank -->
+              <joint axis="0 0 -1" name="LeftKnee" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="0.00112005 -0.117503 -0.00374671" mass="0.119522" fullinertia="0.000748479 3.58231e-05 0.000767785 -2.12649e-05 3.60749e-06 -3.06652e-06"/>
+              <!-- Part rbitbase_29 -->
+              <geom type="mesh" class="visual" pos="0.153793 0.359721 -0.15142" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__28" material="rbitbase__28_material"/>
+              <geom type="mesh" class="collision" pos="0.153793 0.359721 -0.15142" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__28" material="rbitbase__28_material"/>
+              <!-- Link left_foot -->
+              <body name="left_foot" pos="0 -0.25 0" quat="0 1 0 0">
+                <!-- Joint from left_shank to left_foot -->
+                <joint axis="0 0 1" name="LeftAnkle" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="-0.00800841 0.00460468 -0.0178569" mass="0.584071" fullinertia="0.000453964 0.000703847 0.00103504 -9.94341e-07 -2.78871e-05 9.76065e-06"/>
+                <!-- Part rbitbase_30 -->
+                <geom type="mesh" class="visual" pos="0.440513 -0.447674 0.15442" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__29" material="rbitbase__29_material"/>
+                <!-- <geom type="mesh" class="collision" pos="0.440513 -0.447674 0.15442" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__29" material="rbitbase__29_material"/> -->
+                <!-- Part rbitbase_31 -->
+                <geom type="mesh" class="visual" pos="0.439884 -0.447638 0.154" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__30" material="rbitbase__30_material"/>
+                <!-- <geom type="mesh" class="collision" pos="0.439884 -0.447638 0.154" quat="0.612372 0.353553 0.612372 -0.353553" mesh="rbitbase__30" material="rbitbase__30_material"/> -->
+                <geom class="collision" name="left_foot_collision" type="cylinder" size="0.025 0.095" pos="-0.045981 0.019641 0.0" euler="1.5708 -1.0472 -1.0472" friction="1.0 0.005 0.0001"/>
+                <site name="left_foot_site" pos="-0.045981 0.019641 0.0" size="0.025 0.095" type="cylinder" euler="1.5708 -1.0472 -1.0472" rgba="0 1 0 0"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <!-- Link right_hip -->
+      <body name="right_hip" pos="0.0969668 -0.269999 0.59873" quat="0 -0.70701 -0.707203 0">
+        <!-- Joint from torso to right_hip -->
+        <joint axis="0 0 1" name="RightHipYaw" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="-0.00022479 -0.0185205 0.063457" mass="0.851126" fullinertia="0.00186663 0.00170133 0.000805442 -2.51422e-07 -5.60958e-07 0.000583687"/>
+        <!-- Part rbitbase_32 -->
+        <geom type="mesh" class="visual" pos="0.107634 -0.196047 -0.00734276" quat="0 -1 -0.00013676 -0" mesh="rbitbase__31" material="rbitbase__31_material"/>
+        <geom type="mesh" class="collision" pos="0.107634 -0.196047 -0.00734276" quat="0 -1 -0.00013676 -0" mesh="rbitbase__31" material="rbitbase__31_material"/>
+        <!-- Part rbitbase_33 -->
+        <geom type="mesh" class="visual" pos="0.107054 -0.197971 -0.007" quat="0 -1 -0.00013676 -0" mesh="rbitbase__32" material="rbitbase__32_material"/>
+        <geom type="mesh" class="collision" pos="0.107054 -0.197971 -0.007" quat="0 -1 -0.00013676 -0" mesh="rbitbase__32" material="rbitbase__32_material"/>
+        <!-- Part rbitbase_34 -->
+        <geom type="mesh" class="visual" pos="0.109054 -0.197834 -0.00886706" quat="0 -1 -0.00013676 -0" mesh="rbitbase__33" material="rbitbase__33_material"/>
+        <geom type="mesh" class="collision" pos="0.109054 -0.197834 -0.00886706" quat="0 -1 -0.00013676 -0" mesh="rbitbase__33" material="rbitbase__33_material"/>
+        <!-- Link right_hip_bottom -->
+        <body name="right_hip_bottom" pos="1.62586e-05 -0.063 0.101467" quat="0.707107 0.707107 9.67041e-05 9.67041e-05">
+          <!-- Joint from right_hip to right_hip_bottom -->
+          <joint axis="0 0 1" name="RightHipRoll" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="-0.0566615 -0.00048322 -0.0173831" mass="0.498183" fullinertia="0.000403606 0.000628438 0.000698766 7.64067e-06 -8.02084e-06 2.06403e-06"/>
+          <!-- Part rbitbase_35 -->
+          <geom type="mesh" class="visual" pos="0.105 -0.109265 0.134718" quat="0.707107 0.707107 0 -0" mesh="rbitbase__34" material="rbitbase__34_material"/>
+          <geom type="mesh" class="collision" pos="0.105 -0.109265 0.134718" quat="0.707107 0.707107 0 -0" mesh="rbitbase__34" material="rbitbase__34_material"/>
+          <!-- Part rbitbase_36 -->
+          <geom type="mesh" class="visual" pos="0.10858 -0.108343 0.135077" quat="0.707107 0.707107 0 -0" mesh="rbitbase__35" material="rbitbase__35_material"/>
+          <geom type="mesh" class="collision" pos="0.10858 -0.108343 0.135077" quat="0.707107 0.707107 0 -0" mesh="rbitbase__35" material="rbitbase__35_material"/>
+          <!-- Link right_thigh -->
+          <body name="right_thigh" pos="-0.094 0 -0.0179152" quat="0.683013 -0.183013 -0.683013 0.183013">
+            <!-- Joint from right_hip_bottom to right_thigh -->
+            <joint axis="0 0 1" name="RightHipPitch" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="-1.27715e-05 0.184282 -0.0180697" mass="0.841915" fullinertia="0.0071263 0.000571669 0.00739665 3.42754e-05 1.81097e-06 0.000287361"/>
+            <!-- Part rbitbase_37 -->
+            <geom type="mesh" class="visual" pos="0.153042 -0.109455 -0.19858" quat="0.5 0.5 0.5 -0.5" mesh="rbitbase__36" material="rbitbase__36_material"/>
+            <geom type="mesh" class="collision" pos="0.153042 -0.109455 -0.19858" quat="0.5 0.5 0.5 -0.5" mesh="rbitbase__36" material="rbitbase__36_material"/>
+            <!-- Part rbitbase_38 -->
+            <geom type="mesh" class="visual" pos="0.153243 -0.109614 -0.198" quat="0.5 0.5 0.5 -0.5" mesh="rbitbase__37" material="rbitbase__37_material"/>
+            <geom type="mesh" class="collision" pos="0.153243 -0.109614 -0.198" quat="0.5 0.5 0.5 -0.5" mesh="rbitbase__37" material="rbitbase__37_material"/>
+            <!-- Link right_shank -->
+            <body name="right_shank" pos="-0 0.25 -0.039" quat="1 -0 -0 0">
+              <!-- Joint from right_thigh to right_shank -->
+              <joint axis="0 0 1" name="RightKnee" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="0.102328 0.0577874 -0.00374299" mass="0.119684" fullinertia="0.000232416 0.000551924 0.000767819 -0.000319236 4.45711e-06 -1.59286e-06"/>
+              <!-- Part rbitbase_39 -->
+              <geom type="mesh" class="visual" pos="-0.234513 -0.313247 -0.15842" quat="0.183013 0.683013 0.183013 -0.683013" mesh="rbitbase__38" material="rbitbase__38_material"/>
+              <geom type="mesh" class="collision" pos="-0.234513 -0.313247 -0.15842" quat="0.183013 0.683013 0.183013 -0.683013" mesh="rbitbase__38" material="rbitbase__38_material"/>
+              <!-- Link right_foot -->
+              <body name="right_foot" pos="0.216506 0.125 0" quat="0 0.965926 -0.258819 -0">
+                <!-- Joint from right_shank to right_foot -->
+                <joint axis="0 0 -1" name="RightAnkle" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="-0.00430977 -0.00807858 -0.0178568" mass="0.584068" fullinertia="0.000514809 0.00064387 0.00103591 -0.000108907 -1.93158e-05 -2.23842e-05"/>
+                <!-- Part rbitbase_40 -->
+                <geom type="mesh" class="visual" pos="0.158844 0.608254 0.159" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__39" material="rbitbase__39_material"/>
+                <!-- <geom type="mesh" class="collision" pos="0.158844 0.608254 0.159" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__39" material="rbitbase__39_material"/> -->
+                <!-- Part rbitbase_41 -->
+                <geom type="mesh" class="visual" pos="0.158108 0.607589 0.15958" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__40" material="rbitbase__40_material"/>
+                <!-- <geom type="mesh" class="collision" pos="0.158108 0.607589 0.15958" quat="0.5 -0.5 -0.5 -0.5" mesh="rbitbase__40" material="rbitbase__40_material"/> -->
+                <geom class="collision" name="right_foot_collision" type="cylinder" size="0.025 0.095" pos="-0.03 -0.04 0.0" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/>
+                <site name="right_foot_site" pos="-0.03 -0.04 0.0" size="0.025 0.095" type="cylinder" euler="0 1.5708 0" rgba="0 1 0 0"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <!-- Link right_upper_hand -->
+      <body name="right_upper_hand" pos="0.0939896 -0.3845 0.991378" quat="0.544 0.456594 -0.452435 0.53934">
+        <!-- Joint from torso to right_upper_hand -->
+        <joint axis="0 0 1" name="RightShoulderPitch" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="-0.138854 0.000160188 -0.0189243" mass="0.736715" fullinertia="0.000494111 0.00346767 0.00372556 -2.45881e-05 -0.000176534 -3.25737e-07"/>
+        <!-- Part rbitbase_42 -->
+        <geom type="mesh" class="visual" pos="-0.309902 0.195167 -0.283272" quat="0.766044 0 0.642788 -0" mesh="rbitbase__41" material="rbitbase__41_material"/>
+        <geom type="mesh" class="collision" pos="-0.309902 0.195167 -0.283272" quat="0.766044 0 0.642788 -0" mesh="rbitbase__41" material="rbitbase__41_material"/>
+        <!-- Part rbitbase_43 -->
+        <geom type="mesh" class="visual" pos="-0.309752 0.195101 -0.284874" quat="0.766044 0 0.642788 -0" mesh="rbitbase__42" material="rbitbase__42_material"/>
+        <geom type="mesh" class="collision" pos="-0.309752 0.195101 -0.284874" quat="0.766044 0 0.642788 -0" mesh="rbitbase__42" material="rbitbase__42_material"/>
+        <!-- Link right_lower_hand -->
+        <body name="right_lower_hand" pos="-0.18 0 -0.039" quat="1 -0 -0 0">
+          <!-- Joint from right_upper_hand to right_lower_hand -->
+          <joint axis="0 0 1" name="RightElbow" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="-0.158063 0.000829207 -0.00371414" mass="0.130241" fullinertia="4.16843e-05 0.00109853 0.00113122 5.46174e-06 3.02852e-05 -1.57146e-07"/>
+          <!-- Part rbitbase_44 -->
+          <geom type="mesh" class="visual" pos="-0.130649 0.210929 -0.228716" quat="0.76238 0.0227585 0.646447 0.0190966" mesh="rbitbase__43" material="rbitbase__43_material"/>
+          <geom type="mesh" class="collision" pos="-0.130649 0.210929 -0.228716" quat="0.76238 0.0227585 0.646447 0.0190966" mesh="rbitbase__43" material="rbitbase__43_material"/>
+          <!-- Part rbitbase_45 -->
+          <geom type="mesh" class="visual" pos="-0.128024 0.197264 -0.243694" quat="0.766042 0.00167074 0.642785 -0.00199111" mesh="rbitbase__44" material="rbitbase__44_material"/>
+          <geom type="mesh" class="collision" pos="-0.128024 0.197264 -0.243694" quat="0.766042 0.00167074 0.642785 -0.00199111" mesh="rbitbase__44" material="rbitbase__44_material"/>
+        </body>
+      </body>
+      <!-- Link left_upper_hand -->
+      <body name="left_upper_hand" pos="0.0938661 0.0633281 0.990917" quat="0.544 -0.456594 0.452435 0.53934">
+        <!-- Joint from torso to left_upper_hand -->
+        <joint axis="0 0 -1" name="LeftShoulderPitch" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="0.138978 0.000115061 -0.0189243" mass="0.736715" fullinertia="0.000495137 0.00347416 0.00373308 -3.55102e-05 0.000174484 4.20564e-07"/>
+        <!-- Part rbitbase_46 -->
+        <geom type="mesh" class="visual" pos="0.315227 0.19516 -0.282747" quat="0.766044 0 -0.642788 0" mesh="rbitbase__45" material="rbitbase__45_material"/>
+        <geom type="mesh" class="collision" pos="0.315227 0.19516 -0.282747" quat="0.766044 0 -0.642788 0" mesh="rbitbase__45" material="rbitbase__45_material"/>
+        <!-- Part rbitbase_47 -->
+        <geom type="mesh" class="visual" pos="0.314913 0.195849 -0.282746" quat="0.766044 0 -0.642788 0" mesh="rbitbase__46" material="rbitbase__46_material"/>
+        <geom type="mesh" class="collision" pos="0.314913 0.195849 -0.282746" quat="0.766044 0 -0.642788 0" mesh="rbitbase__46" material="rbitbase__46_material"/>
+        <!-- Link left_lower_hand -->
+        <body name="left_lower_hand" pos="0.18 0 -0.039" quat="1 0 -0 0">
+          <!-- Joint from left_upper_hand to left_lower_hand -->
+          <joint axis="0 0 -1" name="LeftElbow" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="0.158065 -7.52222e-06 -0.00371414" mass="0.130241" fullinertia="4.16561e-05 0.00109856 0.00113122 -3.2394e-08 -3.02856e-05 -2.91e-10"/>
+          <!-- Part rbitbase_48 -->
+          <geom type="mesh" class="visual" pos="0.136267 0.194565 -0.24111" quat="0.766044 0 -0.642788 0" mesh="rbitbase__47" material="rbitbase__47_material"/>
+          <geom type="mesh" class="collision" pos="0.136267 0.194565 -0.24111" quat="0.766044 0 -0.642788 0" mesh="rbitbase__47" material="rbitbase__47_material"/>
+          <!-- Part rbitbase_49 -->
+          <geom type="mesh" class="visual" pos="0.137999 0.195052 -0.237894" quat="0.766044 0 -0.642788 0" mesh="rbitbase__48" material="rbitbase__48_material"/>
+          <geom type="mesh" class="collision" pos="0.137999 0.195052 -0.237894" quat="0.766044 0 -0.642788 0" mesh="rbitbase__48" material="rbitbase__48_material"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <asset>
+    <mesh file="rbitbase__16.stl"/>
+    <mesh file="rbitbase__31.stl"/>
+    <mesh file="rbitbase__32.stl"/>
+    <mesh file="rbitbase__10.stl"/>
+    <mesh file="rbitbase__39.stl"/>
+    <mesh file="rbitbase__5.stl"/>
+    <mesh file="rbitbase__30.stl"/>
+    <mesh file="rbitbase__38.stl"/>
+    <mesh file="rbitbase__17.stl"/>
+    <mesh file="rbitbase__22.stl"/>
+    <mesh file="rbitbase__44.stl"/>
+    <mesh file="rbitbase__2.stl"/>
+    <mesh file="rbitbase__3.stl"/>
+    <mesh file="rbitbase__14.stl"/>
+    <mesh file="rbitbase__35.stl"/>
+    <mesh file="rbitbase__33.stl"/>
+    <mesh file="rbitbase__15.stl"/>
+    <mesh file="rbitbase__9.stl"/>
+    <mesh file="head.stl"/>
+    <mesh file="rbitbase__18.stl"/>
+    <mesh file="rbitbase__36.stl"/>
+    <mesh file="rbitbase__41.stl"/>
+    <mesh file="rbitbase__28.stl"/>
+    <mesh file="rbitbase__6.stl"/>
+    <mesh file="rbitbase__11.stl"/>
+    <mesh file="rbitbase__48.stl"/>
+    <mesh file="rbitbase__20.stl"/>
+    <mesh file="rbitbase__13.stl"/>
+    <mesh file="rbitbase__23.stl"/>
+    <mesh file="rbitbase.stl"/>
+    <mesh file="rbitbase__26.stl"/>
+    <mesh file="rbitbase__34.stl"/>
+    <mesh file="rbitbase__37.stl"/>
+    <mesh file="rbitbase__21.stl"/>
+    <mesh file="rbitbase__24.stl"/>
+    <mesh file="rbitbase__42.stl"/>
+    <mesh file="rbitbase__46.stl"/>
+    <mesh file="rbitbase__43.stl"/>
+    <mesh file="rbitbase__12.stl"/>
+    <mesh file="rbitbase__4.stl"/>
+    <mesh file="rbitbase__27.stl"/>
+    <mesh file="rbitbase__45.stl"/>
+    <mesh file="rbitbase__40.stl"/>
+    <mesh file="rbitbase__47.stl"/>
+    <mesh file="rbitbase__8.stl"/>
+    <mesh file="rbitbase__25.stl"/>
+    <mesh file="rbitbase__7.stl"/>
+    <mesh file="rbitbase__19.stl"/>
+    <mesh file="rbitbase__29.stl"/>
+    <material name="rbitbase_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__2_material" rgba="0.0823529 0.615686 0.933333 1"/>
+    <material name="rbitbase__3_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__4_material" rgba="0.0823529 0.615686 0.933333 1"/>
+    <material name="rbitbase__5_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__6_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__7_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__8_material" rgba="0.713725 0.760784 0.8 1"/>
+    <material name="rbitbase__9_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__10_material" rgba="0.713725 0.760784 0.8 1"/>
+    <material name="rbitbase__11_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__12_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__13_material" rgba="0.713725 0.760784 0.8 1"/>
+    <material name="rbitbase__14_material" rgba="0.713725 0.760784 0.8 1"/>
+    <material name="rbitbase__15_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__16_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__17_material" rgba="0.713725 0.760784 0.8 1"/>
+    <material name="rbitbase__18_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__19_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="head_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__20_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__21_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__22_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__23_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__24_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__25_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__26_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__27_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__28_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__29_material" rgba="0.0823529 0.615686 0.933333 1"/>
+    <material name="rbitbase__30_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__31_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__32_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__33_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__34_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__35_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__36_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__37_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__38_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__39_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__40_material" rgba="0.0823529 0.615686 0.933333 1"/>
+    <material name="rbitbase__41_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__42_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__43_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__44_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__45_material" rgba="0.109804 0.101961 0.101961 1"/>
+    <material name="rbitbase__46_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="rbitbase__47_material" rgba="0.0823529 0.615686 0.933333 1"/>
+    <material name="rbitbase__48_material" rgba="0.109804 0.101961 0.101961 1"/>
+  </asset>
+
+  <contact>    
+    <!-- Torso with everything else -->
+    <exclude body1="torso" body2="left_hip"/>
+    <exclude body1="torso" body2="left_hip_bottom"/>
+    <exclude body1="torso" body2="left_thigh"/>
+    <exclude body1="torso" body2="left_shank"/>
+    <exclude body1="torso" body2="right_hip"/>
+    <exclude body1="torso" body2="right_hip_bottom"/>
+    <exclude body1="torso" body2="right_thigh"/>
+    <exclude body1="torso" body2="right_shank"/>
+    <!-- Left leg internal -->
+    <exclude body1="left_hip" body2="left_hip_bottom"/>
+    <exclude body1="left_hip" body2="left_thigh"/>
+    <exclude body1="left_hip" body2="left_shank"/>
+    <exclude body1="left_hip_bottom" body2="left_thigh"/>
+    <exclude body1="left_hip_bottom" body2="left_shank"/>
+    <exclude body1="left_thigh" body2="left_shank"/>
+    <exclude body1="left_shank" body2="left_foot"/>
+    
+    <!-- Right leg internal -->
+    <exclude body1="right_hip" body2="right_hip_bottom"/>
+    <exclude body1="right_hip" body2="right_thigh"/>
+    <exclude body1="right_hip" body2="right_shank"/>
+    <exclude body1="right_hip" body2="right_foot"/>
+    <exclude body1="right_hip_bottom" body2="right_thigh"/>
+    <exclude body1="right_hip_bottom" body2="right_shank"/>
+    <exclude body1="right_hip_bottom" body2="right_foot"/>
+    <exclude body1="right_thigh" body2="right_shank"/>
+    <exclude body1="right_thigh" body2="right_foot"/>
+    <exclude body1="right_shank" body2="right_foot"/>
+    
+    <!-- Left and right legs -->
+    <exclude body1="left_hip" body2="right_hip"/>
+    <exclude body1="left_hip" body2="right_hip_bottom"/>
+    <exclude body1="left_hip" body2="right_thigh"/>
+    <exclude body1="left_hip" body2="right_shank"/>
+    <exclude body1="left_hip" body2="right_foot"/>
+    <exclude body1="left_hip_bottom" body2="right_hip"/>
+    <exclude body1="left_hip_bottom" body2="right_hip_bottom"/>
+    <exclude body1="left_hip_bottom" body2="right_thigh"/>
+    <exclude body1="left_hip_bottom" body2="right_shank"/>
+    <exclude body1="left_hip_bottom" body2="right_foot"/>
+    <exclude body1="left_thigh" body2="right_hip"/>
+    <exclude body1="left_thigh" body2="right_hip_bottom"/>
+    <exclude body1="left_thigh" body2="right_thigh"/>
+    <exclude body1="left_thigh" body2="right_shank"/>
+    <exclude body1="left_thigh" body2="right_foot"/>
+    <exclude body1="left_shank" body2="right_hip"/>
+    <exclude body1="left_shank" body2="right_hip_bottom"/>
+    <exclude body1="left_shank" body2="right_thigh"/>
+    <exclude body1="left_shank" body2="right_shank"/>
+    <exclude body1="left_shank" body2="right_foot"/>
+    <exclude body1="left_foot" body2="right_hip"/>
+    <exclude body1="left_foot" body2="right_hip_bottom"/>
+    <exclude body1="left_foot" body2="right_thigh"/>
+    <exclude body1="left_foot" body2="right_shank"/>
+    <exclude body1="left_foot" body2="right_foot"/>
+    
+    <!-- Right arm internal -->
+    <exclude body1="right_upper_hand" body2="right_lower_hand"/>
+    
+    <!-- Left arm internal -->
+    <exclude body1="left_upper_hand" body2="left_lower_hand"/>
+    
+    <!-- Right arm with left arm -->
+    <exclude body1="right_upper_hand" body2="left_upper_hand"/>
+    <exclude body1="right_upper_hand" body2="left_lower_hand"/>
+    <exclude body1="right_lower_hand" body2="left_upper_hand"/>
+    <exclude body1="right_lower_hand" body2="left_lower_hand"/>
+    
+    <!-- Right arm with both legs -->
+    <exclude body1="right_upper_hand" body2="left_hip"/>
+    <exclude body1="right_upper_hand" body2="left_hip_bottom"/>
+    <exclude body1="right_upper_hand" body2="left_thigh"/>
+    <exclude body1="right_upper_hand" body2="left_shank"/>
+    <exclude body1="right_upper_hand" body2="left_foot"/>
+    <exclude body1="right_upper_hand" body2="right_hip"/>
+    <exclude body1="right_upper_hand" body2="right_hip_bottom"/>
+    <exclude body1="right_upper_hand" body2="right_thigh"/>
+    <exclude body1="right_upper_hand" body2="right_shank"/>
+    <exclude body1="right_upper_hand" body2="right_foot"/>
+    <exclude body1="right_lower_hand" body2="left_hip"/>
+    <exclude body1="right_lower_hand" body2="left_hip_bottom"/>
+    <exclude body1="right_lower_hand" body2="left_thigh"/>
+    <exclude body1="right_lower_hand" body2="left_shank"/>
+    <exclude body1="right_lower_hand" body2="left_foot"/>
+    <exclude body1="right_lower_hand" body2="right_hip"/>
+    <exclude body1="right_lower_hand" body2="right_hip_bottom"/>
+    <exclude body1="right_lower_hand" body2="right_thigh"/>
+    <exclude body1="right_lower_hand" body2="right_shank"/>
+    <exclude body1="right_lower_hand" body2="right_foot"/>
+    
+    <!-- Left arm with both legs -->
+    <exclude body1="left_upper_hand" body2="left_hip"/>
+    <exclude body1="left_upper_hand" body2="left_hip_bottom"/>
+    <exclude body1="left_upper_hand" body2="left_thigh"/>
+    <exclude body1="left_upper_hand" body2="left_shank"/>
+    <exclude body1="left_upper_hand" body2="left_foot"/>
+    <exclude body1="left_upper_hand" body2="right_hip"/>
+    <exclude body1="left_upper_hand" body2="right_hip_bottom"/>
+    <exclude body1="left_upper_hand" body2="right_thigh"/>
+    <exclude body1="left_upper_hand" body2="right_shank"/>
+    <exclude body1="left_upper_hand" body2="right_foot"/>
+    <exclude body1="left_lower_hand" body2="left_hip"/>
+    <exclude body1="left_lower_hand" body2="left_hip_bottom"/>
+    <exclude body1="left_lower_hand" body2="left_thigh"/>
+    <exclude body1="left_lower_hand" body2="left_shank"/>
+    <exclude body1="left_lower_hand" body2="left_foot"/>
+    <exclude body1="left_lower_hand" body2="right_hip"/>
+    <exclude body1="left_lower_hand" body2="right_hip_bottom"/>
+    <exclude body1="left_lower_hand" body2="right_thigh"/>
+    <exclude body1="left_lower_hand" body2="right_shank"/>
+    <exclude body1="left_lower_hand" body2="right_foot"/>
+    <exclude body1="left_hip" body2="left_foot"/>
+    <exclude body1="left_hip_bottom" body2="left_foot"/>
+    <exclude body1="left_thigh" body2="left_foot"/>
+    <exclude body1="torso" body2="left_foot"/>
+    <exclude body1="torso" body2="right_foot"/>
+  </contact>
+
+  <sensor>
+    <touch name="sensor_l_foot" site="left_foot_site"/>
+    <touch name="sensor_r_foot" site="right_foot_site"/>
+  </sensor>
+
+  <equality/>
+</mujoco>
