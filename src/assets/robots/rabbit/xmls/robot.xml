@@ -3,6 +3,7 @@
 <!-- Onshape document_id: ed03cf36064484f045f11029 / workspace_id: 3c0f314be41cfc1e0a6a4e37 -->
 <mujoco model="rabbit_humanoid">
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <option timestep="0.002" solver="Newton" integrator="implicitfast"/>
   <default>
     <default class="rabbit_humanoid">
       <joint frictionloss="0.1" armature="0.005"/>

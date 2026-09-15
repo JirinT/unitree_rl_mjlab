@@ -66,7 +66,7 @@ RABBIT_ACTUATOR_ARM = BuiltinPositionActuatorCfg(
 ##
 
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
-  pos=(0., 0., 0.9),
+  pos=(0., 0., 0.05),
   joint_pos={
     ".*HipPitch": 0.0,
     ".*Knee": 0.0,
