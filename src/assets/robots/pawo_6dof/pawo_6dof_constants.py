@@ -36,13 +36,6 @@ def get_spec() -> mujoco.MjSpec:
 # Actuator config.
 ##
 
-# All 6 joints use the same servo: Hitec D845WP. Hip is pitch-only here --
-# the hip yaw/roll joints (and their servos) from pawo_10dof were removed,
-# see xmls/robot.xml.
-# NOTE: effort_limit is 10 Nm here, not the real D845WP's ~4.9 Nm -- this is
-# a placeholder for a stronger motor we're evaluating in sim, not the real
-# hardware. Don't treat a policy trained with this as valid for the current
-# real robot.
 PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
   target_names_expr=(
     ".*_hip_pitch.*",
@@ -60,10 +53,6 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
 # Keyframe config.
 ##
 
-# Placeholders -- verify visually with the fixed-base, zero-gravity viewer
-# trick below before trusting these for training. Standing height in
-# particular is a guess; PAWO's torso body has no fixed relationship to
-# ground clearance until the legs are posed.
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
   pos=(0, 0, 0.02),
   joint_pos={
@@ -115,7 +104,7 @@ def get_pawo_6dof_robot_cfg() -> EntityCfg:
   )
 
 
-PAWO_6DOF_ACTION_RANGE_RAD = 1  # 57 deg per joint; retune once a gait emerges.
+PAWO_6DOF_ACTION_RANGE_RAD = 1.0  # 57 deg per joint; retune once a gait emerges.
 PAWO_6DOF_ACTION_SCALE: dict[str, float] = {}
 for a in PAWO_6DOF_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
