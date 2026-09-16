@@ -115,12 +115,7 @@ def get_pawo_6dof_robot_cfg() -> EntityCfg:
   )
 
 
-# NOTE: deliberately NOT derived as 0.25 * effort_limit / stiffness (the
-# convention used by the other robots in this repo). `stiffness` needs to
-# stay high (50.0) so the joint can hold a standing pose against gravity, so
-# the action range is set directly here instead, decoupled from holding
-# stiffness. See the same note in pawo_10dof_constants.py.
-PAWO_6DOF_ACTION_RANGE_RAD = 0.4  # ~23 deg per joint; retune once a gait emerges.
+PAWO_6DOF_ACTION_RANGE_RAD = 1  # 57 deg per joint; retune once a gait emerges.
 PAWO_6DOF_ACTION_SCALE: dict[str, float] = {}
 for a in PAWO_6DOF_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
