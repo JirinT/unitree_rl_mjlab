@@ -46,7 +46,7 @@ RABBIT_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
   ),
   stiffness=20.0,
   damping=1.28,
-  effort_limit=30.0,
+  effort_limit=10.0,
   armature=0.005,
 )
 RABBIT_ACTUATOR_ARM = BuiltinPositionActuatorCfg(
