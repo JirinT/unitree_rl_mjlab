@@ -11,6 +11,8 @@ from mjlab.managers.event_manager import EventTermCfg
 from mjlab.sensor import ContactMatch, ContactSensorCfg, RayCastSensorCfg
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from src.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
+from mjlab.managers.termination_manager import TerminationTermCfg
+from mjlab.tasks.velocity import mdp
 
 
 def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
@@ -86,6 +88,11 @@ def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["body_ang_vel"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["foot_clearance"].params["asset_cfg"].site_names = site_names
   cfg.rewards["foot_slip"].params["asset_cfg"].site_names = site_names
+
+  cfg.terminations["torso_too_low"] = TerminationTermCfg(
+    func=mdp.root_height_below_minimum,
+    params={"minimum_height": -0.054},
+  )
 
   if play:
     cfg.episode_length_s = int(1e9)
