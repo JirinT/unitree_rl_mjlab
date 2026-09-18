@@ -14,6 +14,7 @@ from src.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
 from mjlab.managers.termination_manager import TerminationTermCfg
 from mjlab.tasks.velocity import mdp
 
+GAIT_PERIOD = 0.4
 
 def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   """Create PAWO 6-DOF rough terrain velocity configuration."""
@@ -50,6 +51,7 @@ def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   )
 
   cfg.scene.sensors = (cfg.scene.sensors or ()) + (feet_ground_cfg,)
+  cfg.observations["actor"].terms["phase"].params["period"] = GAIT_PERIOD
 
   if cfg.scene.terrain is not None and cfg.scene.terrain.terrain_generator is not None:
     cfg.scene.terrain.terrain_generator.curriculum = True
@@ -88,6 +90,11 @@ def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["body_ang_vel"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["foot_clearance"].params["asset_cfg"].site_names = site_names
   cfg.rewards["foot_slip"].params["asset_cfg"].site_names = site_names
+  cfg.rewards["foot_gait"].params["period"] = GAIT_PERIOD
+
+  cfg.commands["twist"].ranges.lin_vel_x=(-1.0, 2.5)
+  cfg.commands["twist"].ranges.lin_vel_y=(-.05, .05)
+  cfg.commands["twist"].ranges.ang_vel_z=(-.05, .05)
 
   cfg.terminations["torso_too_low"] = TerminationTermCfg(
     func=mdp.root_height_below_minimum,
@@ -139,8 +146,5 @@ def pawo_6dof_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    twist_cmd.ranges.lin_vel_x = (-0.2, .5)
-    twist_cmd.ranges.lin_vel_y = (-0.2, 0.2)
-    twist_cmd.ranges.ang_vel_z = (-0.1, 0.1)
 
   return cfg
