@@ -91,7 +91,7 @@ def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.terminations["torso_too_low"] = TerminationTermCfg(
     func=mdp.root_height_below_minimum,
-    params={"minimum_height": -0.045},
+    params={"minimum_height": -0.03},
   )
 
   if play:
