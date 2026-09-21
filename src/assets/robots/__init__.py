@@ -38,6 +38,13 @@ from .unitree_h1_2.h1_2_constants import (
   get_h1_2_robot_cfg as get_h1_2_robot_cfg,
 )
 
+from .unitree_h1_2_tray.h1_2_tray_constants import (
+  get_h1_2_tray_robot_cfg as get_h1_2_tray_robot_cfg,
+)
+from .unitree_h1_2_tray.h1_2_tray_constants import (
+  H1_2_TRAY_ACTION_SCALE as H1_2_TRAY_ACTION_SCALE,
+)
+
 from .unitree_h2.h2_constants import (
   H2_ACTION_SCALE as H2_ACTION_SCALE,
 )
