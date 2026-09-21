@@ -32,9 +32,11 @@ from mjlab.viewer import ViewerConfig
 
 import src.tasks.velocity.mdp as mdp
 
+TRAY_ENTITY = "tray"
+
 
 def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
-  """Create base velocity tracking task configuration."""
+  """Create base loco-manipulation (velocity + tray leveling) task configuration."""
 
   ##
   # Sensors
@@ -118,6 +120,10 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.foot_contact_forces,
       params={"sensor_name": "feet_ground_contact"},
     ),
+    "tray_projected_gravity": ObservationTermCfg(
+      func=mdp.projected_gravity,
+      params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY)},
+    ),
   }
 
   observations = {
@@ -166,14 +172,15 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
     "twist": UniformVelocityCommandCfg(
       entity_name="robot",
       resampling_time_range=(3.0, 8.0),
-      rel_standing_envs=0.05,
+      rel_standing_envs=0.05,  # Fraction of envs commanded to stand still. Bump if you
+                               # want more standing practice (e.g. 0.1-0.2). PLACEHOLDER.
       heading_command=True,
       heading_control_stiffness=0.5,
       debug_vis=True,
       ranges=UniformVelocityCommandCfg.Ranges(
-        lin_vel_x=(-1.0, 2.0),
-        lin_vel_y=(-1.0, 1.0),
-        ang_vel_z=(-1.0, 1.0),
+        lin_vel_x=(-0.5, 1.0),
+        lin_vel_y=(-0.3, 0.3),
+        ang_vel_z=(-0.5, 0.5),
         heading=(-math.pi, math.pi),
       ),
     )
@@ -297,6 +304,18 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       weight=-0.025,  # Override per-robot
       params={"sensor_name": "robot/root_angmom"},
     ),
+    "tray_level": RewardTermCfg(
+      func=mdp.body_orientation_l2,
+      weight=-2.0,  # PLACEHOLDER main new objective - tune, try -2 .. -5.
+      params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY)},
+    ),
+    # OPTIONAL: damp tray wobble. Verify body_angular_velocity_penalty accepts a tray
+    # body_names before enabling.
+    # "tray_ang_vel": RewardTermCfg(
+    #   func=mdp.body_angular_velocity_penalty,
+    #   weight=-0.05,  # PLACEHOLDER
+    #   params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray")},
+    # ),
     "is_terminated": RewardTermCfg(func=mdp.is_terminated, weight=-200.0),
     "joint_acc_l2": RewardTermCfg(func=mdp.joint_acc_l2, weight=-2.5e-7),
     "joint_pos_limits": RewardTermCfg(func=mdp.joint_pos_limits, weight=-10.0),
@@ -363,6 +382,13 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.bad_orientation,
       params={"limit_angle": math.radians(70.0)},
     ),
+    "tray_spill": TerminationTermCfg(
+      func=mdp.bad_orientation,
+      params={
+        "limit_angle": math.radians(35.0),
+        "asset_cfg": SceneEntityCfg(TRAY_ENTITY),
+      },
+    ),
   }
 
   ##
@@ -379,8 +405,8 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       params={
         "command_name": "twist",
         "velocity_stages": [
-          {"step": 0, "lin_vel_x": (-0.5, 1.0), "lin_vel_y": (-0.5, 0.5), "ang_vel_z": (-1.0, 1.0)},
-          {"step": 5000 * 24, "lin_vel_x": (-1.0, 2.0), "lin_vel_y": (-1.0, 1.0)},
+          {"step": 0, "lin_vel_x": (-0.3, 0.5), "lin_vel_y": (-0.2, 0.2), "ang_vel_z": (-0.5, 0.5)},
+          {"step": 5000 * 24, "lin_vel_x": (-0.5, 1.0), "lin_vel_y": (-0.3, 0.3)},
         ],
       },
     ),

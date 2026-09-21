@@ -1,6 +1,6 @@
-"""Unitree H1_2 velocity environment configurations."""
+"""Unitree H1_2 tray loco-manipulation environment configurations."""
 
-from src.assets.robots.unitree_h1_2_tray.h1_2_constants import (
+from src.assets.robots.unitree_h1_2_tray.h1_2_tray_constants import (
   H1_2_ACTION_SCALE, get_h1_2_robot_cfg, get_tray_cfg,
 )
 
@@ -15,7 +15,11 @@ from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from src.tasks.loco_manipulation.loco_manipulation_env_cfg import make_locomanipulation_env_cfg
 import mujoco
 
+
 def weld_tray_to_hands(spec):
+  """
+  Weld the trays two grip sites to the palm sites.
+  """
   for palm_site, tray_site in (
       ("robot/left_palm", "tray/tray_grip_L"),
       ("robot/right_palm", "tray/tray_grip_R"),
@@ -29,7 +33,7 @@ def weld_tray_to_hands(spec):
     eq.solimp = [0.9, 0.95, 0.001, 0.5, 2]
 
 def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
-  """Create Unitree H1_2 rough terrain velocity configuration."""
+  """Create Unitree H1_2 rough-terrain tray loco-manipulation configuration."""
   cfg = make_locomanipulation_env_cfg()
 
   cfg.sim.mujoco.ccd_iterations = 500
@@ -105,10 +109,25 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   # - Hip roll/yaw stay tighter to prevent excessive lateral sway and keep gait stable.
   # - Ankle roll is very tight for balance; ankle pitch looser for foot clearance.
   # - Waist roll/pitch stay tight to keep the torso upright and stable.
-  # - Shoulders/elbows get moderate freedom for natural arm swing during walking.
-  # - Wrists are loose (0.3) since they don't affect balance much.
-  # Running values are ~1.5-2x walking values to accommodate larger motion range.
-  cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
+  # - Arms: default pose is 0 (holds the welded tray level). Legs/torso keep the exact
+  #   velocity-task tolerance so the standing posture matches the velocity task. Arms
+  #   get a MODERATE (not tight) std: they must be free to make corrective motions to
+  #   re-level the tray under pushes, so we don't clamp them like the legs. The
+  #   tray_level reward is what actually governs the arms. PLACEHOLDER arm values - tune.
+  cfg.rewards["pose"].params["std_standing"] = {
+    # Lower body + waist (same as velocity task).
+    r".*hip_yaw.*": 0.05,
+    r".*hip_pitch.*": 0.05,
+    r".*hip_roll.*": 0.05,
+    r".*knee.*": 0.05,
+    r".*ankle_pitch.*": 0.05,
+    r".*ankle_roll.*": 0.05,
+    r".*torso.*": 0.05,
+    # Arms (loosened so they can hold + re-level the tray). PLACEHOLDER.
+    r".*shoulder.*": 0.3,
+    r".*elbow.*": 0.3,
+    r".*wrist.*": 0.3,
+  }
   cfg.rewards["pose"].params["std_walking"] = {
     # Lower body.
     r".*hip_yaw.*": 0.15,
@@ -119,7 +138,9 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     r".*ankle_roll.*": 0.1,
     # Waist.
     r".*torso.*": 0.15,
-    # Arms.
+    # Arms. NOTE: these are tighter (0.1) than std_standing's arm values - during
+    # walking the arms will be pulled toward 0 harder, which may fight tray leveling
+    # while moving. Consider loosening to ~0.3 if the tray tips during locomotion.
     r".*shoulder_pitch.*": 0.15,
     r".*shoulder_roll.*": 0.1,
     r".*shoulder_yaw.*": 0.1,
@@ -178,8 +199,9 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   return cfg
 
 
-def unitree_h1_2_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
-  """Create Unitree H1_2 flat terrain velocity configuration."""
+def unitree_h1_2_tray_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
+  """Create Unitree H1_2 flat-terrain tray loco-manipulation configuration.
+  """
   cfg = unitree_h1_2_tray_rough_env_cfg(play=play)
 
   cfg.sim.njmax = 300

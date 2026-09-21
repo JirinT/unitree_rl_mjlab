@@ -37,7 +37,7 @@
            dynamics than the exact thickness does. -->
       <geom name="tray_geom" class="tray"
             size="0.25 0.075 0.002"
-            mass="0.3"/>
+            mass="0.5"/>
 
       <!-- Grip sites, 40 cm apart (±0.20 m), centered on the tray,
            on the underside where the palms contact it (z = -0.002,
@@ -47,8 +47,8 @@
            the matching palm site's frame convention before you
            rely on a nonzero torquescale in the weld — mismatched
            frames fight the constraint from the first timestep. -->
-      <site name="tray_grip_L" pos="-0.2 0 -0.002" size="0.005" rgba="0 1 0 1"/>
-      <site name="tray_grip_R" pos="0.2 0 -0.002" size="0.005" rgba="1 0 0 1"/>
+      <site name="tray_grip_L" pos="-0.20 0.05 -0.002" size="0.005" rgba="0 1 0 1"/>
+      <site name="tray_grip_R" pos="0.20 0.05 -0.002" size="0.005" rgba="1 0 0 1"/>
     </body>
   </worldbody>
 </mujoco>
