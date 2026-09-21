@@ -156,7 +156,7 @@ H1_2_ARTICULATION = EntityArticulationInfoCfg(
 )
 
 
-def get_h1_2_robot_cfg() -> EntityCfg:
+def get_h1_2_tray_robot_cfg() -> EntityCfg:
   """Get a fresh H1_2 robot configuration instance.
 
   Returns a new EntityCfg instance each time to avoid mutation issues when
@@ -181,22 +181,22 @@ def get_tray_cfg() -> EntityCfg:
     spec_fn=get_tray_spec,
   )
 
-H1_2_ACTION_SCALE: dict[str, float] = {}
-for a in H1_2_ARTICULATION.actuators:
+H1_2_TRAY_ACTION_SCALE: dict[str, float] = {}
+for a in H1_2_TRAY_ACTION_SCALE.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
   e = a.effort_limit
   s = a.stiffness
   names = a.target_names_expr
   assert e is not None
   for n in names:
-    H1_2_ACTION_SCALE[n] = 0.25 * e / s
+    H1_2_TRAY_ACTION_SCALE[n] = 0.25 * e / s
 
 
 if __name__ == "__main__":
   import mujoco.viewer as viewer
   from mjlab.entity.entity import Entity
 
-  robot = Entity(get_h1_2_robot_cfg())
+  robot = Entity(get_h1_2_tray_robot_cfg())
   spec = robot.spec
 
   # Freeze every robot joint (base included) at its zero/nominal
