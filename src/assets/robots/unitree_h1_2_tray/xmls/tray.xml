@@ -1,0 +1,54 @@
+<mujoco model="tray">
+  <compiler angle="radian"/>
+
+  <default>
+    <default class="tray">
+      <geom type="box" rgba="0.75 0.55 0.25 1" contype="1" conaffinity="1"/>
+    </default>
+  </default>
+
+  <!-- ============================================================
+       STANDALONE TEST SCENE
+       Floor + light only exist so you can drop this file straight
+       into `simulate` and eyeball the geometry/site placement.
+       Delete this part when you merge the tray into the main
+       H1_2 task scene.
+       ============================================================ -->
+  <worldbody>
+    <light pos="0 0 3" dir="0 0 -1" diffuse="1 1 1"/>
+    <geom name="floor" type="plane" size="1 1 0.1" rgba="0.85 0.85 0.85 1"/>
+
+    <!-- ==========================================================
+         REUSABLE TRAY BODY
+         Copy this <body>...</body> block (including its two
+         <site> children) into the main scene. Keep the freejoint
+         when merging: the weld constraints you add there (one per
+         hand, using site1/site2) take over control of its pose —
+         they don't need the body to be static first.
+         ========================================================== -->
+    <body name="tray" pos="0 0 1.0">
+      <freejoint name="tray_free"/>
+
+      <!-- 50 x 15 cm x 4 mm diner-tray slab. size = HALF-extents
+           in MuJoCo, so full 0.50 x 0.15 x 0.004 m -> size
+           0.25 0.075 0.002. Mass (0.3 kg) is still a placeholder —
+           replace with the real tray's mass once you've weighed
+           or estimated it; this matters more for training
+           dynamics than the exact thickness does. -->
+      <geom name="tray_geom" class="tray"
+            size="0.25 0.075 0.002"
+            mass="0.3"/>
+
+      <!-- Grip sites, 40 cm apart (±0.20 m), centered on the tray,
+           on the underside where the palms contact it (z = -0.002,
+           i.e. the bottom face). Long axis of the tray = local x.
+           Rename L/R once you've fixed which hand is which in
+           your scene, and check each site's orientation against
+           the matching palm site's frame convention before you
+           rely on a nonzero torquescale in the weld — mismatched
+           frames fight the constraint from the first timestep. -->
+      <site name="tray_grip_L" pos="-0.2 0 -0.002" size="0.005" rgba="0 1 0 1"/>
+      <site name="tray_grip_R" pos="0.2 0 -0.002" size="0.005" rgba="1 0 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>
