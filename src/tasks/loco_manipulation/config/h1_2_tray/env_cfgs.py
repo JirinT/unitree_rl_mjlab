@@ -1,7 +1,7 @@
 """Unitree H1_2 tray loco-manipulation environment configurations."""
 
 from src.assets.robots.unitree_h1_2_tray.h1_2_tray_constants import (
-  H1_2_ACTION_SCALE, get_h1_2_robot_cfg, get_tray_cfg,
+  H1_2_TRAY_ACTION_SCALE, get_h1_2_tray_robot_cfg, get_tray_cfg,
 )
 
 from mjlab.envs import ManagerBasedRlEnvCfg
@@ -15,6 +15,45 @@ from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from src.tasks.loco_manipulation.loco_manipulation_env_cfg import make_locomanipulation_env_cfg
 import mujoco
 
+import torch
+import math
+from mjlab.managers.scene_entity_config import SceneEntityCfg
+from mjlab.utils.lab_api.math import quat_mul, quat_from_euler_xyz
+
+
+
+def reset_tray_to_hands(env, env_ids,
+                        robot_cfg=SceneEntityCfg("robot"),
+                        tray_cfg=SceneEntityCfg("tray"),
+                        left_site="left_palm", right_site="right_palm"):
+  if env_ids is None:
+    env_ids = torch.arange(env.num_envs, device=env.device, dtype=torch.int)
+
+  env.scene.write_data_to_sim()
+  env.sim.forward()
+
+  robot = env.scene[robot_cfg.name]
+  tray  = env.scene[tray_cfg.name]
+  lid = robot.find_sites(left_site)[0][0]
+  rid = robot.find_sites(right_site)[0][0]
+
+  pL = robot.data.site_pos_w[env_ids, lid]
+  pR = robot.data.site_pos_w[env_ids, rid]
+  mid = 0.5 * (pL + pR)
+  quat = robot.data.site_quat_w[env_ids, lid]
+
+  # Correct the constant 90deg offset between the palm frame and the tray frame.
+  # Applied on the right -> rotation about the tray's own z (yaw). Flip the sign
+  # of the angle if it turns the wrong way.
+  n = len(env_ids)
+  zero = torch.zeros(n, device=env.device)
+  yaw_fix = quat_from_euler_xyz(zero, zero, zero - math.pi / 2)   # (n, 4)
+  quat = quat_mul(quat, yaw_fix)
+
+  root_state = torch.zeros((n, 13), device=env.device)
+  root_state[:, 0:3] = mid
+  root_state[:, 3:7] = quat
+  tray.write_root_state_to_sim(root_state, env_ids)
 
 def weld_tray_to_hands(spec):
   """
@@ -41,7 +80,7 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.sim.nconmax = 48
 
   cfg.scene.entities = {
-    "robot": get_h1_2_robot_cfg(),
+    "robot": get_h1_2_tray_robot_cfg(),
     "tray": get_tray_cfg(),
   }
   cfg.scene.spec_fn = weld_tray_to_hands
@@ -89,7 +128,7 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   joint_pos_action = cfg.actions["joint_pos"]
   assert isinstance(joint_pos_action, JointPositionActionCfg)
-  joint_pos_action.scale = H1_2_ACTION_SCALE
+  joint_pos_action.scale = H1_2_TRAY_ACTION_SCALE
 
   cfg.viewer.body_name = "torso_link"
 
@@ -103,17 +142,15 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.events["foot_friction"].params["asset_cfg"].geom_names = geom_names
   cfg.events["base_com"].params["asset_cfg"].body_names = ("torso_link",)
-
-  # Rationale for std values:
-  # - Knees/hip_pitch get the loosest std to allow natural leg bending during stride.
-  # - Hip roll/yaw stay tighter to prevent excessive lateral sway and keep gait stable.
-  # - Ankle roll is very tight for balance; ankle pitch looser for foot clearance.
-  # - Waist roll/pitch stay tight to keep the torso upright and stable.
-  # - Arms: default pose is 0 (holds the welded tray level). Legs/torso keep the exact
-  #   velocity-task tolerance so the standing posture matches the velocity task. Arms
-  #   get a MODERATE (not tight) std: they must be free to make corrective motions to
-  #   re-level the tray under pushes, so we don't clamp them like the legs. The
-  #   tray_level reward is what actually governs the arms. PLACEHOLDER arm values - tune.
+  cfg.events["reset_tray_to_hands"] = EventTermCfg(
+    func=reset_tray_to_hands,
+    mode="reset",
+    params={
+        "robot_cfg": SceneEntityCfg("robot"),
+        "tray_cfg": SceneEntityCfg("tray"),
+    },
+)
+  
   cfg.rewards["pose"].params["std_standing"] = {
     # Lower body + waist (same as velocity task).
     r".*hip_yaw.*": 0.05,

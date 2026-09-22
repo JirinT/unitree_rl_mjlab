@@ -39,7 +39,7 @@ def unitree_h1_2_tray_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
       desired_kl=0.01,
       max_grad_norm=1.0,
     ),
-    experiment_name="h1_2_velocity",
+    experiment_name="h1_2_tray_velocity",
     save_interval=100,
     num_steps_per_env=24,
     max_iterations=10001,

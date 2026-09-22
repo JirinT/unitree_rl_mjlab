@@ -182,7 +182,7 @@ def get_tray_cfg() -> EntityCfg:
   )
 
 H1_2_TRAY_ACTION_SCALE: dict[str, float] = {}
-for a in H1_2_TRAY_ACTION_SCALE.actuators:
+for a in H1_2_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
   e = a.effort_limit
   s = a.stiffness
@@ -216,6 +216,9 @@ if __name__ == "__main__":
       quat=[0.7071068, 0, 0, -0.7071068],
   )
   frame.attach_body(tray_body, "", "")
+  for g in spec.body("tray/tray").geoms:
+      g.contype = 0
+      g.conaffinity = 4
 
   for palm_site, tray_site in (
       ("left_palm", "tray_grip_L"),

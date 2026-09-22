@@ -34,7 +34,6 @@ import src.tasks.velocity.mdp as mdp
 
 TRAY_ENTITY = "tray"
 
-
 def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
   """Create base loco-manipulation (velocity + tray leveling) task configuration."""
 
