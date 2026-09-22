@@ -44,7 +44,7 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
   ),
   stiffness=50.0,
   damping=3.2,
-  effort_limit=10.0,
+  effort_limit=5.0,
   armature=6e-4,
 )
 
