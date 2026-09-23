@@ -1,4 +1,5 @@
-"""Unitree H1_2 tray loco-manipulation environment configurations."""
+import math
+import torch
 
 from src.assets.robots.unitree_h1_2_tray.h1_2_tray_constants import (
   H1_2_TRAY_ACTION_SCALE, get_h1_2_tray_robot_cfg, get_tray_cfg,
@@ -6,26 +7,26 @@ from src.assets.robots.unitree_h1_2_tray.h1_2_tray_constants import (
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs import mdp as envs_mdp
+from mjlab.envs.mdp import dr
 from mjlab.envs.mdp.actions import JointPositionActionCfg
 from mjlab.managers.event_manager import EventTermCfg
 from mjlab.managers.reward_manager import RewardTermCfg
+from mjlab.managers.scene_entity_config import SceneEntityCfg
 from mjlab.sensor import ContactMatch, ContactSensorCfg, RayCastSensorCfg
-from mjlab.tasks.velocity import mdp
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
-from src.tasks.loco_manipulation.loco_manipulation_env_cfg import make_locomanipulation_env_cfg
+from mjlab.utils.lab_api.math import quat_from_euler_xyz, quat_mul
 import mujoco
 
-import torch
-import math
-from mjlab.managers.scene_entity_config import SceneEntityCfg
-from mjlab.utils.lab_api.math import quat_mul, quat_from_euler_xyz
-
+import src.tasks.loco_manipulation.mdp as mdp
+from src.tasks.loco_manipulation.loco_manipulation_env_cfg import make_locomanipulation_env_cfg
 
 
 def reset_tray_to_hands(env, env_ids,
                         robot_cfg=SceneEntityCfg("robot"),
                         tray_cfg=SceneEntityCfg("tray"),
                         left_site="left_palm", right_site="right_palm"):
+  """Place the tray exactly at the weld target so the hard weld starts satisfied
+  (no yank). Must run AFTER reset_base and reset_robot_joints."""
   if env_ids is None:
     env_ids = torch.arange(env.num_envs, device=env.device, dtype=torch.int)
 
@@ -33,7 +34,7 @@ def reset_tray_to_hands(env, env_ids,
   env.sim.forward()
 
   robot = env.scene[robot_cfg.name]
-  tray  = env.scene[tray_cfg.name]
+  tray = env.scene[tray_cfg.name]
   lid = robot.find_sites(left_site)[0][0]
   rid = robot.find_sites(right_site)[0][0]
 
@@ -42,12 +43,10 @@ def reset_tray_to_hands(env, env_ids,
   mid = 0.5 * (pL + pR)
   quat = robot.data.site_quat_w[env_ids, lid]
 
-  # Correct the constant 90deg offset between the palm frame and the tray frame.
-  # Applied on the right -> rotation about the tray's own z (yaw). Flip the sign
-  # of the angle if it turns the wrong way.
+  # Constant 90deg palm->tray yaw offset (matches the grip-site geometry).
   n = len(env_ids)
   zero = torch.zeros(n, device=env.device)
-  yaw_fix = quat_from_euler_xyz(zero, zero, zero - math.pi / 2)   # (n, 4)
+  yaw_fix = quat_from_euler_xyz(zero, zero, zero - math.pi / 2)
   quat = quat_mul(quat, yaw_fix)
 
   root_state = torch.zeros((n, 13), device=env.device)
@@ -55,12 +54,11 @@ def reset_tray_to_hands(env, env_ids,
   root_state[:, 3:7] = quat
   tray.write_root_state_to_sim(root_state, env_ids)
 
+
 def weld_tray_to_hands(spec):
-  """
-  Compliant weld of the tray's two grip sites to the palm sites.
-  Soft solref/solimp so the tray gives under acceleration like velcro would,
-  instead of a rigid weld the policy can exploit.
-  """
+  """HARD weld of the tray grip sites to the palm sites (stiff = easy training).
+  The velcro-like behavior comes from the reward penalties, not from softening
+  this weld."""
   for palm_site, tray_site in (
       ("robot/left_palm", "tray/tray_grip_L"),
       ("robot/right_palm", "tray/tray_grip_R"),
@@ -70,23 +68,18 @@ def weld_tray_to_hands(spec):
     eq.objtype = mujoco.mjtObj.mjOBJ_SITE
     eq.name1 = palm_site
     eq.name2 = tray_site
-    # # solref: [timeconst, dampratio] -- 0.1 s is springy (was 0.02), dampratio 1 = no wobble.
-    # eq.solref = [0.02, 1.0]
-    # # solimp: [dmin, dmax, width, mid, power] -- dmax 0.8 lets the weld yield under load.
-    # eq.solimp = [0.9, 0.95, 0.001, 0.5, 2]
+    eq.solref = [0.02, 1.0] # stiff (hard weld)
+    eq.solimp = [0.9, 0.95, 0.001, 0.5, 2]
 
-    # solref: [timeconst, dampratio] -- 0.1 s is springy (was 0.02), dampratio 1 = no wobble.
-    eq.solref = [0.1, 1.0]
-    # solimp: [dmin, dmax, width, mid, power] -- dmax 0.8 lets the weld yield under load.
-    eq.solimp = [0.6, 0.8, 0.005, 0.5, 2]
 
 def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
-  """Create Unitree H1_2 rough-terrain tray loco-manipulation configuration."""
+  """Create Unitree H1_2 rough-terrain FREE-tray configuration."""
   cfg = make_locomanipulation_env_cfg()
 
   cfg.sim.mujoco.ccd_iterations = 500
   cfg.sim.contact_sensor_maxmatch = 500
-  cfg.sim.nconmax = 48
+  # Free tray adds tray<->hand (+ possibly tray<->body) contacts. Give headroom.
+  cfg.sim.nconmax = 64
 
   cfg.scene.entities = {
     "robot": get_h1_2_tray_robot_cfg(),
@@ -94,7 +87,6 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   }
   cfg.scene.spec_fn = weld_tray_to_hands
 
-  # Set raycast sensor frame to H1_2 pelvis.
   for sensor in cfg.scene.sensors or ():
     if sensor.name == "terrain_scan":
       assert isinstance(sensor, RayCastSensorCfg)
@@ -127,10 +119,7 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     num_slots=1,
     history_length=4,
   )
-  cfg.scene.sensors = (cfg.scene.sensors or ()) + (
-    feet_ground_cfg,
-    self_collision_cfg,
-  )
+  cfg.scene.sensors = (cfg.scene.sensors or ()) + (feet_ground_cfg, self_collision_cfg)
 
   if cfg.scene.terrain is not None and cfg.scene.terrain.terrain_generator is not None:
     cfg.scene.terrain.terrain_generator.curriculum = True
@@ -145,70 +134,57 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   assert isinstance(twist_cmd, UniformVelocityCommandCfg)
   twist_cmd.viz.z_offset = 1.55
 
-  cfg.observations["critic"].terms["foot_height"].params[
-    "asset_cfg"
-  ].site_names = site_names
+  cfg.observations["critic"].terms["foot_height"].params["asset_cfg"].site_names = site_names
 
   cfg.events["foot_friction"].params["asset_cfg"].geom_names = geom_names
   cfg.events["base_com"].params["asset_cfg"].body_names = ("torso_link",)
+
+  # Reset the tray to the weld target (runs last -> after base/joint resets).
   cfg.events["reset_tray_to_hands"] = EventTermCfg(
     func=reset_tray_to_hands,
     mode="reset",
     params={
-        "robot_cfg": SceneEntityCfg("robot"),
-        "tray_cfg": SceneEntityCfg("tray"),
+      "robot_cfg": SceneEntityCfg("robot"),
+      "tray_cfg": SceneEntityCfg("tray"),
     },
-)
-  
+  )
+
+  # Posture stds: legs/torso = velocity task; arms loose (they hold the tray).
   cfg.rewards["pose"].params["std_standing"] = {
-    # Lower body + waist (same as velocity task).
-    r".*hip_yaw.*": 0.05,
+    r".*hip_yaw.*": 0.05, 
     r".*hip_pitch.*": 0.05,
     r".*hip_roll.*": 0.05,
     r".*knee.*": 0.05,
     r".*ankle_pitch.*": 0.05,
     r".*ankle_roll.*": 0.05,
     r".*torso.*": 0.05,
-    # Arms (loosened so they can hold + re-level the tray). PLACEHOLDER.
     r".*shoulder.*": 0.3,
     r".*elbow.*": 0.3,
     r".*wrist.*": 0.3,
   }
   cfg.rewards["pose"].params["std_walking"] = {
-    # Lower body.
     r".*hip_yaw.*": 0.15,
     r".*hip_pitch.*": 0.5,
     r".*hip_roll.*": 0.15,
     r".*knee.*": 0.5,
     r".*ankle_pitch.*": 0.15,
     r".*ankle_roll.*": 0.1,
-    # Waist.
     r".*torso.*": 0.15,
-    # Arms. NOTE: these are tighter (0.1) than std_standing's arm values - during
-    # walking the arms will be pulled toward 0 harder, which may fight tray leveling
-    # while moving. Consider loosening to ~0.3 if the tray tips during locomotion.
-    r".*shoulder_pitch.*": 0.15,
-    r".*shoulder_roll.*": 0.1,
-    r".*shoulder_yaw.*": 0.1,
-    r".*elbow.*": 0.1,
-    r".*wrist.*": 0.1,
+    r".*shoulder.*": 0.3,
+    r".*elbow.*": 0.3,
+    r".*wrist.*": 0.3,
   }
   cfg.rewards["pose"].params["std_running"] = {
-    # Lower body.
     r".*hip_yaw.*": 0.25,
     r".*hip_pitch.*": 0.5,
     r".*hip_roll.*": 0.25,
     r".*knee.*": 0.5,
     r".*ankle_pitch.*": 0.25,
     r".*ankle_roll.*": 0.1,
-    # Waist.
     r".*torso.*": 0.25,
-    # Arms.
-    r".*shoulder_pitch.*": 0.25,
-    r".*shoulder_roll.*": 0.1,
-    r".*shoulder_yaw.*": 0.1,
-    r".*elbow.*": 0.1,
-    r".*wrist.*": 0.1,
+    r".*shoulder.*": 0.3,
+    r".*elbow.*": 0.3,
+    r".*wrist.*": 0.3,
   }
 
   cfg.rewards["body_orientation_l2"].params["asset_cfg"].body_names = ("torso_link",)
@@ -221,63 +197,48 @@ def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     params={"sensor_name": self_collision_cfg.name, "force_threshold": 10.0},
   )
 
-  # Apply play mode overrides.
   if play:
-    # Effectively infinite episode length.
     cfg.episode_length_s = int(1e9)
-
     cfg.observations["actor"].enable_corruption = False
     cfg.events.pop("push_robot", None)
     cfg.curriculum = {}
     cfg.events["randomize_terrain"] = EventTermCfg(
-      func=envs_mdp.randomize_terrain,
-      mode="reset",
-      params={},
+      func=envs_mdp.randomize_terrain, mode="reset", params={},
     )
-
-    if cfg.scene.terrain is not None:
-      if cfg.scene.terrain.terrain_generator is not None:
-        cfg.scene.terrain.terrain_generator.curriculum = False
-        cfg.scene.terrain.terrain_generator.num_cols = 5
-        cfg.scene.terrain.terrain_generator.num_rows = 5
-        cfg.scene.terrain.terrain_generator.border_width = 10.0
+    if cfg.scene.terrain is not None and cfg.scene.terrain.terrain_generator is not None:
+      cfg.scene.terrain.terrain_generator.curriculum = False
+      cfg.scene.terrain.terrain_generator.num_cols = 5
+      cfg.scene.terrain.terrain_generator.num_rows = 5
+      cfg.scene.terrain.terrain_generator.border_width = 10.0
 
   return cfg
 
 
 def unitree_h1_2_tray_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
-  """Create Unitree H1_2 flat-terrain tray loco-manipulation configuration.
-  """
+  """Create Unitree H1_2 flat-terrain FREE-tray configuration."""
   cfg = unitree_h1_2_tray_rough_env_cfg(play=play)
 
-  cfg.sim.njmax = 300
+  cfg.sim.njmax = 400
   cfg.sim.mujoco.ccd_iterations = 50
   cfg.sim.contact_sensor_maxmatch = 64
-  cfg.sim.nconmax = None
+  cfg.sim.nconmax = 64   # free tray needs contact headroom even on flat ground
 
-  # Switch to flat terrain.
   assert cfg.scene.terrain is not None
   cfg.scene.terrain.terrain_type = "plane"
   cfg.scene.terrain.terrain_generator = None
 
-  # Remove raycast sensor and height scan (no terrain to scan).
-  cfg.scene.sensors = tuple(
-    s for s in (cfg.scene.sensors or ()) if s.name != "terrain_scan"
-  )
+  cfg.scene.sensors = tuple(s for s in (cfg.scene.sensors or ()) if s.name != "terrain_scan")
   del cfg.observations["actor"].terms["height_scan"]
   del cfg.observations["critic"].terms["height_scan"]
 
-  # Disable terrain curriculum (not present in play mode since rough clears all).
   cfg.curriculum.pop("terrain_levels", None)
 
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    twist_cmd.ranges.lin_vel_x = (-0.001, 0.001)
-    twist_cmd.ranges.lin_vel_y = (-.001, .001)
-    twist_cmd.ranges.ang_vel_z = (-.001, .001)
-    # twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
-    # twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
-    # twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
+    # Stand still in play to inspect tray holding first.
+    twist_cmd.ranges.lin_vel_x = (0.0, 0.0)
+    twist_cmd.ranges.lin_vel_y = (0.0, 0.0)
+    twist_cmd.ranges.ang_vel_z = (0.0, 0.0)
 
   return cfg

@@ -1,7 +1,4 @@
-"""Velocity task configuration.
-
-This module provides a factory function to create a base velocity task config.
-Robot-specific configurations call the factory and customize as needed.
+"""Loco-manipulation base config: velocity tracking + a tray.
 """
 
 import math
@@ -34,8 +31,9 @@ import src.tasks.loco_manipulation.mdp as mdp
 
 TRAY_ENTITY = "tray"
 
+
 def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
-  """Create base loco-manipulation (velocity + tray leveling) task configuration."""
+  """Create base loco-manipulation (velocity + welded tray) task configuration."""
 
   ##
   # Sensors
@@ -48,7 +46,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
     pattern=GridPatternCfg(size=(1.6, 1.0), resolution=0.1),
     max_distance=5.0,
     exclude_parent_body=True,
-    debug_vis=True,
+    debug_vis=False,
     viz=RayCastSensorCfg.VizCfg(show_normals=True),
   )
 
@@ -119,6 +117,9 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.foot_contact_forces,
       params={"sensor_name": "feet_ground_contact"},
     ),
+    # Privileged tray tilt (critic only). With the weld the tray pose is a rigid
+    # function of the arm joints, so the actor can infer it from proprioception;
+    # this gives the critic clean tray orientation for value learning.
     "tray_projected_gravity": ObservationTermCfg(
       func=mdp.projected_gravity,
       params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY)},
@@ -145,9 +146,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
   ##
 
   metrics = {
-    "mean_action_acc": MetricsTermCfg(
-      func=mdp.mean_action_acc,
-    ),
+    "mean_action_acc": MetricsTermCfg(func=mdp.mean_action_acc),
   }
 
   ##
@@ -171,8 +170,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
     "twist": UniformVelocityCommandCfg(
       entity_name="robot",
       resampling_time_range=(3.0, 8.0),
-      rel_standing_envs=0.05,  # Fraction of envs commanded to stand still. Bump if you
-                               # want more standing practice (e.g. 0.1-0.2). PLACEHOLDER.
+      rel_standing_envs=0.1,  # more standing practice for the tray task
       heading_command=True,
       heading_control_stiffness=0.5,
       debug_vis=True,
@@ -212,6 +210,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
         "asset_cfg": SceneEntityCfg("robot", joint_names=(".*",)),
       },
     ),
+    # reset_tray_to_hands is appended per-robot (must run AFTER the two resets above).
     "push_robot": EventTermCfg(
       func=mdp.push_by_setting_velocity,
       mode="interval",
@@ -234,9 +233,10 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
         "asset_cfg": SceneEntityCfg("robot", geom_names=()),  # Set per-robot.
         "operation": "abs",
         "ranges": (0.3, 1.6),
-        "shared_random": True,  # All foot geoms share the same friction.
+        "shared_random": True,
       },
     ),
+
     "encoder_bias": EventTermCfg(
       mode="startup",
       func=dr.encoder_bias,
@@ -251,11 +251,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       params={
         "asset_cfg": SceneEntityCfg("robot", body_names=()),  # Set per-robot.
         "operation": "add",
-        "ranges": {
-          0: (-0.05, 0.05),
-          1: (-0.05, 0.05),
-          2: (-0.05, 0.05),
-        },
+        "ranges": {0: (-0.05, 0.05), 1: (-0.05, 0.05), 2: (-0.05, 0.05)},
       },
     ),
   }
@@ -287,43 +283,68 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
         "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
         "command_name": "twist",
         "std_standing": {},  # Set per-robot.
-        "std_walking": {},  # Set per-robot.
-        "std_running": {},  # Set per-robot.
+        "std_walking": {},   # Set per-robot.
+        "std_running": {},   # Set per-robot.
         "walking_threshold": 0.1,
         "running_threshold": 1.5,
       },
     ),
     "body_ang_vel": RewardTermCfg(
       func=mdp.body_angular_velocity_penalty,
-      weight=-0.05,  # Override per-robot
+      weight=-0.05,
       params={"asset_cfg": SceneEntityCfg("robot", body_names=())},  # Set per-robot.
     ),
     "angular_momentum": RewardTermCfg(
       func=mdp.angular_momentum_penalty,
-      weight=-0.025,  # Override per-robot
+      weight=-0.025,
       params={"sensor_name": "robot/root_angmom"},
     ),
+
+    # ---- WELDED tray, shaped to behave like velcro -------------------------------
+    # Trained WITH a hard weld (stable, easy). These penalties stop the policy from
+    # relying on forces a real strap could not supply, so it transfers.
+    #
+    # Keep it level.
     "tray_level": RewardTermCfg(
       func=mdp.body_orientation_l2,
-      weight=-3.0,  # PLACEHOLDER main new objective - tune, try -2 .. -5.
+      weight=-3.0,  # PLACEHOLDER
       params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY)},
     ),
-    # OPTIONAL: damp tray wobble. Verify body_angular_velocity_penalty accepts a tray
-    # body_names before enabling.
+    # Don't wobble (xy angular velocity of the tray).
     "tray_ang_vel": RewardTermCfg(
       func=mdp.body_angular_velocity_penalty,
-      weight=-0.1,  # PLACEHOLDER tune
+      weight=-0.1,  # PLACEHOLDER
       params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray")},
     ),
+    # Move smoothly (penalize tray accel). Start tiny.
     "tray_acc": RewardTermCfg(
       func=mdp.tray_acceleration,
-      weight=-1e-4,   # PLACEHOLDER - accel values are large, so start tiny (like joint_acc_l2's -2.5e-7 scale)
+      weight=-1e-4,  # PLACEHOLDER
       params={
         "asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray"),
-        "lin_scale": 1.0,
-        "ang_scale": 1.0,
+        "lin_scale": 1.0, "ang_scale": 1.0,
       },
     ),
+    # Don't yank: penalize ARM actuator effort (proxy for how hard the weld works).
+    "arm_effort": RewardTermCfg(
+      func=mdp.arm_effort_l2,
+      weight=-1e-3,  # PLACEHOLDER - actuator_force^2 is sizeable; start small.
+      params={"asset_cfg": SceneEntityCfg(
+        "robot", actuator_names=(r".*_shoulder.*", r".*_elbow.*", r".*_wrist.*"),
+      )},
+    ),
+    # Don't use the weld as a brake: penalize tray velocity relative to the palms.
+    "tray_hand_rel_vel": RewardTermCfg(
+      func=mdp.tray_hand_rel_vel,
+      weight=-0.05,  # PLACEHOLDER
+      params={
+        "robot_cfg": SceneEntityCfg("robot"),
+        "tray_cfg": SceneEntityCfg(TRAY_ENTITY),
+        "left_site": "left_palm", "right_site": "right_palm",
+      },
+    ),
+    # ------------------------------------------------------------------------------
+
     "is_terminated": RewardTermCfg(func=mdp.is_terminated, weight=-200.0),
     "joint_acc_l2": RewardTermCfg(func=mdp.joint_acc_l2, weight=-2.5e-7),
     "joint_pos_limits": RewardTermCfg(func=mdp.joint_pos_limits, weight=-10.0),
@@ -338,7 +359,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
         "command_threshold": 0.1,
         "command_name": "twist",
         "sensor_name": "feet_ground_contact",
-      }
+      },
     ),
     "foot_clearance": RewardTermCfg(
       func=mdp.feet_clearance,
@@ -390,6 +411,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.bad_orientation,
       params={"limit_angle": math.radians(70.0)},
     ),
+    # Tray tilted past 35 deg = spilled.
     "tray_spill": TerminationTermCfg(
       func=mdp.bad_orientation,
       params={
@@ -400,7 +422,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
   }
 
   ##
-  # Curriculum
+  # Curriculum  (STANDING-FIRST: learn to hold the tray while balancing before walking)
   ##
 
   curriculum = {
@@ -413,8 +435,12 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
       params={
         "command_name": "twist",
         "velocity_stages": [
-          {"step": 0, "lin_vel_x": (-0.3, 0.5), "lin_vel_y": (-0.2, 0.2), "ang_vel_z": (-0.5, 0.5)},
-          {"step": 5000 * 24, "lin_vel_x": (-0.5, 1.0), "lin_vel_y": (-0.3, 0.3)},
+          # Stage 0: pure standing -- master holding the tray + balance first.
+          {"step": 0, "lin_vel_x": (0.0, 0.0), "lin_vel_y": (0.0, 0.0), "ang_vel_z": (0.0, 0.0)},
+          # Stage 1: slow walking.
+          {"step": 3000 * 24, "lin_vel_x": (-0.2, 0.3), "lin_vel_y": (-0.1, 0.1), "ang_vel_z": (-0.3, 0.3)},
+          # Stage 2: full range.
+          {"step": 8000 * 24, "lin_vel_x": (-0.5, 1.0), "lin_vel_y": (-0.3, 0.3), "ang_vel_z": (-0.5, 0.5)},
         ],
       },
     ),
@@ -454,11 +480,7 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
     sim=SimulationCfg(
       nconmax=35,
       njmax=1500,
-      mujoco=MujocoCfg(
-        timestep=0.005,
-        iterations=10,
-        ls_iterations=20,
-      ),
+      mujoco=MujocoCfg(timestep=0.005, iterations=10, ls_iterations=20),
     ),
     decimation=4,
     episode_length_s=20.0,

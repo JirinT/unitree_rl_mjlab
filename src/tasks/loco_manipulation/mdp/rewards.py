@@ -426,27 +426,59 @@ def stand_still(
             reward *= scale
     return reward
 
+#########################
+# TRAY SPECIFIC REWARDS
+#########################
+
 class tray_acceleration:
-    """Penalize tray linear + angular acceleration (finite-differenced velocity).
+  """
+  Penalize tray linear + angular acceleration (finite-differenced velocity).
+  """
+  def __init__(self, cfg: RewardTermCfg, env: ManagerBasedRlEnv):
+      asset = env.scene[cfg.params["asset_cfg"].name]
+      self.prev_lin = asset.data.root_link_lin_vel_w.clone()
+      self.prev_ang = asset.data.root_link_ang_vel_w.clone()
 
-    Stateful: stores last step's velocity per env. Reset envs re-seed on their
-    next call (accel there is ~0 for one step, which is fine).
+  def __call__(self, env, asset_cfg, lin_scale: float = 1.0, ang_scale: float = 1.0):
+      asset = env.scene[asset_cfg.name]
+      lin = asset.data.root_link_lin_vel_w
+      ang = asset.data.root_link_ang_vel_w
+      dt = env.step_dt
+      lin_acc = (lin - self.prev_lin) / dt
+      ang_acc = (ang - self.prev_ang) / dt
+      self.prev_lin = lin.clone()
+      self.prev_ang = ang.clone()
+      return (lin_scale * torch.sum(lin_acc ** 2, dim=1)
+              + ang_scale * torch.sum(ang_acc ** 2, dim=1))
+
+def arm_effort_l2(
+    env,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
     """
-    def __init__(self, cfg: RewardTermCfg, env: ManagerBasedRlEnv):
-        self.asset_cfg = cfg.params["asset_cfg"]
-        asset = env.scene[self.asset_cfg.name]
-        self.prev_lin = asset.data.root_link_lin_vel_w.clone()
-        self.prev_ang = asset.data.root_link_ang_vel_w.clone()
-
-    def __call__(self, env, asset_cfg, lin_scale=1.0, ang_scale=1.0):
-        asset = env.scene[asset_cfg.name]
-        lin = asset.data.root_link_lin_vel_w
-        ang = asset.data.root_link_ang_vel_w
-        dt = env.step_dt
-        lin_acc = (lin - self.prev_lin) / dt
-        ang_acc = (ang - self.prev_ang) / dt
-        self.prev_lin = lin.clone()
-        self.prev_ang = ang.clone()
-        return (lin_scale * torch.sum(lin_acc ** 2, dim=1)
-                + ang_scale * torch.sum(ang_acc ** 2, dim=1))
-  
+    Penalize actuator effort in the ARM joints (sum of squared actuator forces).
+    """
+    asset = env.scene[asset_cfg.name]
+    force = asset.data.actuator_force[:, asset_cfg.actuator_ids]
+    return torch.sum(force ** 2, dim=1)
+ 
+ 
+def tray_hand_rel_vel(
+    env,
+    robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+    tray_cfg: SceneEntityCfg = SceneEntityCfg("tray"),
+    left_site: str = "left_palm",
+    right_site: str = "right_palm",
+) -> torch.Tensor:
+    """
+    Penalize the tray's velocity relative to the palms.
+    """
+    robot = env.scene[robot_cfg.name]
+    tray = env.scene[tray_cfg.name]
+    lid = robot.find_sites(left_site)[0][0]
+    rid = robot.find_sites(right_site)[0][0]
+    # palm midpoint velocity (average of the two palm site velocities)
+    palm_vel = 0.5 * (robot.data.site_lin_vel_w[:, lid] + robot.data.site_lin_vel_w[:, rid])
+    tray_vel = tray.data.root_link_lin_vel_w
+    rel = tray_vel - palm_vel
+    return torch.sum(rel ** 2, dim=1)
