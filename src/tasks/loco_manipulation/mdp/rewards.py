@@ -426,3 +426,27 @@ def stand_still(
             reward *= scale
     return reward
 
+class tray_acceleration:
+    """Penalize tray linear + angular acceleration (finite-differenced velocity).
+
+    Stateful: stores last step's velocity per env. Reset envs re-seed on their
+    next call (accel there is ~0 for one step, which is fine).
+    """
+    def __init__(self, cfg: RewardTermCfg, env: ManagerBasedRlEnv):
+        self.asset_cfg = cfg.params["asset_cfg"]
+        asset = env.scene[self.asset_cfg.name]
+        self.prev_lin = asset.data.root_link_lin_vel_w.clone()
+        self.prev_ang = asset.data.root_link_ang_vel_w.clone()
+
+    def __call__(self, env, asset_cfg, lin_scale=1.0, ang_scale=1.0):
+        asset = env.scene[asset_cfg.name]
+        lin = asset.data.root_link_lin_vel_w
+        ang = asset.data.root_link_ang_vel_w
+        dt = env.step_dt
+        lin_acc = (lin - self.prev_lin) / dt
+        ang_acc = (ang - self.prev_ang) / dt
+        self.prev_lin = lin.clone()
+        self.prev_ang = ang.clone()
+        return (lin_scale * torch.sum(lin_acc ** 2, dim=1)
+                + ang_scale * torch.sum(ang_acc ** 2, dim=1))
+  

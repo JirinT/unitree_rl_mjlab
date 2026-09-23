@@ -174,7 +174,7 @@
                       <inertial pos="0.027967 9.6e-05 0.000739" quat="0.704961 -0.0198461 -0.019614 0.708697" mass="0.124" diaginertia="0.000169999 0.000137463 8.46436e-05"/>
                       <joint name="left_wrist_yaw_joint" pos="0 0 0" axis="0 0 1" range="-1.27 1.27"/>
                       <geom class="visual" mesh="wrist_yaw_link"/>
-                      <site name="left_palm" pos="0.08 0.0 0.05" size="0.01"/>
+                      <site name="left_palm" pos="0.02 0.0 0.05" size="0.01"/>
                       <geom name="left_hand_collision" class="collision" size="0.035" rgba=".2 .6 .2 .2" fromto="-0.01 0 0 0.045 0 0"/>
                     </body>
                   </body>
@@ -214,7 +214,7 @@
                       <inertial pos="0.027967 -9.6e-05 0.000739" quat="0.708697 -0.019614 -0.0198461 0.704961" mass="0.124" diaginertia="0.000169999 0.000137463 8.46436e-05"/>
                       <joint name="right_wrist_yaw_joint" pos="0 0 0" axis="0 0 1" range="-1.27 1.27"/>
                       <geom class="visual" mesh="wrist_yaw_link"/>
-                      <site name="right_palm" pos="0.08 0 0.05" size="0.01"/>
+                      <site name="right_palm" pos="0.02 0 0.05" size="0.01"/>
                       <geom name="right_hand_collision" class="collision" size="0.035" rgba=".2 .6 .2 .2" fromto="-0.01 0 0 0.045 0 0"/>
                     </body>
                   </body>

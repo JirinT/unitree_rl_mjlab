@@ -57,7 +57,9 @@ def reset_tray_to_hands(env, env_ids,
 
 def weld_tray_to_hands(spec):
   """
-  Weld the trays two grip sites to the palm sites.
+  Compliant weld of the tray's two grip sites to the palm sites.
+  Soft solref/solimp so the tray gives under acceleration like velcro would,
+  instead of a rigid weld the policy can exploit.
   """
   for palm_site, tray_site in (
       ("robot/left_palm", "tray/tray_grip_L"),
@@ -68,8 +70,15 @@ def weld_tray_to_hands(spec):
     eq.objtype = mujoco.mjtObj.mjOBJ_SITE
     eq.name1 = palm_site
     eq.name2 = tray_site
-    eq.solref = [0.02, 1]
-    eq.solimp = [0.9, 0.95, 0.001, 0.5, 2]
+    # # solref: [timeconst, dampratio] -- 0.1 s is springy (was 0.02), dampratio 1 = no wobble.
+    # eq.solref = [0.02, 1.0]
+    # # solimp: [dmin, dmax, width, mid, power] -- dmax 0.8 lets the weld yield under load.
+    # eq.solimp = [0.9, 0.95, 0.001, 0.5, 2]
+
+    # solref: [timeconst, dampratio] -- 0.1 s is springy (was 0.02), dampratio 1 = no wobble.
+    eq.solref = [0.1, 1.0]
+    # solimp: [dmin, dmax, width, mid, power] -- dmax 0.8 lets the weld yield under load.
+    eq.solimp = [0.6, 0.8, 0.005, 0.5, 2]
 
 def unitree_h1_2_tray_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   """Create Unitree H1_2 rough-terrain tray loco-manipulation configuration."""
@@ -264,8 +273,11 @@ def unitree_h1_2_tray_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
-    twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
-    twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
+    twist_cmd.ranges.lin_vel_x = (-0.001, 0.001)
+    twist_cmd.ranges.lin_vel_y = (-.001, .001)
+    twist_cmd.ranges.ang_vel_z = (-.001, .001)
+    # twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
+    # twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
+    # twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 
   return cfg

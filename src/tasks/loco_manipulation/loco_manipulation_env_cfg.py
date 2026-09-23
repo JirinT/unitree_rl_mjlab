@@ -305,16 +305,25 @@ def make_locomanipulation_env_cfg() -> ManagerBasedRlEnvCfg:
     ),
     "tray_level": RewardTermCfg(
       func=mdp.body_orientation_l2,
-      weight=-2.0,  # PLACEHOLDER main new objective - tune, try -2 .. -5.
+      weight=-3.0,  # PLACEHOLDER main new objective - tune, try -2 .. -5.
       params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY)},
     ),
     # OPTIONAL: damp tray wobble. Verify body_angular_velocity_penalty accepts a tray
     # body_names before enabling.
-    # "tray_ang_vel": RewardTermCfg(
-    #   func=mdp.body_angular_velocity_penalty,
-    #   weight=-0.05,  # PLACEHOLDER
-    #   params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray")},
-    # ),
+    "tray_ang_vel": RewardTermCfg(
+      func=mdp.body_angular_velocity_penalty,
+      weight=-0.1,  # PLACEHOLDER tune
+      params={"asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray")},
+    ),
+    "tray_acc": RewardTermCfg(
+      func=mdp.tray_acceleration,
+      weight=-1e-4,   # PLACEHOLDER - accel values are large, so start tiny (like joint_acc_l2's -2.5e-7 scale)
+      params={
+        "asset_cfg": SceneEntityCfg(TRAY_ENTITY, body_names="tray"),
+        "lin_scale": 1.0,
+        "ang_scale": 1.0,
+      },
+    ),
     "is_terminated": RewardTermCfg(func=mdp.is_terminated, weight=-200.0),
     "joint_acc_l2": RewardTermCfg(func=mdp.joint_acc_l2, weight=-2.5e-7),
     "joint_pos_limits": RewardTermCfg(func=mdp.joint_pos_limits, weight=-10.0),
