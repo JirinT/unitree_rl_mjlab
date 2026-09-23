@@ -30,7 +30,7 @@ from mjlab.terrains.config import ROUGH_TERRAINS_CFG
 from mjlab.utils.noise import UniformNoiseCfg as Unoise
 from mjlab.viewer import ViewerConfig
 
-import src.tasks.velocity.mdp as mdp
+import src.tasks.loco_manipulation.mdp as mdp
 
 TRAY_ENTITY = "tray"
 
