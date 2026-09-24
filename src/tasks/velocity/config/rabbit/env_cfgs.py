@@ -4,6 +4,7 @@ from src.assets.robots import (
   RABBIT_ACTION_SCALE,
   get_rabbit_robot_cfg,
 )
+import math
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs import mdp as envs_mdp
 from mjlab.envs.mdp.actions import JointPositionActionCfg
@@ -75,7 +76,9 @@ def rabbit_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   twist_cmd = cfg.commands["twist"]
   assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-  twist_cmd.viz.z_offset = 0.9 # CHANGE THIS TO MOVE THE ARROWS
+  twist_cmd.debug_vis = False
+  twist_cmd.viz.z_offset = 2.5 # CHANGE THIS TO MOVE THE ARROWS
+  twist_cmd.viz.y_offset = -1 # CHANGE THIS TO MOVE THE ARROWS
 
   cfg.observations["critic"].terms["foot_height"].params[
     "asset_cfg"
@@ -120,11 +123,31 @@ def rabbit_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     func=mdp.root_height_below_minimum,
     params={"minimum_height": -0.2},
   )
+  cfg.terminations["fell_over"] = TerminationTermCfg(
+      func=mdp.bad_orientation,
+      params={"limit_angle": math.radians(35.0)},
+    )
 
   if play:
+    cfg.events["push_robot"] = EventTermCfg(
+      func=mdp.push_by_setting_velocity,
+      mode="interval",
+      interval_range_s=(0.0, 3.0),
+      params={
+        "velocity_range": {
+          "x": (-0.5, 0.5),
+          "y": (-0.5, 0.5),
+          "z": (-0.4, 0.4),
+          "roll": (-0.52, 0.52),
+          "pitch": (-0.52, 0.52),
+          "yaw": (-0.78, 0.78),
+        },
+      },
+    )
+
     cfg.episode_length_s = int(1e9)
     cfg.observations["actor"].enable_corruption = False
-    cfg.events.pop("push_robot", None)
+    # cfg.events.pop("push_robot", None)
     cfg.curriculum = {}
     cfg.events["randomize_terrain"] = EventTermCfg(
       func=envs_mdp.randomize_terrain,
@@ -166,8 +189,11 @@ def rabbit_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
-    twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
-    twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
+    twist_cmd.ranges.lin_vel_x = (0., 0.0)
+    twist_cmd.ranges.lin_vel_y = (0., 0.0)
+    twist_cmd.ranges.ang_vel_z = (0., 0.0)
+    # twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
+    # twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
+    # twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 
   return cfg
