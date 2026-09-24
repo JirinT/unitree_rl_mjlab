@@ -20,7 +20,6 @@ from mjlab.managers.termination_manager import TerminationTermCfg
 from mjlab.scene import SceneCfg
 from mjlab.sensor import GridPatternCfg, ObjRef, RayCastSensorCfg
 from mjlab.sim import MujocoCfg, SimulationCfg
-from mjlab.tasks.velocity import mdp
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from mjlab.terrains import TerrainEntityCfg
 from mjlab.terrains.config import ROUGH_TERRAINS_CFG
