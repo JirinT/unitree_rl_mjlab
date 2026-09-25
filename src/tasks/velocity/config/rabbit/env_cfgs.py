@@ -132,7 +132,7 @@ def rabbit_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     cfg.events["push_robot"] = EventTermCfg(
       func=mdp.push_by_setting_velocity,
       mode="interval",
-      interval_range_s=(0.0, 3.0),
+      interval_range_s=(0.0, 2.0),
       params={
         "velocity_range": {
           "x": (-0.5, 0.5),
@@ -189,9 +189,9 @@ def rabbit_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    twist_cmd.ranges.lin_vel_x = (0., 0.0)
-    twist_cmd.ranges.lin_vel_y = (0., 0.0)
-    twist_cmd.ranges.ang_vel_z = (0., 0.0)
+    # twist_cmd.ranges.lin_vel_x = (0., 0.0)
+    # twist_cmd.ranges.lin_vel_y = (0., 0.0)
+    # twist_cmd.ranges.ang_vel_z = (0., 0.0)
     # twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
     # twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
     # twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)

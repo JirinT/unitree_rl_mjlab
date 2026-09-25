@@ -40,7 +40,7 @@ def rabbit_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
       max_grad_norm=1.0,
     ),
     experiment_name="Rabbit_velocity",
-    save_interval=100,
+    save_interval=10,
     num_steps_per_env=24,
     max_iterations=10001,
   )
