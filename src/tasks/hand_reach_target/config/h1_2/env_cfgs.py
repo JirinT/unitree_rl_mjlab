@@ -2,7 +2,7 @@
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 
-from src.assets.robots.unitree_h1_2.h1_2_left_arm_constants import (
+from src.assets.robots.unitree_h1_2_hand.h1_2_hand_constants import (
   EE_SITE_NAME,
   H1_2_LEFT_ARM_ACTION_SCALE,
   get_h1_2_left_arm_robot_cfg,
