@@ -24,12 +24,9 @@ def unitree_h1_2_left_arm_reach_env_cfg(play: bool = False) -> ManagerBasedRlEnv
   ee = (EE_SITE_NAME,)
   cfg.observations["actor"].terms["ee_to_target"].params["asset_cfg"].site_names = ee
   cfg.observations["critic"].terms["ee_to_target"].params["asset_cfg"].site_names = ee
-  cfg.rewards["reach_coarse"].params["asset_cfg"].site_names = ee
-  cfg.rewards["reach_fine"].params["asset_cfg"].site_names = ee
+  cfg.rewards["reach_coarse"].params["asset_cfg"].site_names = ("left_palm",)
+  cfg.rewards["reach_fine"].params["asset_cfg"].site_names = ("left_palm",)
 
-  # Target box in the env-origin frame. The left shoulder pitch link is at
-  # (0, 0.148, 1.453); ~98% of this box is reachable by the palm (checked by
-  # sampling joint space on the left-arm-only model).
   cfg.commands["reach_target"].target_position_range = (
     ReachCommandCfg.TargetPositionRangeCfg(
       x=(0.2, 0.45),

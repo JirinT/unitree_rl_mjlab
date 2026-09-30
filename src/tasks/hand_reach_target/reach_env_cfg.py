@@ -130,8 +130,6 @@ def make_reach_env_cfg() -> ManagerBasedRlEnvCfg:
   # Rewards
   ##
 
-  ee_asset_cfg = SceneEntityCfg("robot", site_names=())  # Set per-robot.
-
   rewards = {
     # Coarse kernel: gradient far from the target.
     "reach_coarse": RewardTermCfg(
@@ -140,7 +138,7 @@ def make_reach_env_cfg() -> ManagerBasedRlEnvCfg:
       params={
         "command_name": "reach_target",
         "std": 0.25,
-        "asset_cfg": ee_asset_cfg,
+        "asset_cfg": SceneEntityCfg("robot", site_names=()),  # Set per-robot
       },
     ),
     # Fine kernel: precision near the target.
@@ -150,7 +148,7 @@ def make_reach_env_cfg() -> ManagerBasedRlEnvCfg:
       params={
         "command_name": "reach_target",
         "std": 0.05,
-        "asset_cfg": ee_asset_cfg,
+        "asset_cfg": SceneEntityCfg("robot", site_names=()),  # Set per-robot
       },
     ),
     "action_rate_l2": RewardTermCfg(func=mdp.action_rate_l2, weight=-0.01),

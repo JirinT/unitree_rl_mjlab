@@ -85,7 +85,7 @@ H1_2_ACTUATOR_GO2HV_2 = BuiltinPositionActuatorCfg(
 
 # Base is fixed, so pos is the (pinned) pelvis position.
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
-  pos=(0, 0, 1.03),
+  pos=(0, 0, 0),
   joint_pos={
     "left_shoulder_pitch_joint": 0.28,
     "left_shoulder_roll_joint": 0.0,
