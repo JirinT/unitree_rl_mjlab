@@ -19,17 +19,22 @@ GAIT_PERIOD = 0.4
 CONTROL_DT = 4 * 0.005
 
 
-def action_based_joint_pos(env, scale: float):
+def _resolved_joint_pos_scale(env):
+  return env.action_manager.get_term("joint_pos")._scale
+
+
+def action_based_joint_pos(env):
   """
   Actor only proxy for joint_pos
   """
-  return scale * env.action_manager.action
+  return _resolved_joint_pos_scale(env) * env.action_manager.action
 
 
-def action_based_joint_vel(env, scale: float, dt: float):
+def action_based_joint_vel(env, dt: float):
   """
   Actor only proxy for joint_vel
   """
+  scale = _resolved_joint_pos_scale(env)
   return scale * (env.action_manager.action - env.action_manager.prev_action) / dt
 
 
@@ -71,11 +76,10 @@ def pawo_6dof_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.observations["actor"].terms["phase"].params["period"] = GAIT_PERIOD
   cfg.observations["actor"].terms["joint_pos"] = ObservationTermCfg(
     func=action_based_joint_pos,
-    params={"scale": PAWO_6DOF_ACTION_SCALE},
   )
   cfg.observations["actor"].terms["joint_vel"] = ObservationTermCfg(
     func=action_based_joint_vel,
-    params={"scale": PAWO_6DOF_ACTION_SCALE, "dt": CONTROL_DT},
+    params={"dt": CONTROL_DT},
   )
 
   if cfg.scene.terrain is not None and cfg.scene.terrain.terrain_generator is not None:
@@ -171,8 +175,9 @@ def pawo_6dof_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   if play:
     twist_cmd = cfg.commands["twist"]
     assert isinstance(twist_cmd, UniformVelocityCommandCfg)
-    cfg.commands["twist"].ranges.lin_vel_x=(-1.0, 2.50)
-    cfg.commands["twist"].ranges.lin_vel_y=(.0, .0)
-    cfg.commands["twist"].ranges.ang_vel_z=(.0, .0)
+    cfg.commands["twist"].ranges.lin_vel_x=(-.001, .5001)
+    # cfg.commands["twist"].ranges.lin_vel_x=(-1.0, 2.50)
+    cfg.commands["twist"].ranges.lin_vel_y=(-.001, .001)
+    cfg.commands["twist"].ranges.ang_vel_z=(-.001, .001)
 
   return cfg

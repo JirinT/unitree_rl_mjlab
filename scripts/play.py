@@ -19,6 +19,68 @@ from mjlab.utils.wrappers import VideoRecorder
 from mjlab.viewer import NativeMujocoViewer, ViserPlayViewer
 
 
+import torch
+
+import ctypes
+import ctypes.util
+
+# macOS only: poll the physical key state.
+_lib = ctypes.util.find_library("CoreGraphics") or (
+  "/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices"
+)
+_cg = ctypes.CDLL(_lib)
+_cg.CGEventSourceKeyState.argtypes = [ctypes.c_int32, ctypes.c_uint16]
+_cg.CGEventSourceKeyState.restype = ctypes.c_bool
+
+
+def _down(vk: int) -> bool:
+  return bool(_cg.CGEventSourceKeyState(1, vk))  # 1 = HID system state
+
+
+# macOS virtual keycodes (physical key positions)
+VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT = 0x7E, 0x7D, 0x7B, 0x7C
+VK_COMMA, VK_PERIOD = 0x2B, 0x2F
+VK_SHIFT, VK_OPTION = 0x38, 0x3A
+
+
+class KeyboardTwist:
+  """Hold UP/DOWN: forward/back. LEFT/RIGHT: yaw. , / . : strafe.
+  Speed: normal by default, hold SHIFT for fast, OPTION for slow."""
+
+  def __init__(self, max_fwd=1.0, max_back=0.5, max_side=0.5, max_yaw=2,
+               slow=0.3, normal=0.5, fast=1.0):
+    self.max_fwd, self.max_back = max_fwd, max_back
+    self.max_side, self.max_yaw = max_side, max_yaw
+    self.slow, self.normal, self.fast = slow, normal, fast
+    self._last_printed = None
+
+  def apply(self, env) -> None:  # main thread, once per step
+    s = self.fast if _down(VK_SHIFT) else self.slow if _down(VK_OPTION) else self.normal
+    vx = s * (self.max_fwd * _down(VK_UP) - self.max_back * _down(VK_DOWN))
+    vy = s * self.max_side * (_down(VK_COMMA) - _down(VK_PERIOD))
+    wz = s * self.max_yaw * (_down(VK_LEFT) - _down(VK_RIGHT))
+
+    if (vx, vy, wz) != self._last_printed:
+      self._last_printed = (vx, vy, wz)
+      print(f"cmd vx={vx:.2f} vy={vy:.2f} wz={wz:.2f}")
+
+    term = env.unwrapped.command_manager.get_term("twist")
+    term.vel_command_b[:, 0] = vx
+    term.vel_command_b[:, 1] = vy
+    term.vel_command_b[:, 2] = wz
+    term.time_left[:] = 1e9
+    for flag in ("is_standing_env", "is_heading_env"):
+      if hasattr(term, flag):
+        getattr(term, flag)[:] = False
+class CommandedPolicy:
+  def __init__(self, policy, env, kb: KeyboardTwist):
+    self.policy, self.env, self.kb = policy, env, kb
+
+  def __call__(self, obs):
+    self.kb.apply(self.env)
+    return self.policy(obs)
+
+
 @dataclass(frozen=True)
 class PlayConfig:
   agent: Literal["zero", "random", "trained"] = "trained"
@@ -34,6 +96,8 @@ class PlayConfig:
   viewer: Literal["auto", "native", "viser"] = "auto"
   no_terminations: bool = False
   """Disable all termination conditions (useful for viewing motions with dummy agents)."""
+  keyboard_control: bool = False
+  """Steer the twist command from the keyboard instead of the sampled/pinned command (native viewer only, macOS)."""
 
   # Internal flag used by demo script.
   _demo_mode: tyro.conf.Suppress[bool] = False
@@ -168,6 +232,9 @@ def run_play(task_id: str, cfg: PlayConfig):
     resolved_viewer = cfg.viewer
 
   if resolved_viewer == "native":
+    if cfg.keyboard_control:
+      kb = KeyboardTwist()
+      policy = CommandedPolicy(policy, env, kb)
     NativeMujocoViewer(env, policy).run()
   elif resolved_viewer == "viser":
     ViserPlayViewer(env, policy).run()

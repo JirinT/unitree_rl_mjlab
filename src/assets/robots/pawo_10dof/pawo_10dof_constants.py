@@ -56,10 +56,6 @@ PAWO_ACTUATOR_D845WP = BuiltinPositionActuatorCfg(
 # Keyframe config.
 ##
 
-# Placeholders -- verify visually with the fixed-base, zero-gravity viewer
-# trick below before trusting these for training. Standing height in
-# particular is a guess; PAWO's torso body has no fixed relationship to
-# ground clearance until the legs are posed.
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
   pos=(0, 0, 0.02),
   joint_pos={
