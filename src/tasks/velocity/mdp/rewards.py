@@ -39,6 +39,31 @@ def track_linear_velocity(
   lin_vel_error = xy_error + (2 * z_error)
   return torch.exp(-lin_vel_error / std**2)
 
+def penalize_noncommanded_linear_velocities(
+    env: ManagerBasedRlEnv,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = _DEFAULT_ASSET_CFG,
+) -> torch.Tensor:
+    """
+    Penalize linear velocities orthogonal to the commanded direction.
+    Returns the squared actual velocity on axes where the command is zero.
+    """
+    asset: Entity = env.scene[asset_cfg.name]
+    command = env.command_manager.get_command(command_name)
+    assert command is not None, f"Command '{command_name}' not found."
+    actual = asset.data.root_link_lin_vel_b
+    
+    # Penalty weight is 1.0 when command is 0, and decays exponentially as command increases
+    drift_weight = torch.exp(-torch.square(command[:, :2]) / 0.1**2)
+
+    # Apply the continuous weight to the squared actual velocity
+    xy_penalty = torch.sum(torch.square(actual[:, :2]) * drift_weight, dim=1)
+    
+    # Always penalize z-axis velocity (bouncing/drift)
+    z_penalty = torch.square(actual[:, 2])
+    
+    # Return the raw quadratic penalty. The environment config will multiply this by a negative weight.
+    return xy_penalty + z_penalty
 
 def track_angular_velocity(
   env: ManagerBasedRlEnv,
