@@ -71,7 +71,7 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
     ),
     "phase": ObservationTermCfg(
       func=mdp.phase,
-      params={"period": 0.6, "command_name": "twist"},
+      params={"period": 0.4, "command_name": "twist"},
     ),
     "joint_pos": ObservationTermCfg(
       func=mdp.joint_pos_rel,

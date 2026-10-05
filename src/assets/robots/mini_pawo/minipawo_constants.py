@@ -44,7 +44,7 @@ MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
     ".*knee",
     ".*ankle",
   ),
-  stiffness=30.0,
+  stiffness=10.0,
   damping=2.0,
   effort_limit=2.90,
   armature=0.005, # Gearbox rotor inertia
