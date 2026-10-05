@@ -1,0 +1,13 @@
+{
+    "configuration": "default",
+    "documentId": "871c7b715a2c83f79caa172c",
+    "documentMicroversion": "386b802c38bb5c30af6900a4",
+    "elementId": "a999e9ff7d75adb4c577bb53",
+    "fullConfiguration": "default",
+    "id": "MY1WCqbP5+SJdVlUF",
+    "isStandardContent": false,
+    "name": "left_hip_roll_servo <1>",
+    "partId": "JWD",
+    "suppressed": false,
+    "type": "Part"
+}
