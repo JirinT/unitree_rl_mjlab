@@ -17,7 +17,7 @@
   <worldbody>
     <body name="torso" pos="0 0 0" quat="1 0 0 0" childclass="mini_pawo_export">
       <freejoint name="torso_freejoint" />
-      <site name="imu" pos="0 0 0" size="0.01" type="sphere" rgba="0 1 0 1"/>
+      <site name="imu" pos="0.000578677 -0.0890544 0.24954" size="0.01" type="sphere" rgba="0 1 0 1"/>
       <inertial pos="0.000578677 -0.0890544 0.24954" mass="0.420" fullinertia="0.000484452 0.000463436 0.000276136 -8.03923e-06 -6.23499e-07 7.19998e-05" />
       <geom type="mesh" class="visual" pos="0.000725367 -0.136837 0.34695" quat="1 1.7005e-08 7.105e-09 -8.081e-09" mesh="frame" material="frame_material" />
       <geom type="mesh" class="collision" pos="0.000725367 -0.136837 0.34695" quat="1 1.7005e-08 7.105e-09 -8.081e-09" mesh="frame" material="frame_material" />
@@ -35,19 +35,19 @@
       <geom type="mesh" class="collision" pos="0.000725367 -0.136977 0.34695" quat="1 1.7005e-08 7.105e-09 -8.081e-09" mesh="lidar" material="lidar_material" />
       <body name="left_hip_yaw_case" pos="0.0363247 -0.103778 0.282335" quat="1.7005e-08 -1 -4.313e-09 7.105e-09">
         <joint axis="0 0 1" name="left_hip_yaw" type="hinge" range="-3.14 3.14" />
-        <inertial pos="0.00235874 0.000276912 0.0576388" mass="0.088" fullinertia="6.22352e-05 6.22289e-05 1.53551e-05 6.948e-08 8.35602e-06 -3.70517e-07" />
+        <inertial pos="0.00235874 0.000276912 0.0576388" mass="0.088" fullinertia="6.22352e-05 6.22289e-05 1.53551e-05 -6.948e-08 -8.35602e-06 -3.70517e-07" />
         <geom type="mesh" class="visual" pos="-0.0358409 -0.00248042 0.0863252" quat="0 1 0 0" mesh="left_hip_yaw_case" material="left_hip_yaw_case_material" />
         <geom type="mesh" class="collision" pos="-0.0358409 -0.00248042 0.0863252" quat="0 1 0 0" mesh="left_hip_yaw_case" material="left_hip_yaw_case_material" />
         <geom type="mesh" class="visual" pos="-0.0356071 -0.00255163 0.0863215" quat="0 -1 -0 -0" mesh="left_hip_roll_servo" material="left_hip_roll_servo_material" />
         <geom type="mesh" class="collision" pos="-0.0356071 -0.00255163 0.0863215" quat="0 -1 -0 -0" mesh="left_hip_roll_servo" material="left_hip_roll_servo_material" />
         <body name="left_hip_roll_case" pos="-9.81985e-05 -0.0186498 0.0842236" quat="0.707107 -0.707107 3.864e-09 3.864e-09">
           <joint axis="0 0 1" name="left_hip_roll" type="hinge" range="-3.14 3.14" />
-          <inertial pos="0.0275104 -0.00289827 0.0186226" mass="0.042" fullinertia="9.7662e-06 1.9477e-05 1.69846e-05 2.0618e-06 1.196e-09 -1.915e-09" />
+          <inertial pos="0.0275104 -0.00289827 0.0186226" mass="0.042" fullinertia="9.7662e-06 1.9477e-05 1.69846e-05 -2.0618e-06 -1.196e-09 -1.915e-09" />
           <geom type="mesh" class="visual" pos="-0.0354652 -0.00212887 0.0164546" quat="0.707107 -0.707107 -0 0" mesh="left_hip_roll_case" material="left_hip_roll_case_material" />
           <geom type="mesh" class="collision" pos="-0.0354652 -0.00212887 0.0164546" quat="0.707107 -0.707107 -0 0" mesh="left_hip_roll_case" material="left_hip_roll_case_material" />
           <body name="left_hip_pitch_case" pos="0.05825 -0.0222987 0.0186748" quat="0.707107 -1.0736e-08 0.707107 -1.0736e-08">
             <joint axis="0 0 1" name="left_hip_pitch" type="hinge" range="-3.14 3.14" />
-            <inertial pos="0.013894 -0.0327895 -0.0186066" mass="0.123" fullinertia="7.95883e-05 4.23439e-05 9.65542e-05 3.20003e-05 -1.55598e-07 2.2858e-07" />
+            <inertial pos="0.013894 -0.0327895 -0.0186066" mass="0.123" fullinertia="7.95883e-05 4.23439e-05 9.65542e-05 -3.20003e-05 -1.55598e-07 -2.2858e-07" />
             <geom type="mesh" class="visual" pos="0.00224067 0.0201372 -0.0943654" quat="0.5 -0.5 -0.5 -0.5" mesh="left_hip_pitch_servo" material="left_hip_pitch_servo_material" />
             <geom type="mesh" class="collision" pos="0.00224067 0.0201372 -0.0943654" quat="0.5 -0.5 -0.5 -0.5" mesh="left_hip_pitch_servo" material="left_hip_pitch_servo_material" />
             <geom type="mesh" class="visual" pos="0.002258 0.0201794 -0.0943436" quat="0.5 -0.5 -0.5 -0.5" mesh="left_hip_pitch_case" material="left_hip_pitch_case_material" />
@@ -56,7 +56,7 @@
             <geom type="mesh" class="collision" pos="0.00228617 0.0201665 -0.0941654" quat="0.5 -0.5 -0.5 -0.5" mesh="left_knee_servo" material="left_knee_servo_material" />
             <body name="left_knee_case" pos="0.027788 -0.0655791 -0.0376" quat="0.953717 0 0 0.300706">
               <joint axis="0 0 1" name="left_knee" type="hinge" range="-3.14 3.14" />
-              <inertial pos="-0.0319413 -0.0464947 0.0188933" mass="0.09" fullinertia="5.10572e-05 3.44913e-05 5.52052e-05 -2.1165e-05 1.10964e-07 1.68052e-07" />
+              <inertial pos="-0.0319413 -0.0464947 0.0188933" mass="0.09" fullinertia="5.10572e-05 3.44913e-05 5.52052e-05 -2.1165e-05 -1.10964e-07 -1.68052e-07" />
               <geom type="mesh" class="visual" pos="-0.0256451 0.0857559 -0.0561875" quat="0.5 -0.5 -0.5 -0.5" mesh="left_ankle_servo" material="left_ankle_servo_material" />
               <geom type="mesh" class="collision" pos="-0.0256451 0.0857559 -0.0561875" quat="0.5 -0.5 -0.5 -0.5" mesh="left_ankle_servo" material="left_ankle_servo_material" />
               <geom type="mesh" class="visual" pos="-0.0256872 0.0857043 -0.057205" quat="0.5 -0.5 -0.5 -0.5" mesh="left_knee_case" material="left_knee_case_material" />

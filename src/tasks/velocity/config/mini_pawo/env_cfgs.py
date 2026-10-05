@@ -32,10 +32,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       assert isinstance(sensor, RayCastSensorCfg)
       sensor.frame.name = "torso"
   
-  # Ensure you add <site name="left_foot_site" pos="..."/> to your XML foot bodies!
   site_names = ("left_foot_site", "right_foot_site")
-  
-  # Targets the robust box collision pads we added to scene.xml
   geom_names = ("left_foot_collision", "right_foot_collision")
 
   feet_ground_cfg = ContactSensorCfg(
@@ -80,7 +77,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   twist_cmd = cfg.commands["twist"]
   assert isinstance(twist_cmd, UniformVelocityCommandCfg)
   twist_cmd.debug_vis = False
-  twist_cmd.viz.z_offset = 1.0 # Adjusted lower for the smaller Pawo robot
+  twist_cmd.viz.z_offset = 1.0
   twist_cmd.viz.y_offset = -0.5 
 
   cfg.observations["critic"].terms["foot_height"].params[
@@ -92,7 +89,6 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
   
-  # Removed arm tracking since Pawo is legs-only
   cfg.rewards["pose"].params["std_walking"] = {
     r".*hip_yaw": 0.15,
     r".*hip_pitch": 0.5,
@@ -119,10 +115,10 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     params={"sensor_name": self_collision_cfg.name, "force_threshold": 10.0},
   )
 
-  cfg.terminations["torso_too_low"] = TerminationTermCfg(
-    func=mdp.root_height_below_minimum,
-    params={"minimum_height": 0.15}, # Adjusted for Pawo's shorter stature
-  )
+  # cfg.terminations["torso_too_low"] = TerminationTermCfg(
+  #   func=mdp.root_height_below_minimum,
+  #   params={"minimum_height": -0.1}, # Adjusted for Pawo's shorter stature
+  # )
   cfg.terminations["fell_over"] = TerminationTermCfg(
       func=mdp.bad_orientation,
       params={"limit_angle": math.radians(35.0)},
