@@ -115,10 +115,10 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     params={"sensor_name": self_collision_cfg.name, "force_threshold": 10.0},
   )
 
-  # cfg.terminations["torso_too_low"] = TerminationTermCfg(
-  #   func=mdp.root_height_below_minimum,
-  #   params={"minimum_height": -0.1}, # Adjusted for Pawo's shorter stature
-  # )
+  cfg.terminations["torso_too_low"] = TerminationTermCfg(
+    func=mdp.root_height_below_minimum,
+    params={"minimum_height": -0.1}, # Adjusted for Pawo's shorter stature
+  )
   cfg.terminations["fell_over"] = TerminationTermCfg(
       func=mdp.bad_orientation,
       params={"limit_angle": math.radians(35.0)},
