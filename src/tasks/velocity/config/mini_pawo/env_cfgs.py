@@ -78,7 +78,10 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   assert isinstance(twist_cmd, UniformVelocityCommandCfg)
   twist_cmd.debug_vis = False
   twist_cmd.viz.z_offset = 1.0
-  twist_cmd.viz.y_offset = -0.5 
+  twist_cmd.viz.y_offset = -0.5
+  twist_cmd.ranges.lin_vel_x = (-0.2, 0.4)
+  twist_cmd.ranges.lin_vel_y = (-0.2, 0.2)
+  twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 
   cfg.observations["critic"].terms["foot_height"].params[
     "asset_cfg"
@@ -107,6 +110,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["body_orientation_l2"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["body_ang_vel"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["foot_clearance"].params["asset_cfg"].site_names = site_names
+  cfg.rewards["foot_clearance"].params["target_height"] = 0.03
   cfg.rewards["foot_slip"].params["asset_cfg"].site_names = site_names
 
   cfg.rewards["self_collisions"] = RewardTermCfg(
@@ -121,8 +125,17 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   )
   cfg.terminations["fell_over"] = TerminationTermCfg(
       func=mdp.bad_orientation,
-      params={"limit_angle": math.radians(35.0)},
+      params={"limit_angle": math.radians(50.0)},
     )
+
+  cfg.events["push_robot"].params["velocity_range"] = {
+      "x": (-0.1, 0.1),
+      "y": (-0.1, 0.1),
+      "z": (-0.05, 0.05),
+      "roll": (-0.1, 0.1),
+      "pitch": (-0.1, 0.1),
+      "yaw": (-0.2, 0.2),
+  }
 
   if play:
     cfg.events["push_robot"] = EventTermCfg(
@@ -180,5 +193,14 @@ def mini_pawo_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   del cfg.observations["critic"].terms["height_scan"]
 
   cfg.curriculum.pop("terrain_levels", None)
+  if play:
+    twist_cmd = cfg.commands["twist"]
+    assert isinstance(twist_cmd, UniformVelocityCommandCfg)
+    # twist_cmd.ranges.lin_vel_x = (0., 0.0)
+    # twist_cmd.ranges.lin_vel_y = (0., 0.0)
+    # twist_cmd.ranges.ang_vel_z = (0., 0.0)
+    twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
+    twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
+    twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 
   return cfg

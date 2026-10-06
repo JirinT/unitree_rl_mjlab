@@ -264,11 +264,11 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       weight=1.0,
       params={"command_name": "twist", "std": math.sqrt(0.25)},
     ),
-    "penalize_noncommanded_linear_velocities": RewardTermCfg(
-      func=mdp.penalize_noncommanded_linear_velocities,
-      weight=-1.0,
-      params={"command_name": "twist"}
-    ),
+    # "penalize_noncommanded_linear_velocities": RewardTermCfg(
+    #   func=mdp.penalize_noncommanded_linear_velocities,
+    #   weight=-1.0,
+    #   params={"command_name": "twist"}
+    # ),
     "track_angular_velocity": RewardTermCfg(
       func=mdp.track_angular_velocity,
       weight=1.0,
@@ -310,7 +310,7 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.feet_gait,
       weight=0.5,
       params={
-        "period": 0.6,
+        "period": 0.4,
         "offset": [0.0, 0.5],
         "threshold": 0.56,
         "command_threshold": 0.1,

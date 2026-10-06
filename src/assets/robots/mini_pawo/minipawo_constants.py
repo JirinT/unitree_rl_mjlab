@@ -37,17 +37,17 @@ def get_spec() -> mujoco.MjSpec:
 ##
 
 MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
-  target_names_expr=(
-    ".*hip_yaw",
-    ".*hip_roll",
-    ".*hip_pitch",
-    ".*knee",
-    ".*ankle",
-  ),
-  stiffness=10.0,
-  damping=2.0,
-  effort_limit=2.90,
-  armature=0.005, # Gearbox rotor inertia
+    target_names_expr=(
+        ".*hip_yaw",
+        ".*hip_roll",
+        ".*hip_pitch",
+        ".*knee",
+        ".*ankle",
+    ),
+    stiffness=10.0,
+    damping=2.5,
+    effort_limit=2.94,
+    armature=0.015,
 )
 
 
@@ -56,7 +56,7 @@ MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
 ##
 
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
-  pos=(0., 0., 0.),   # Adjusted starting height so feet clear the ground
+  pos=(0., 0., 0.01),   # Adjusted starting height so feet clear the ground
   joint_pos={
     ".*hip_pitch": 0.0,
     ".*knee": -0.523598776,

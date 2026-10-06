@@ -3,8 +3,8 @@
   <compiler angle="radian" meshdir="assets" autolimits="true" />
   <default>
     <default class="mini_pawo_export">
-      <joint frictionloss="0.1" armature="0.005" />
-      <position kp="40" kv="2" />
+      <joint frictionloss="0.1" armature="0.015" />
+      <position kp="10" dampratio="1" />
       <default class="visual">
         <geom type="mesh" contype="0" conaffinity="0" group="2" />
       </default>
