@@ -4,8 +4,7 @@ from src.tasks.velocity.rl import VelocityOnPolicyRunner
 from .env_cfgs import (
   mini_pawo_flat_env_cfg,
 )
-# Assuming you renamed your PPO config to match the new robot. 
-# If not, you can leave this as rabbit_ppo_runner_cfg.
+
 from .rl_cfg import mini_pawo_ppo_runner_cfg 
 
 register_mjlab_task(
