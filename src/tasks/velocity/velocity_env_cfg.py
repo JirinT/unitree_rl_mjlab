@@ -431,6 +431,6 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
         ls_iterations=20,
       ),
     ),
-    decimation=4,
+    decimation=20, # change this to 4 for 50 Hz, 20 corresponds to 10 Hz
     episode_length_s=20.0,
   )
