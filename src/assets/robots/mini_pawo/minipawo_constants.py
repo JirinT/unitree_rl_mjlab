@@ -58,6 +58,8 @@ MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
 HOME_KEYFRAME = EntityCfg.InitialStateCfg(
   pos=(0., 0., 0.01),   # Adjusted starting height so feet clear the ground
   joint_pos={
+    "right_hip_roll": 0.0872664626,
+    "left_hip_roll": -0.0872664626,
     ".*hip_pitch": 0.0,
     ".*knee": -0.523598776,
     ".*ankle": 0.523598776,

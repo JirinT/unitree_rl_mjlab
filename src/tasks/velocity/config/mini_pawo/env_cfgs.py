@@ -16,6 +16,7 @@ from mjlab.tasks.velocity import mdp
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from src.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
 
+GAIT_PERIOD = 0.4
 
 def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   """Create Mini Pawo humanoid rough terrain velocity configuration."""
@@ -79,19 +80,20 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   twist_cmd.debug_vis = False
   twist_cmd.viz.z_offset = 1.0
   twist_cmd.viz.y_offset = -0.5
-  twist_cmd.ranges.lin_vel_x = (-0.2, 0.4)
-  twist_cmd.ranges.lin_vel_y = (-0.2, 0.2)
+  twist_cmd.ranges.lin_vel_x = (-0.5, 1)
+  twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
   twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 
   cfg.observations["critic"].terms["foot_height"].params[
     "asset_cfg"
   ].site_names = site_names
+  cfg.observations["actor"].terms["phase"].params["period"] = GAIT_PERIOD
 
   cfg.events["foot_friction"].params["asset_cfg"].geom_names = geom_names
   cfg.events["base_com"].params["asset_cfg"].body_names = ("torso",)
 
+  cfg.rewards["pose"].params["running_threshold"] = 0.7
   cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
-  
   cfg.rewards["pose"].params["std_walking"] = {
     r".*hip_yaw": 0.15,
     r".*hip_pitch": 0.5,
@@ -110,8 +112,10 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["body_orientation_l2"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["body_ang_vel"].params["asset_cfg"].body_names = ("torso",)
   cfg.rewards["foot_clearance"].params["asset_cfg"].site_names = site_names
-  cfg.rewards["foot_clearance"].params["target_height"] = 0.03
+  cfg.rewards["foot_clearance"].params["target_height"] = 0.04
   cfg.rewards["foot_slip"].params["asset_cfg"].site_names = site_names
+  cfg.rewards["foot_gait"].params["period"] = GAIT_PERIOD
+
 
   cfg.rewards["self_collisions"] = RewardTermCfg(
     func=mdp.self_collision_cost,
@@ -199,7 +203,7 @@ def mini_pawo_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     # twist_cmd.ranges.lin_vel_x = (0., 0.0)
     # twist_cmd.ranges.lin_vel_y = (0., 0.0)
     # twist_cmd.ranges.ang_vel_z = (0., 0.0)
-    twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
+    twist_cmd.ranges.lin_vel_x = (-0.5, 1)
     twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
     twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
 

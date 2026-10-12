@@ -71,7 +71,7 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
     ),
     "phase": ObservationTermCfg(
       func=mdp.phase,
-      params={"period": 0.4, "command_name": "twist"},
+      params={"period": 0.6, "command_name": "twist"},
     ),
     "joint_pos": ObservationTermCfg(
       func=mdp.joint_pos_rel,
@@ -310,7 +310,7 @@ def make_velocity_env_cfg() -> ManagerBasedRlEnvCfg:
       func=mdp.feet_gait,
       weight=0.5,
       params={
-        "period": 0.4,
+        "period": 0.6,
         "offset": [0.0, 0.5],
         "threshold": 0.56,
         "command_threshold": 0.1,
