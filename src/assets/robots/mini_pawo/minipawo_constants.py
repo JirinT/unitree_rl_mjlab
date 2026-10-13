@@ -45,7 +45,7 @@ MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
         ".*ankle",
     ),
     stiffness=10.0,
-    damping=2.5,
+    damping=1.5,
     effort_limit=2.94,
     armature=0.015,
 )
@@ -117,7 +117,10 @@ if __name__ == "__main__":
 
   robot = Entity(get_mini_pawo_robot_cfg())
   model = robot.spec.compile()
-  
+
+  total_mass = mujoco.mj_getTotalmass(model)
+  print(f"Total robot mass: {total_mass:.3f} kg")
+
   model.opt.gravity[:] = 0.0  # Uncomment to test without gravity collapsing the legs
 
   data = mujoco.MjData(model)
