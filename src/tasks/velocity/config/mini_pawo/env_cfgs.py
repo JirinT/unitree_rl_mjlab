@@ -141,6 +141,12 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       "yaw": (-0.2, 0.2),
   }
 
+  cfg.events["base_com"].params["ranges"] = {
+          0: (-0.005, 0.005),
+          1: (-0.005, 0.005),
+          2: (-0.01, 0.01),
+        }
+
   if play:
     cfg.events["push_robot"] = EventTermCfg(
       func=mdp.push_by_setting_velocity,
