@@ -45,7 +45,7 @@ MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
         ".*ankle",
     ),
     stiffness=10.0,
-    damping=1.5,
+    damping=2.5,
     effort_limit=2.94,
     armature=0.015,
 )

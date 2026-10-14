@@ -132,14 +132,14 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       params={"limit_angle": math.radians(50.0)},
     )
 
-  # cfg.events["push_robot"].params["velocity_range"] = {
-  #     "x": (-0.1, 0.1),
-  #     "y": (-0.1, 0.1),
-  #     "z": (-0.05, 0.05),
-  #     "roll": (-0.1, 0.1),
-  #     "pitch": (-0.1, 0.1),
-  #     "yaw": (-0.2, 0.2),
-  # }
+  cfg.events["push_robot"].params["velocity_range"] = {
+      "x": (-0.3, 0.3),
+      "y": (-0.1, 0.1),
+      "z": (-0.2, 0.2),
+      "roll": (-0.3, 0.3),
+      "pitch": (-0.3, 0.3),
+      "yaw": (-0.5, 0.5),
+  }
 
   cfg.events["base_com"].params["ranges"] = {
           0: (-0.005, 0.005),
