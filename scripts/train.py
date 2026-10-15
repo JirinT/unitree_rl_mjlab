@@ -18,12 +18,16 @@ from mjlab.utils.gpu import select_gpus
 from mjlab.utils.os import dump_yaml, get_checkpoint_path
 from mjlab.utils.torch import configure_torch_backends
 from mjlab.utils.wrappers import VideoRecorder
+from src.assets.robots.mini_pawo.actuator_cfg import configure_actuators
 
 
 @dataclass(frozen=True)
 class TrainConfig:
   env: ManagerBasedRlEnvCfg
   agent: RslRlBaseRunnerCfg
+  actuator_model: Literal["builtin", "bam-sts3215"] = "builtin"
+  bam_voltage: float = 7.4
+  bam_friction_model: Literal["m1", "m2", "m3", "m4", "m5", "m6"] = "m6"
   motion_file: str | None = None
   video: bool = False
   video_length: int = 200
@@ -55,6 +59,8 @@ def run_train(task_id: str, cfg: TrainConfig, log_dir: Path) -> None:
     seed = cfg.agent.seed + local_rank
 
   configure_torch_backends()
+
+  configure_actuators(task_id, cfg.env, cfg.actuator_model, cfg.bam_voltage, cfg.bam_friction_model)
 
   cfg.agent.seed = seed
   cfg.env.seed = seed

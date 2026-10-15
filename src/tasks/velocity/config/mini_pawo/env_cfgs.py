@@ -147,6 +147,9 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
           2: (-0.01, 0.01),
         }
 
+  cfg.events["reset_robot_joints"].params["position_range"]= (-0.05, 0.05)
+
+
   if play:
     cfg.events["push_robot"] = EventTermCfg(
       func=mdp.push_by_setting_velocity,
@@ -154,12 +157,12 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       interval_range_s=(5.0, 8.0),
       params={
         "velocity_range": {
-          "x": (-0.5, 0.5),
-          "y": (-0.5, 0.5),
-          "z": (-0.4, 0.4),
-          "roll": (-0.52, 0.52),
-          "pitch": (-0.52, 0.52),
-          "yaw": (-0.78, 0.78),
+          "x": (-0., 0.),
+          "y": (-0., 0.),
+          "z": (-0., 0.),
+          "roll": (-0., 0.),
+          "pitch": (-0., 0.),
+          "yaw": (-0., 0.),
         },
       },
     )
