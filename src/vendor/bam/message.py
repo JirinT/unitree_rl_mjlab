@@ -7,16 +7,15 @@
 #     http://www.apache.org/licenses/LICENSE-2.0
 
 import os
-from colorama import Fore, Back, Style
 
 
 def error(message):
-    print(Style.BRIGHT + Fore.RED + message + Style.RESET_ALL)
+    print(message)
 
 
 def bright(message):
     print("")
-    print(Style.BRIGHT + message + Style.RESET_ALL)
+    print(message)
 
 
 def run_or_fail(cmd):
@@ -25,19 +24,19 @@ def run_or_fail(cmd):
 
 
 def emphasis(text):
-    return Fore.BLUE + text + Fore.RESET
+    return text
 
 
 def yellow(text):
-    return Fore.YELLOW + text + Fore.RESET
+    return text
 
 
 def red(text):
-    return Fore.RED + text + Fore.RESET
+    return text
 
 
 def success(text):
-    return Fore.GREEN + text + Fore.RESET
+    return text
 
 
 def die(message):
