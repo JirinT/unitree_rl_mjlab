@@ -274,6 +274,14 @@ class BamActuator(Actuator):
         mjact.forcelimited = False
         mjact.ctrllimited = False
 
+    @staticmethod
+    def _zero_joint_damping(joint) -> None:
+        # MuJoCo older versions expose scalar damping; 3.7 uses a 3-vector.
+        try:
+            joint.damping = 0.0
+        except TypeError:
+            joint.damping = np.zeros((3, 1))
+
     def edit_spec(self, spec: mujoco.MjSpec, target_names: list[str]) -> None:
         """Convert position actuators to motor mode and zero MuJoCo friction.
 
@@ -301,7 +309,7 @@ class BamActuator(Actuator):
                 for joint in spec.joints:
                     if joint.name == tgt_name:
                         joint.armature = float(armature)
-                        joint.damping = np.zeros((3, 1))
+                        self._zero_joint_damping(joint)
                         joint.frictionloss = 0.0
                         self._set_friction_stiffness(joint)
                         break
@@ -323,7 +331,7 @@ class BamActuator(Actuator):
                 self._mjs_actuators.append(mjact)
                 for joint in spec.joints:
                     if joint.name == target_name:
-                        joint.damping = np.zeros((3, 1))
+                        self._zero_joint_damping(joint)
                         joint.frictionloss = 0.0
                         self._set_friction_stiffness(joint)
                         break
