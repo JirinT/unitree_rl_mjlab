@@ -115,6 +115,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["foot_clearance"].params["target_height"] = 0.03
   cfg.rewards["foot_slip"].params["asset_cfg"].site_names = site_names
   cfg.rewards["foot_gait"].params["period"] = GAIT_PERIOD
+  cfg.rewards["action_rate_l2"].weight = -0.1
 
 
   cfg.rewards["self_collisions"] = RewardTermCfg(
