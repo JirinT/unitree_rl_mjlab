@@ -101,7 +101,8 @@ def get_mini_pawo_robot_cfg() -> EntityCfg:
   )
 
 
-MINI_PAWO_ACTION_RANGE_RAD = 1.0  # 57 deg
+# MINI_PAWO_ACTION_RANGE_RAD = 1.0  # 57 deg
+MINI_PAWO_ACTION_RANGE_RAD = .25  # 57 deg
 MINI_PAWO_ACTION_SCALE: dict[str, float] = {}
 for a in MINI_PAWO_ARTICULATION.actuators:
   assert isinstance(a, BuiltinPositionActuatorCfg)
