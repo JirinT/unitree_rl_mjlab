@@ -103,14 +103,14 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.events["foot_friction"].params["asset_cfg"].geom_names = geom_names
   cfg.events["base_com"].params["asset_cfg"].body_names = ("torso",)
 
-  cfg.rewards["pose"].params["running_threshold"] = 0.7
+  cfg.rewards["pose"].params["running_threshold"] = 1 # was 0.7
   cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
   cfg.rewards["pose"].params["std_walking"] = {
-    r".*hip_yaw": 0.15,
-    r".*hip_pitch": 0.5,
-    r".*hip_roll": 0.15,
-    r".*knee": 0.5,
-    r".*ankle": 0.15,
+    r".*hip_yaw": 0.3, # was 0.15
+    r".*hip_pitch": 0.4, # was 0.5
+    r".*hip_roll": 0.05, # was 0.15
+    r".*knee": 0.4, # was 0.5
+    r".*ankle": 0.25, # was 0.15
   }
   cfg.rewards["pose"].params["std_running"] = {
     r".*hip_yaw": 0.25,
