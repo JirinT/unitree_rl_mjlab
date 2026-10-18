@@ -5,6 +5,7 @@ from src.assets.robots.mini_pawo.minipawo_constants import (
   get_mini_pawo_robot_cfg,
 )
 import math
+from copy import deepcopy
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs import mdp as envs_mdp
 from mjlab.envs.mdp.actions import JointPositionActionCfg
@@ -88,6 +89,16 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
     "asset_cfg"
   ].site_names = site_names
   cfg.observations["actor"].terms["phase"].params["period"] = GAIT_PERIOD
+
+  # MicroDuck-style sensor latency (control steps, not physics substeps).
+  # Clone terms because the base config shares them with the privileged critic.
+  # At 50 Hz: IMU 0/20 ms, joint velocity 20 ms. Keep these in playback too.
+  for name in ("base_ang_vel", "projected_gravity", "joint_vel"):
+    term = deepcopy(cfg.observations["actor"].terms[name])
+    term.delay_min_lag = 1 if name == "joint_vel" else 0
+    term.delay_max_lag = 1
+    term.delay_update_period = 0 if name == "joint_vel" else 64
+    cfg.observations["actor"].terms[name] = term
 
   cfg.events["foot_friction"].params["asset_cfg"].geom_names = geom_names
   cfg.events["base_com"].params["asset_cfg"].body_names = ("torso",)
