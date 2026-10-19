@@ -27,6 +27,8 @@ class TrainConfig:
   agent: RslRlBaseRunnerCfg
   actuator_model: Literal["builtin", "bam-sts3215"] = "builtin"
   bam_voltage: float = 7.4
+  bam_command_delay_min: int = 3  # Physics steps; 15 ms at dt=0.005
+  bam_command_delay_max: int = 6  # Physics steps; 30 ms at dt=0.005
   bam_friction_model: Literal["m1", "m2", "m3", "m4", "m5", "m6"] = "m6"
   motion_file: str | None = None
   video: bool = False
@@ -60,7 +62,8 @@ def run_train(task_id: str, cfg: TrainConfig, log_dir: Path) -> None:
 
   configure_torch_backends()
 
-  configure_actuators(task_id, cfg.env, cfg.actuator_model, cfg.bam_voltage, cfg.bam_friction_model)
+  configure_actuators(task_id, cfg.env, cfg.actuator_model, cfg.bam_voltage, cfg.bam_friction_model,
+                      cfg.bam_command_delay_min, cfg.bam_command_delay_max)
 
   cfg.agent.seed = seed
   cfg.env.seed = seed
