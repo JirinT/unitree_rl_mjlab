@@ -9,15 +9,19 @@ from copy import deepcopy
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs import mdp as envs_mdp
 from mjlab.envs.mdp.actions import JointPositionActionCfg
+from mjlab.managers.curriculum_manager import CurriculumTermCfg
 from mjlab.managers.event_manager import EventTermCfg
 from mjlab.managers.reward_manager import RewardTermCfg
 from mjlab.managers.termination_manager import TerminationTermCfg
 from mjlab.sensor import ContactMatch, ContactSensorCfg, RayCastSensorCfg
 from mjlab.tasks.velocity import mdp
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
+from src.tasks.velocity import mdp as velocity_mdp
 from src.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
 
 GAIT_PERIOD = 0.4
+# Keep aligned with num_steps_per_env in mini_pawo/rl_cfg.py.
+NUM_STEPS_PER_ENV = 24
 
 def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   """Create Mini Pawo humanoid rough terrain velocity configuration."""
@@ -81,9 +85,9 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   twist_cmd.debug_vis = False
   twist_cmd.viz.z_offset = 1.0
   twist_cmd.viz.y_offset = -0.5
-  twist_cmd.ranges.lin_vel_x = (-0.5, 1)
-  twist_cmd.ranges.lin_vel_y = (-0.5, 0.5)
-  twist_cmd.ranges.ang_vel_z = (-0.5, 0.5)
+  twist_cmd.ranges.lin_vel_x = (-0.4, 0.4)
+  twist_cmd.ranges.lin_vel_y = (-0.3, 0.3)
+  twist_cmd.ranges.ang_vel_z = (-1.0, 1.0)
 
   cfg.observations["critic"].terms["foot_height"].params[
     "asset_cfg"
@@ -107,9 +111,9 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
   cfg.rewards["pose"].params["std_walking"] = {
     r".*hip_yaw": 0.3, # was 0.15
-    r".*hip_pitch": 0.4, # was 0.5
+    r".*hip_pitch": 0.5, # was 0.5
     r".*hip_roll": 0.05, # was 0.15
-    r".*knee": 0.4, # was 0.5
+    r".*knee": 0.5, # was 0.5
     r".*ankle": 0.25, # was 0.15
   }
   cfg.rewards["pose"].params["std_running"] = {
@@ -144,13 +148,14 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       params={"limit_angle": math.radians(50.0)},
     )
 
+  cfg.events["push_robot"].interval_range_s=(3., 6.)
   cfg.events["push_robot"].params["velocity_range"] = {
       "x": (-0.3, 0.3),
-      "y": (-0.1, 0.1),
-      "z": (-0.2, 0.2),
-      "roll": (-0.3, 0.3),
-      "pitch": (-0.3, 0.3),
-      "yaw": (-0.5, 0.5),
+      "y": (-0.3, 0.3),
+      "z": (0., 0.),
+      "roll": (0., 0.),
+      "pitch": (0., 0.),
+      "yaw": (0., 0.),
   }
 
   cfg.events["base_com"].params["ranges"] = {
@@ -161,6 +166,37 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.events["reset_robot_joints"].params["position_range"]= (-0.05, 0.05)
 
+
+  # Start with walking, then increase smoothness and standing practice.
+  twist_cmd.rel_standing_envs = 0.02
+  cfg.curriculum["action_rate_weight"] = CurriculumTermCfg(
+    func=velocity_mdp.reward_weight,
+    params={
+      "reward_name": "action_rate_l2",
+      "weight_stages": [
+        {"step": 0, "weight": -0.1},
+        {"step": 500 * NUM_STEPS_PER_ENV, "weight": -0.2},
+        {"step": 750 * NUM_STEPS_PER_ENV, "weight": -0.4},
+        {"step": 1000 * NUM_STEPS_PER_ENV, "weight": -0.6},
+        {"step": 1250 * NUM_STEPS_PER_ENV, "weight": -0.8},
+        {"step": 1500 * NUM_STEPS_PER_ENV, "weight": -1.0},
+      ],
+    },
+  )
+  cfg.curriculum["standing_envs"] = CurriculumTermCfg(
+    func=velocity_mdp.standing_envs_curriculum,
+    params={
+      "command_name": "twist",
+      "standing_stages": [
+        {"step": 0, "rel_standing_envs": 0.02},
+        {"step": 500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.05},
+        {"step": 750 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.1},
+        {"step": 1000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.15},
+        {"step": 1500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.2},
+        {"step": 2000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.25},
+      ],
+    },
+  )
 
   if play:
     cfg.events["push_robot"] = EventTermCfg(

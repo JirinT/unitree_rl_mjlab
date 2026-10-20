@@ -94,7 +94,8 @@
                 <inertial pos="0.0065865 -0.0167241 0.0187619" mass="0.036" fullinertia="1.14862e-05 2.53897e-05 1.86586e-05 6.35074e-07 -6.0493e-08 -1.64915e-07"/>
                 <!-- Part left_foot -->
                 <geom type="mesh" class="visual" pos="0.0212202 0.153948 -0.0568561" quat="0.5 -0.5 -0.5 -0.5" mesh="left_foot" material="left_foot_material"/>
-                <geom class="collision" name="left_foot_collision" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/>
+                <!-- <geom class="collision" name="left_foot_collision" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/> -->
+                <geom type="mesh" class="collision" name="left_foot_collision" pos="0.0212202 0.153948 -0.0568561" quat="0.5 -0.5 -0.5 -0.5" mesh="left_foot" material="left_foot_material" friction="1.0 0.005 0.0001"/>
                 <site name="left_foot_site" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" rgba="0 1 0 0"/>
               </body>
             </body>
@@ -152,7 +153,8 @@
                 <inertial pos="0.00658657 -0.0167241 0.0184881" mass="0.036" fullinertia="1.14863e-05 2.53896e-05 1.86585e-05 6.35039e-07 6.0488e-08 1.64901e-07"/>
                 <!-- Part right_foot -->
                 <geom type="mesh" class="visual" pos="0.0212202 0.153948 0.0941061" quat="0.5 -0.5 -0.5 -0.5" mesh="right_foot" material="right_foot_material"/>
-                <geom class="collision" name="right_foot_collision" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/>
+                <!-- <geom class="collision" name="right_foot_collision" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" friction="1.0 0.005 0.0001"/> -->
+                <geom type="mesh" class="collision" name="right_foot_collision" pos="0.0212202 0.153948 0.0941061" quat="0.5 -0.5 -0.5 -0.5" mesh="right_foot" material="right_foot_material" friction="1.0 0.005 0.0001"/>
                 <site name="right_foot_site" type="cylinder" size="0.02 0.04" pos="0.007 -0.007 0.02" euler="0 1.5708 0" rgba="0 1 0 0"/>
               </body>
             </body>

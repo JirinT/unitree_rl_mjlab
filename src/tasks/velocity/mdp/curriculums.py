@@ -27,6 +27,11 @@ class RewardWeightStage(TypedDict):
   weight: float
 
 
+class StandingStage(TypedDict):
+  step: int
+  rel_standing_envs: float
+
+
 def terrain_levels_vel(
   env: ManagerBasedRlEnv,
   env_ids: torch.Tensor,
@@ -102,6 +107,23 @@ def reward_weight(
   del env_ids  # Unused.
   reward_term_cfg = env.reward_manager.get_term_cfg(reward_name)
   for stage in weight_stages:
-    if env.common_step_counter > stage["step"]:
+    if env.common_step_counter >= stage["step"]:
       reward_term_cfg.weight = stage["weight"]
   return torch.tensor([reward_term_cfg.weight])
+
+
+def standing_envs_curriculum(
+  env: ManagerBasedRlEnv,
+  env_ids: torch.Tensor,
+  command_name: str,
+  standing_stages: list[StandingStage],
+) -> torch.Tensor:
+  """Update standing probability for future command resampling by training step."""
+  del env_ids  # Unused: the command configuration is shared by all environments.
+  command_term = env.command_manager.get_term(command_name)
+  assert command_term is not None
+  cfg = cast(UniformVelocityCommandCfg, command_term.cfg)
+  for stage in standing_stages:
+    if env.common_step_counter >= stage["step"]:
+      cfg.rel_standing_envs = stage["rel_standing_envs"]
+  return torch.tensor([cfg.rel_standing_envs])
