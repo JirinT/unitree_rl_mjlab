@@ -172,23 +172,23 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.events["reset_robot_joints"].params["position_range"]= (-0.05, 0.05)
 
-
+  cfg.rewards["action_rate_l2"].weight = -0.1
   # Start with walking, then increase smoothness and standing practice.
   # twist_cmd.rel_standing_envs = 0.02
-  cfg.curriculum["action_rate_weight"] = CurriculumTermCfg(
-    func=velocity_mdp.reward_weight,
-    params={
-      "reward_name": "action_rate_l2",
-      "weight_stages": [
-        {"step": 0, "weight": -0.1},
-        {"step": 500 * NUM_STEPS_PER_ENV, "weight": -0.2},
-        {"step": 750 * NUM_STEPS_PER_ENV, "weight": -0.4},
-        {"step": 1000 * NUM_STEPS_PER_ENV, "weight": -0.6},
-        {"step": 1250 * NUM_STEPS_PER_ENV, "weight": -0.8},
-        {"step": 1500 * NUM_STEPS_PER_ENV, "weight": -1.0},
-      ],
-    },
-  )
+  # cfg.curriculum["action_rate_weight"] = CurriculumTermCfg(
+  #   func=velocity_mdp.reward_weight,
+  #   params={
+  #     "reward_name": "action_rate_l2",
+  #     "weight_stages": [
+  #       {"step": 0, "weight": -0.1},
+  #       {"step": 500 * NUM_STEPS_PER_ENV, "weight": -0.2},
+  #       {"step": 750 * NUM_STEPS_PER_ENV, "weight": -0.4},
+  #       {"step": 1000 * NUM_STEPS_PER_ENV, "weight": -0.6},
+  #       {"step": 1250 * NUM_STEPS_PER_ENV, "weight": -0.8},
+  #       {"step": 1500 * NUM_STEPS_PER_ENV, "weight": -1.0},
+  #     ],
+  #   },
+  # )
   # cfg.curriculum["standing_envs"] = CurriculumTermCfg(
   #   func=velocity_mdp.standing_envs_curriculum,
   #   params={
