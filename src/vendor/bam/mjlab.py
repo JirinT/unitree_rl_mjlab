@@ -32,6 +32,8 @@ Usage example — custom JSON path::
 
 from __future__ import annotations
 
+import json
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -157,6 +159,31 @@ class BamActuatorCfg(ActuatorCfg):
             "_resolved_json_path",
             _resolve_json_path(self.json_path, self.motor_name, self.model),
         )
+
+        # The Waveshare fitter records firmware settings outside the fitted
+        # scalar parameters. Preserve them unless the caller explicitly overrides.
+        if self.json_path is not None:
+            with open(self._resolved_json_path) as stream:
+                data = json.load(stream)
+            if data.get("actuator") in {"waveshare_st3215", "waveshare_st3025"}:
+                settings = data.get("hardware_settings", [])
+                for field, key in (("vin", "vin"), ("kp_fw", "kp")):
+                    if getattr(self, field) is not None:
+                        continue
+                    values = [row[key] for row in settings if key in row]
+                    if not values:
+                        continue  # Same controller defaults as identification.
+                    if any(not isinstance(value, (int, float))
+                           or not math.isfinite(value) or value <= 0 for value in values):
+                        raise ValueError(f"Invalid Waveshare hardware_settings {key}: {values}")
+                    if any(not math.isclose(value, values[0], rel_tol=1e-6, abs_tol=1e-9)
+                           for value in values):
+                        raise ValueError(
+                            f"Waveshare JSON contains multiple {key} settings: {values}. "
+                            f"Set {field} explicitly in BamActuatorCfg "
+                            "(MINI_PAWO_BAM_VIN / MINI_PAWO_BAM_KP_FW)."
+                        )
+                    setattr(self, field, float(values[0]))
 
     def build(
         self,

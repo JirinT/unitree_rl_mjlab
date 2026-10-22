@@ -1,5 +1,6 @@
 """Mini Pawo humanoid 10 DOF constants."""
 
+from dataclasses import fields, replace
 from pathlib import Path
 
 import mujoco
@@ -36,19 +37,97 @@ def get_spec() -> mujoco.MjSpec:
 # Actuator config.
 ##
 
-MINI_PAWO_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
-    target_names_expr=(
-        ".*hip_yaw",
-        ".*hip_roll",
-        ".*hip_pitch",
-        ".*knee",
-        ".*ankle",
-    ),
+# This is the default for both training and playback (no CLI override needed).
+MINI_PAWO_ACTUATOR_MODEL = "bam"  # "builtin" or "bam"
+# Set this to the JSON produced by your BAM identification. Relative paths are
+# resolved from this directory, independently of the process working directory.
+# Drop your Waveshare fit here (any M1-M6, saved under this fixed filename).
+MINI_PAWO_BAM_DROP_IN_JSON = SRC_PATH / "vendor" / "bam" / "params" / "waveshare_st3215" / "model.json"
+# An explicit path takes precedence. None auto-selects the drop-in file if present.
+MINI_PAWO_BAM_JSON_PATH: Path | None = None
+# Used only when JSON_PATH is None. This bundled fit is an experimental stand-in,
+# not an identified model of MiniPawo's own servos.
+MINI_PAWO_BAM_MOTOR_NAME = "feetech_sts3215_7_4V"
+MINI_PAWO_BAM_FRICTION_MODEL = "m6"
+MINI_PAWO_BAM_VIN: float | None = None  # None: controller/model default
+MINI_PAWO_BAM_KP_FW: float | None = None  # Firmware gain, not PD stiffness
+MINI_PAWO_BAM_DELAY_MIN = 3
+MINI_PAWO_BAM_DELAY_MAX = 6
+
+MINI_PAWO_LEG_JOINTS = (
+    ".*hip_yaw", ".*hip_roll", ".*hip_pitch", ".*knee", ".*ankle",
+)
+
+MINI_PAWO_BUILTIN_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
+    target_names_expr=MINI_PAWO_LEG_JOINTS,
     stiffness=10.0,
     damping=2.5,
     effort_limit=2.94,
     armature=0.015,
 )
+
+
+def make_mini_pawo_bam_actuator(
+    *, json_path=None, motor_name=None, model=None, vin=None, kp_fw=None,
+    delay_min_lag=0, delay_max_lag=0,
+):
+  """Construct BAM using the documented API and the local mjlab 1.2 adapter."""
+  from src.vendor.bam.mjlab import BamActuatorCfg
+
+  if (not isinstance(delay_min_lag, int) or not isinstance(delay_max_lag, int)
+      or not 0 <= delay_min_lag <= delay_max_lag):
+    raise ValueError("BAM delay must satisfy 0 <= min <= max (physics steps)")
+  if json_path is not None:
+    path = Path(json_path).expanduser()
+    if not path.is_absolute():
+      path = Path(__file__).parent / path
+    path = path.resolve()
+    if not path.is_file():
+      raise FileNotFoundError(f"MiniPawo BAM parameter file not found: {path}")
+    json_path = str(path)
+  actuator = BamActuatorCfg(
+      json_path=json_path, motor_name=motor_name, model=model,
+      target_names_expr=MINI_PAWO_LEG_JOINTS, vin=vin, kp_fw=kp_fw,
+  )
+  if delay_max_lag:
+    if "delay_max_lag" in {field.name for field in fields(actuator)}:
+      actuator = replace(actuator, delay_min_lag=delay_min_lag,
+                         delay_max_lag=delay_max_lag)
+    else:
+      from mjlab.actuator import DelayedActuatorCfg
+      actuator = DelayedActuatorCfg(
+          base_cfg=actuator, delay_target="position",
+          delay_min_lag=delay_min_lag, delay_max_lag=delay_max_lag,
+      )
+  return actuator
+
+
+def _default_leg_actuator():
+  if MINI_PAWO_ACTUATOR_MODEL == "builtin":
+    return MINI_PAWO_BUILTIN_ACTUATOR_LEG
+  if MINI_PAWO_ACTUATOR_MODEL != "bam":
+    raise ValueError("MINI_PAWO_ACTUATOR_MODEL must be 'builtin' or 'bam'")
+  json_path = MINI_PAWO_BAM_JSON_PATH
+  if json_path is None:
+    drop_in = Path(__file__).parent / MINI_PAWO_BAM_DROP_IN_JSON
+    if drop_in.is_file():
+      json_path = drop_in
+    else:
+      print(f"[MiniPawo BAM] No Waveshare fit at {drop_in}; "
+            "using the bundled experimental STS3215 fit.")
+  source = (
+      {"json_path": json_path}
+      if json_path is not None else
+      {"motor_name": MINI_PAWO_BAM_MOTOR_NAME, "model": MINI_PAWO_BAM_FRICTION_MODEL}
+  )
+  return make_mini_pawo_bam_actuator(
+      **source, vin=MINI_PAWO_BAM_VIN, kp_fw=MINI_PAWO_BAM_KP_FW,
+      delay_min_lag=MINI_PAWO_BAM_DELAY_MIN,
+      delay_max_lag=MINI_PAWO_BAM_DELAY_MAX,
+  )
+
+
+MINI_PAWO_ACTUATOR_LEG = _default_leg_actuator()
 
 
 ##
@@ -104,11 +183,8 @@ def get_mini_pawo_robot_cfg() -> EntityCfg:
 # MINI_PAWO_ACTION_RANGE_RAD = 1.0  # 57 deg
 MINI_PAWO_ACTION_RANGE_RAD = .25  # 57 deg
 MINI_PAWO_ACTION_SCALE: dict[str, float] = {}
-for a in MINI_PAWO_ARTICULATION.actuators:
-  assert isinstance(a, BuiltinPositionActuatorCfg)
-  names = a.target_names_expr
-  for n in names:
-    MINI_PAWO_ACTION_SCALE[n] = MINI_PAWO_ACTION_RANGE_RAD
+for name in MINI_PAWO_LEG_JOINTS:
+  MINI_PAWO_ACTION_SCALE[name] = MINI_PAWO_ACTION_RANGE_RAD
 
 
 if __name__ == "__main__":

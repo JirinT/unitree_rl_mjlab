@@ -32,6 +32,12 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.sim.nconmax = 48
 
   cfg.scene.entities = {"robot": get_mini_pawo_robot_cfg()}
+  # BAM requires these fields expanded before any simulation steps, including
+  # callers that construct the task directly without train.py or play.py.
+  from src.assets.robots.mini_pawo.actuator_cfg import describe_actuators
+  if describe_actuators(cfg.scene.entities["robot"])["actuator_model"] == "bam":
+    from src.vendor.bam.mjlab import bam_init
+    cfg.events["bam_init"] = EventTermCfg(func=bam_init, mode="startup")
 
   for sensor in cfg.scene.sensors or ():
     if sensor.name == "terrain_scan":
@@ -85,7 +91,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   twist_cmd.debug_vis = False
   twist_cmd.viz.z_offset = 1.0
   twist_cmd.viz.y_offset = -0.5
-  twist_cmd.ranges.lin_vel_x = (-0.4, 0.4)
+  twist_cmd.ranges.lin_vel_x = (-0.5, 1.0)
   twist_cmd.ranges.lin_vel_y = (-0.3, 0.3)
   twist_cmd.ranges.ang_vel_z = (-1.0, 1.0)
 
@@ -110,11 +116,11 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   cfg.rewards["pose"].params["running_threshold"] = 1 # was 0.7
   cfg.rewards["pose"].params["std_standing"] = {".*": 0.05}
   cfg.rewards["pose"].params["std_walking"] = {
-    r".*hip_yaw": 0.3, # was 0.15
+    r".*hip_yaw": 0.15, # was 0.15
     r".*hip_pitch": 0.5, # was 0.5
-    r".*hip_roll": 0.05, # was 0.15
+    r".*hip_roll": 0.15, # was 0.15
     r".*knee": 0.5, # was 0.5
-    r".*ankle": 0.25, # was 0.15
+    r".*ankle": 0.15, # was 0.15
   }
   cfg.rewards["pose"].params["std_running"] = {
     r".*hip_yaw": 0.25,
@@ -150,8 +156,8 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
   cfg.events["push_robot"].interval_range_s=(3., 6.)
   cfg.events["push_robot"].params["velocity_range"] = {
-      "x": (-0.3, 0.3),
-      "y": (-0.3, 0.3),
+      "x": (-0.4, 0.4),
+      "y": (-0.4, 0.4),
       "z": (0., 0.),
       "roll": (0., 0.),
       "pitch": (0., 0.),
@@ -168,7 +174,7 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
 
 
   # Start with walking, then increase smoothness and standing practice.
-  twist_cmd.rel_standing_envs = 0.02
+  # twist_cmd.rel_standing_envs = 0.02
   cfg.curriculum["action_rate_weight"] = CurriculumTermCfg(
     func=velocity_mdp.reward_weight,
     params={
@@ -183,20 +189,20 @@ def mini_pawo_rough_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
       ],
     },
   )
-  cfg.curriculum["standing_envs"] = CurriculumTermCfg(
-    func=velocity_mdp.standing_envs_curriculum,
-    params={
-      "command_name": "twist",
-      "standing_stages": [
-        {"step": 0, "rel_standing_envs": 0.02},
-        {"step": 500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.05},
-        {"step": 750 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.1},
-        {"step": 1000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.15},
-        {"step": 1500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.2},
-        {"step": 2000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.25},
-      ],
-    },
-  )
+  # cfg.curriculum["standing_envs"] = CurriculumTermCfg(
+  #   func=velocity_mdp.standing_envs_curriculum,
+  #   params={
+  #     "command_name": "twist",
+  #     "standing_stages": [
+  #       {"step": 0, "rel_standing_envs": 0.02},
+  #       {"step": 500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.05},
+  #       {"step": 750 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.1},
+  #       {"step": 1000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.15},
+  #       {"step": 1500 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.2},
+  #       {"step": 2000 * NUM_STEPS_PER_ENV, "rel_standing_envs": 0.25},
+  #     ],
+  #   },
+  # )
 
   if play:
     cfg.events["push_robot"] = EventTermCfg(
