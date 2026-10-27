@@ -34,7 +34,7 @@ def get_spec() -> mujoco.MjSpec:
 # Actuator config.
 ##
 
-MINI_PAWO_ACTUATOR_MODEL = "bam"  # "builtin" or "bam"
+MINI_PAWO_ACTUATOR_MODEL = "builtin"  # "builtin" or "bam"
 
 MINI_PAWO_BAM_JSON_PATH = SRC_PATH / "vendor" / "bam" / "params" / "waveshare_st3215" / "m6.json"
 MINI_PAWO_BAM_VIN: float | None = None  # None: controller/model default
