@@ -17,7 +17,7 @@ from mjlab.tasks.velocity import mdp
 from mjlab.tasks.velocity.mdp import UniformVelocityCommandCfg
 from src.tasks.velocity.velocity_env_cfg import make_velocity_env_cfg
 
-GAIT_PERIOD = 0.4
+GAIT_PERIOD = 0.5
 
 def mini_pawo_flat_env_cfg(play: bool = False) -> ManagerBasedRlEnvCfg:
   """Create Mini Pawo humanoid flat velocity configuration."""
