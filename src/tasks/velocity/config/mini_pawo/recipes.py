@@ -8,6 +8,7 @@ from mjlab.envs import ManagerBasedRlEnvCfg
 from .modifiers.add_sensor_latency import add_sensor_latency
 from .modifiers.add_bam_actuator import add_bam_actuator
 from .modifiers.add_actuator_latency import add_actuator_latency
+from .modifiers.add_action_scale import add_action_scale
 
 # A modifier edits its own environment configuration in place.
 Modifier = Callable[[ManagerBasedRlEnvCfg], None]
@@ -49,4 +50,14 @@ BAM_ACTUATOR_LATENCY = Recipe(
 BAM_SENSOR_ACTUATOR_LATENCY = Recipe(
   name="bam_sensor_actuator_latency",
   modifiers=BAM_SENSOR_LATENCY.modifiers + ACTUATOR_LATENCY.modifiers,
+)
+
+ACTION_SCALE = Recipe(
+  name="action_scale",
+  modifiers=(add_action_scale,),
+)
+
+BAM_ACTION_SCALE = Recipe(
+  name="action_scale",
+  modifiers=BAM.modifiers + ACTION_SCALE.modifiers,
 )

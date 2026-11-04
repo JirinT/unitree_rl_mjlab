@@ -8,15 +8,17 @@ from .env_cfgs import (
 from dataclasses import replace
 
 from .recipes import (
-  ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
+  ACTION_SCALE, ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
   BAM_SENSOR_ACTUATOR_LATENCY, SENSOR_LATENCY,
 )
 from .rl_cfg import mini_pawo_ppo_runner_cfg 
 
 for task_id, recipe, experiment_name in (
   ("MiniPawo-Flat", BASELINE, "MiniPawo_velocity"),
+  ("MiniPawo-Flat-ActionScale", ACTION_SCALE, "MiniPawo_action_scale"),
   ("MiniPawo-Flat-SensorLatency", SENSOR_LATENCY, "MiniPawo_sensor_latency"),
   ("MiniPawo-Flat-ActuatorLatency", ACTUATOR_LATENCY, "MiniPawo_actuator_latency"),
+  ("MiniPawo-Flat-BAM", BAM, "MiniPawo_bam"),
   ("MiniPawo-Flat-BAM", BAM, "MiniPawo_bam"),
   ("MiniPawo-Flat-BAM-ActuatorLatency", BAM_ACTUATOR_LATENCY, "MiniPawo_bam_actuator_latency"),
   ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency", BAM_SENSOR_ACTUATOR_LATENCY, "MiniPawo_bam_sensor_actuator_latency"),
