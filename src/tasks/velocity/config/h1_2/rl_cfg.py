@@ -42,5 +42,5 @@ def unitree_h1_2_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
     experiment_name="h1_2_velocity",
     save_interval=100,
     num_steps_per_env=24,
-    max_iterations=10001,
+    max_iterations=50001,
   )
