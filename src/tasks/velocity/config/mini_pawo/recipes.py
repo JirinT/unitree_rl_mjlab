@@ -42,6 +42,11 @@ ACTUATOR_LATENCY = Recipe(
   modifiers=(add_actuator_latency,),
 )
 
+ACTUATOR_SENSOR_LATENCY = Recipe(
+  name="actuator_sensor_latency",
+  modifiers=ACTUATOR_LATENCY.modifiers + SENSOR_LATENCY.modifiers,
+)
+
 BAM_ACTUATOR_LATENCY = Recipe(
   name="bam_actuator_latency",
   modifiers=BAM.modifiers + ACTUATOR_LATENCY.modifiers,
