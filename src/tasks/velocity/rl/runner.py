@@ -2,6 +2,8 @@ import os
 
 import wandb
 
+from src.assets.robots.unitree_h1_2.deployment import deployment_metadata
+
 from mjlab.rl import RslRlVecEnvWrapper
 from mjlab.rl.exporter_utils import (
   attach_metadata_to_onnx,
@@ -23,6 +25,7 @@ class VelocityOnPolicyRunner(MjlabOnPolicyRunner):
     )  # type: ignore[assignment]
     onnx_path = os.path.join(policy_path, filename)
     metadata = get_base_metadata(self.env.unwrapped, run_name)
+    metadata.update(deployment_metadata(self.env.unwrapped))
     joint_action = self.env.unwrapped.action_manager.get_term("joint_pos")
     if hasattr(joint_action, "arm_action_ids"):
       # Exported policy contains no random generator or arm override controller.

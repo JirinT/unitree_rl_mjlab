@@ -7,7 +7,7 @@ from .env_cfgs import (
   unitree_h1_2_flat_env_cfg,
   unitree_h1_2_rough_env_cfg,
 )
-from .recipes import ARM_INTERVENTION, BASELINE, HAND_TRACKING
+from .recipes import ARM_INTERVENTION, ARM_INTERVENTION_DEPLOYMENT, BASELINE, HAND_TRACKING
 from .rl_cfg import unitree_h1_2_ppo_runner_cfg
 
 for task_id, env_cfg_factory, recipe, experiment_name in (
@@ -17,6 +17,7 @@ for task_id, env_cfg_factory, recipe, experiment_name in (
   ("Unitree-H1_2-Flat-HandTracking", unitree_h1_2_flat_env_cfg, HAND_TRACKING, "h1_2_hand_tracking"),
   ("Unitree-H1_2-Rough-ArmIntervention", unitree_h1_2_rough_env_cfg, ARM_INTERVENTION, "h1_2_arm_intervention"),
   ("Unitree-H1_2-Flat-ArmIntervention", unitree_h1_2_flat_env_cfg, ARM_INTERVENTION, "h1_2_arm_intervention"),
+  ("Unitree-H1_2-Flat-ArmIntervention-Deployment", unitree_h1_2_flat_env_cfg, ARM_INTERVENTION_DEPLOYMENT, "h1_2_arm_intervention_deployment"),
 ):
   register_mjlab_task(
     task_id=task_id,

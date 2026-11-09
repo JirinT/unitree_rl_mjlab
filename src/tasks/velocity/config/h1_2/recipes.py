@@ -7,6 +7,7 @@ from mjlab.envs import ManagerBasedRlEnvCfg
 
 from .modifiers.add_hand_tracking import add_hand_tracking
 from .modifiers.add_arm_intervention import add_arm_intervention
+from .modifiers.match_unitree_mujoco import match_unitree_mujoco
 
 # A modifier edits its own environment configuration in place.
 Modifier = Callable[[ManagerBasedRlEnvCfg], None]
@@ -30,4 +31,10 @@ HAND_TRACKING = Recipe(
 ARM_INTERVENTION = Recipe(
   name="arm_intervention",
   modifiers=(add_arm_intervention,),
+)
+
+
+ARM_INTERVENTION_DEPLOYMENT = Recipe(
+  name="arm_intervention_deployment",
+  modifiers=(match_unitree_mujoco, add_arm_intervention),
 )
