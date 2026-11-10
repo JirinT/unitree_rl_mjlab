@@ -105,3 +105,9 @@ BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RNDM = Recipe(
   modifiers=(BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE.modifiers
              + BASE_ORIENTATION_RANDOMIZATION.modifiers),
 )
+
+
+BAM_SENSOR_LATENCY_ACTION_SCALE = Recipe(
+  name="bam_sensor_latency_action_scale",
+  modifiers=BAM_SENSOR_LATENCY.modifiers + ACTION_SCALE.modifiers,
+)

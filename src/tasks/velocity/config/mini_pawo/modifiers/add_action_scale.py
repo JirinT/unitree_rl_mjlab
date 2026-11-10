@@ -3,7 +3,7 @@
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs.mdp.actions import JointPositionActionCfg
 
-ACTION_SCALE = 0.25
+ACTION_SCALE = 0.5
 
 def add_action_scale(cfg: ManagerBasedRlEnvCfg) -> None:
   """Scale each raw action by 0.25 rad, keeping the default-pose offset.

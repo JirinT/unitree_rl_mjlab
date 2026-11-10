@@ -8,13 +8,15 @@ from .env_cfgs import (
 from dataclasses import replace
 
 from .recipes import (
+  BAM_SENSOR_LATENCY_ACTION_SCALE,
   BASE_ORIENTATION_RANDOMIZATION,
   JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
   BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
   BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RNDM,
   JOINT_PAIR_ACTION_SCALE, BAM_JOINT_PAIR_ACTION_SCALE,
   BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE,
-  ACTION_SCALE, ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
+  ACTION_SCALE, 
+  ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
   BAM_SENSOR_ACTUATOR_LATENCY, SENSOR_LATENCY, BAM_ACTION_SCALE, ACTUATOR_SENSOR_LATENCY
 )
 from .rl_cfg import mini_pawo_ppo_runner_cfg 
@@ -46,6 +48,8 @@ for task_id, recipe, experiment_name in (
   ("MiniPawo-Flat-BAM-ActuatorLatency", BAM_ACTUATOR_LATENCY, "MiniPawo_bam_actuator_latency"),
   ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency", BAM_SENSOR_ACTUATOR_LATENCY, "MiniPawo_bam_sensor_actuator_latency"),
   ("MiniPawo-Flat-BAM-SensorLatency", BAM_SENSOR_LATENCY, "MiniPawo_bam_sensor_latency"),
+  ("MiniPawo-Flat-BAM-SensorLatency-ActionScale", BAM_SENSOR_LATENCY_ACTION_SCALE,
+   "MiniPawo_bam_sensor_latency_action_scale"),
 ):
   register_mjlab_task(
     task_id=task_id,
