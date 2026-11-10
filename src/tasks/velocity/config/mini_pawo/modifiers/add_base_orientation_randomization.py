@@ -5,10 +5,6 @@ import math
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 
-# EDIT THESE. Only recipes containing this modifier use these settings.
-# Limits follow the optional Microduck reset-orientation feature:
-# https://github.com/pollen-robotics/microduck_rl/blob/develop/src/mjlab_microduck/tasks/microduck_velocity_env_cfg.py
-ENABLE_BASE_ORIENTATION_RANDOMIZATION = True
 BASE_ORIENTATION_MAX_PITCH_DEG = 10.0
 BASE_ORIENTATION_MAX_ROLL_DEG = 5.0
 
@@ -22,8 +18,6 @@ def add_base_orientation_randomization(cfg: ManagerBasedRlEnvCfg) -> None:
   Enabled in both training and playback for the recipes that select it.
   This changes initial conditions; interval pushes are a separate event.
   """
-  if not ENABLE_BASE_ORIENTATION_RANDOMIZATION:
-    return
   limits = {
     "pitch": BASE_ORIENTATION_MAX_PITCH_DEG,
     "roll": BASE_ORIENTATION_MAX_ROLL_DEG,
