@@ -53,7 +53,7 @@ MINI_PAWO_LEG_JOINTS = (
 MINI_PAWO_BUILTIN_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
     target_names_expr=MINI_PAWO_LEG_JOINTS,
     stiffness=10.0,
-    damping=2.5,
+    damping=1.5,
     effort_limit=2.94,
     armature=0.015,
 )
