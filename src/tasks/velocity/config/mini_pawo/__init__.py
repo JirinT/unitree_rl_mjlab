@@ -8,12 +8,34 @@ from .env_cfgs import (
 from dataclasses import replace
 
 from .recipes import (
+  BASE_ORIENTATION_RANDOMIZATION,
+  JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  JOINT_PAIR_ACTION_SCALE, BAM_JOINT_PAIR_ACTION_SCALE,
+  BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE,
   ACTION_SCALE, ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
   BAM_SENSOR_ACTUATOR_LATENCY, SENSOR_LATENCY, BAM_ACTION_SCALE, ACTUATOR_SENSOR_LATENCY
 )
 from .rl_cfg import mini_pawo_ppo_runner_cfg 
 
 for task_id, recipe, experiment_name in (
+  ("MiniPawo-Flat-BaseOrientationRandomization", BASE_ORIENTATION_RANDOMIZATION,
+   "MiniPawo_base_orientation_randomization"),
+  ("MiniPawo-Flat-JointPairActionScale-BaseOrientationRandomization",
+   JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+   "MiniPawo_joint_pair_scale_base_orientation"),
+  ("MiniPawo-Flat-BAM-JointPairActionScale-BaseOrientationRandomization",
+   BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+   "MiniPawo_bam_joint_pair_scale_base_orientation"),
+  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-JointPairActionScale-BaseOrientationRandomization",
+   BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+   "MiniPawo_bam_sensor_actuator_latency_joint_pair_scale_base_orientation"),
+  ("MiniPawo-Flat-JointPairActionScale", JOINT_PAIR_ACTION_SCALE, "MiniPawo_joint_pair_action_scale"),
+  ("MiniPawo-Flat-BAM-JointPairActionScale", BAM_JOINT_PAIR_ACTION_SCALE, "MiniPawo_bam_joint_pair_action_scale"),
+  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-JointPairActionScale",
+   BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE,
+   "MiniPawo_bam_sensor_actuator_latency_joint_pair_action_scale"),
   ("MiniPawo-Flat", BASELINE, "MiniPawo_velocity"),
   ("MiniPawo-Flat-ActionScale", ACTION_SCALE, "MiniPawo_action_scale"),
   ("MiniPawo-Flat-SensorLatency", SENSOR_LATENCY, "MiniPawo_sensor_latency"),
