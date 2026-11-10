@@ -3,11 +3,11 @@
 from mjlab.envs import ManagerBasedRlEnvCfg
 
 JOINT_PAIR_ACTION_SCALES = {
-  "hip_yaw": 0.25,
-  "hip_roll": 0.25,
-  "hip_pitch": 0.25,
-  "knee": 0.25,
-  "ankle": 0.25,
+  "hip_yaw": 0.5,
+  "hip_roll": 0.5,
+  "hip_pitch": 0.5,
+  "knee": 0.5,
+  "ankle": 0.5,
 }
 
 

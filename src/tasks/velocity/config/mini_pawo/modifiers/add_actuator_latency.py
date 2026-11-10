@@ -23,7 +23,7 @@ def add_actuator_latency(cfg: ManagerBasedRlEnvCfg) -> None:
         base_cfg=actuator,
         delay_target="position",
         delay_min_lag=3,
-        delay_max_lag=6,
+        delay_max_lag=3,
       )
     actuators.append(actuator)
   robot.articulation = replace(robot.articulation, actuators=tuple(actuators))
