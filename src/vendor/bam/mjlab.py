@@ -103,6 +103,7 @@ class BamActuatorCfg(ActuatorCfg):
     :param json_path: Path to a custom BAM params JSON file produced by ``bam.fit``. Mutually exclusive with ``motor_name`` and ``model``.
     :param target_names_expr: Tuple of regex patterns to match actuated joint names.
     :param vin: Supply voltage override [V]. ``None`` → uses the value in the JSON.
+    :param kd_fw: External PWM derivative gain override; None preserves the fit.
     :param kp_fw: Firmware P-gain override. ``None`` → uses the value in the JSON.
     :param vin_range: If set, a per-env battery voltage is sampled uniformly from this
         range at startup and held constant across resets. Takes precedence over ``vin``.
@@ -141,6 +142,7 @@ class BamActuatorCfg(ActuatorCfg):
     json_path: str | None = None
     vin: float | None = None
     kp_fw: float | None = None
+    kd_fw: float | None = None
     vin_range: tuple[float, float] | None = None
     vin_drop_resistance_range: tuple[float, float] | None = None
     vin_min: float | None = None
@@ -148,6 +150,8 @@ class BamActuatorCfg(ActuatorCfg):
     stiff_frictionloss: bool = True
 
     def __post_init__(self) -> None:
+        if self.kd_fw is not None and (not math.isfinite(self.kd_fw) or not 0 <= self.kd_fw <= 2.55):
+            raise ValueError("kd_fw must be finite and within ESP range [0, 2.55]")
         if self.json_path is not None and (
             self.motor_name is not None or self.model is not None
         ):
@@ -165,7 +169,7 @@ class BamActuatorCfg(ActuatorCfg):
         if self.json_path is not None:
             with open(self._resolved_json_path) as stream:
                 data = json.load(stream)
-            if data.get("actuator") in {"waveshare_st3215", "waveshare_st3025"}:
+            if data.get("actuator") in {"waveshare_st3215", "waveshare_st3025", "esp_pwm_st3215"}:
                 settings = data.get("hardware_settings", [])
                 for field, key in (("vin", "vin"), ("kp_fw", "kp")):
                     if getattr(self, field) is not None:
@@ -245,6 +249,11 @@ class BamActuator(Actuator):
             self._bam_model.actuator.vin = cfg.vin
         if cfg.kp_fw is not None:
             self._bam_model.actuator.kp = cfg.kp_fw
+
+        if cfg.kd_fw is not None:
+            if not hasattr(self._bam_model, "controller_kd"):
+                raise ValueError("kd_fw requires an external PWM-PD actuator model")
+            self._bam_model.controller_kd.value = cfg.kd_fw
 
         if not isinstance(self._bam_model.actuator, DCMotorActuator):
             raise NotImplementedError(
@@ -734,15 +743,11 @@ class BamActuator(Actuator):
         # the vectorized firmware controller with no re-implementation.
         act.vin = vin  # (N, 1)
         act.kp = self._base_kp * self.kp_scale  # (N, 1)
-        # kd_scale scales the electrical (back-EMF) damping only. Both
-        # compute_control (current-limiter back-EMF) and compute_torque
-        # (motor-torque back-EMF) use the velocity solely in that term, so
-        # feeding them a scaled velocity applies kd_scale consistently. The
-        # firmware current limit is modelled inside compute_control as a
-        # duty-cycle constraint (torque_enable handled by the Simulator).
+        # Electrical damping randomization must not change the external PD gain.
         scaled_vel = vel * self.kd_scale
+        controller_vel = vel if hasattr(self._bam_model, "controller_kd") else scaled_vel
         control = act.compute_control(
-            cmd.position_target, cmd.pos, scaled_vel, self._dt
+            cmd.position_target, cmd.pos, controller_vel, self._dt
         )
         motor_torque = act.compute_torque(control, True, cmd.pos, scaled_vel)
 

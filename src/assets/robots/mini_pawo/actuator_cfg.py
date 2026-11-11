@@ -66,6 +66,7 @@ def describe_actuators(robot_cfg):
         actuator_model="bam", bam_json_path=base._resolved_json_path,
         bam_actuator=parameters["actuator"],
         bam_friction_model=parameters["model"], bam_voltage=base.vin, bam_kp_fw=base.kp_fw,
+        bam_kd_fw=base.kd_fw if base.kd_fw is not None else parameters.get("controller_kd"),
         bam_command_delay_min=getattr(actuator, "delay_min_lag", 0),
         bam_command_delay_max=getattr(actuator, "delay_max_lag", 0),
     )

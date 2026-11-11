@@ -53,14 +53,14 @@ MINI_PAWO_LEG_JOINTS = (
 MINI_PAWO_BUILTIN_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
     target_names_expr=MINI_PAWO_LEG_JOINTS,
     stiffness=10.0,
-    damping=1.0,
+    damping=1.5,
     effort_limit=2.94,
     armature=0.015,
 )
 
 
 def make_mini_pawo_bam_actuator(
-    *, json_path=None, motor_name=None, model=None, vin=None, kp_fw=None,
+    *, json_path=None, motor_name=None, model=None, vin=None, kp_fw=None, kd_fw=None,
     delay_min_lag=0, delay_max_lag=0,
 ):
   """
@@ -72,7 +72,7 @@ def make_mini_pawo_bam_actuator(
 
   actuator = BamActuatorCfg(
       json_path=json_path, motor_name=motor_name, model=model,
-      target_names_expr=MINI_PAWO_LEG_JOINTS, vin=vin, kp_fw=kp_fw)
+      target_names_expr=MINI_PAWO_LEG_JOINTS, vin=vin, kp_fw=kp_fw, kd_fw=kd_fw)
   
   if delay_max_lag:
     if "delay_max_lag" in {field.name for field in fields(actuator)}:

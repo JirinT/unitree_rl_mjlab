@@ -8,36 +8,32 @@ from .env_cfgs import (
 from dataclasses import replace
 
 from .recipes import (
+  IDENTIFIED_PWM, IDENTIFIED_PWM_ACTION_SCALE, IDENTIFIED_PWM_SENSOR_LATENCY_ACTION_SCALE,
+  IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY,
+  IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE,
   BAM_SENSOR_LATENCY_ACTION_SCALE,
   BASE_ORIENTATION_RANDOMIZATION,
-  JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
-  BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
-  BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RNDM,
-  JOINT_PAIR_ACTION_SCALE, BAM_JOINT_PAIR_ACTION_SCALE,
-  BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE,
+  ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  BAM_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
+  BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE,
   ACTION_SCALE, 
   ACTUATOR_LATENCY, BASELINE, BAM, BAM_ACTUATOR_LATENCY, BAM_SENSOR_LATENCY,
   BAM_SENSOR_ACTUATOR_LATENCY, SENSOR_LATENCY, BAM_ACTION_SCALE, ACTUATOR_SENSOR_LATENCY
 )
 from .rl_cfg import mini_pawo_ppo_runner_cfg 
 
-for task_id, recipe, experiment_name in (
-  ("MiniPawo-Flat-BaseOrientationRandomization", BASE_ORIENTATION_RANDOMIZATION,
-   "MiniPawo_base_orientation_randomization"),
-  ("MiniPawo-Flat-JointPairActionScale-BaseOrientationRandomization",
-   JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
-   "MiniPawo_joint_pair_scale_base_orientation"),
-  ("MiniPawo-Flat-BAM-JointPairActionScale-BaseOrientationRandomization",
-   BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION,
-   "MiniPawo_bam_joint_pair_scale_base_orientation"),
-  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-JointPairActionScale-BaseOrientationRandomization",
-   BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RNDM,
-   "MiniPawo_bam_sensor_actuator_latency_joint_pair_scale_base_orientation"),
-  ("MiniPawo-Flat-JointPairActionScale", JOINT_PAIR_ACTION_SCALE, "MiniPawo_joint_pair_action_scale"),
-  ("MiniPawo-Flat-BAM-JointPairActionScale", BAM_JOINT_PAIR_ACTION_SCALE, "MiniPawo_bam_joint_pair_action_scale"),
-  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-JointPairActionScale",
-   BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE,
-   "MiniPawo_bam_sensor_actuator_latency_joint_pair_action_scale"),
+_TASK_RECIPES = (
+  ("MiniPawo-Flat-IdentifiedPWM-SensorLatency-ActuatorLatency", IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY, "MiniPawo_identified_pwm_sensor_actuator_latency"),
+  ("MiniPawo-Flat-IdentifiedPWM-SensorLatency-ActuatorLatency-ActionScale", IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE, "MiniPawo_identified_pwm_sensor_actuator_latency_action_scale"),
+  ("MiniPawo-Flat-IdentifiedPWM", IDENTIFIED_PWM, "MiniPawo_identified_pwm"),
+  ("MiniPawo-Flat-IdentifiedPWM-ActionScale", IDENTIFIED_PWM_ACTION_SCALE, "MiniPawo_identified_pwm_action_scale"),
+  ("MiniPawo-Flat-IdentifiedPWM-SensorLatency-ActionScale", IDENTIFIED_PWM_SENSOR_LATENCY_ACTION_SCALE, "MiniPawo_identified_pwm_sensor_latency_action_scale"),
+  ("MiniPawo-Flat-BaseOrientationRandomization", BASE_ORIENTATION_RANDOMIZATION, "MiniPawo_base_orientation_randomization"),
+  ("MiniPawo-Flat-ActionScale-BaseOrientationRandomization", ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION, "MiniPawo_action_scale_base_orientation"),
+  ("MiniPawo-Flat-BAM-ActionScale-BaseOrientationRandomization", BAM_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION, "MiniPawo_bam_action_scale_base_orientation"),
+  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-ActionScale-BaseOrientationRandomization", BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION, "MiniPawo_bam_sensor_actuator_latency_action_scale_base_orientation"),
+  ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency-ActionScale", BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE, "MiniPawo_bam_sensor_actuator_latency_action_scale"),
   ("MiniPawo-Flat", BASELINE, "MiniPawo_velocity"),
   ("MiniPawo-Flat-ActionScale", ACTION_SCALE, "MiniPawo_action_scale"),
   ("MiniPawo-Flat-SensorLatency", SENSOR_LATENCY, "MiniPawo_sensor_latency"),
@@ -48,9 +44,10 @@ for task_id, recipe, experiment_name in (
   ("MiniPawo-Flat-BAM-ActuatorLatency", BAM_ACTUATOR_LATENCY, "MiniPawo_bam_actuator_latency"),
   ("MiniPawo-Flat-BAM-SensorLatency-ActuatorLatency", BAM_SENSOR_ACTUATOR_LATENCY, "MiniPawo_bam_sensor_actuator_latency"),
   ("MiniPawo-Flat-BAM-SensorLatency", BAM_SENSOR_LATENCY, "MiniPawo_bam_sensor_latency"),
-  ("MiniPawo-Flat-BAM-SensorLatency-ActionScale", BAM_SENSOR_LATENCY_ACTION_SCALE,
-   "MiniPawo_bam_sensor_latency_action_scale"),
-):
+  ("MiniPawo-Flat-BAM-SensorLatency-ActionScale", BAM_SENSOR_LATENCY_ACTION_SCALE, "MiniPawo_bam_sensor_latency_action_scale"),
+)
+
+for task_id, recipe, experiment_name in _TASK_RECIPES:
   register_mjlab_task(
     task_id=task_id,
     env_cfg=mini_pawo_flat_env_cfg(recipe=recipe),

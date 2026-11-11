@@ -5,11 +5,11 @@ from dataclasses import dataclass
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 
+from .modifiers.add_identified_pwm_actuator import add_identified_pwm_actuator
 from .modifiers.add_sensor_latency import add_sensor_latency
 from .modifiers.add_bam_actuator import add_bam_actuator
 from .modifiers.add_actuator_latency import add_actuator_latency
 from .modifiers.add_action_scale import add_action_scale
-from .modifiers.add_joint_pair_action_scale import add_joint_pair_action_scale
 from .modifiers.add_base_orientation_randomization import add_base_orientation_randomization
 
 # A modifier edits its own environment configuration in place.
@@ -65,24 +65,19 @@ ACTION_SCALE = Recipe(
 )
 
 BAM_ACTION_SCALE = Recipe(
-  name="action_scale",
+  name="bam_action_scale",
   modifiers=BAM.modifiers + ACTION_SCALE.modifiers,
 )
 
 
-JOINT_PAIR_ACTION_SCALE = Recipe(
-  name="joint_pair_action_scale",
-  modifiers=(add_joint_pair_action_scale,),
+BAM_SENSOR_LATENCY_ACTION_SCALE = Recipe(
+  name="bam_sensor_latency_action_scale",
+  modifiers=BAM_SENSOR_LATENCY.modifiers + ACTION_SCALE.modifiers,
 )
 
-BAM_JOINT_PAIR_ACTION_SCALE = Recipe(
-  name="bam_joint_pair_action_scale",
-  modifiers=BAM.modifiers + JOINT_PAIR_ACTION_SCALE.modifiers,
-)
-
-BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE = Recipe(
-  name="bam_sensor_actuator_latency_joint_pair_action_scale",
-  modifiers=BAM_SENSOR_ACTUATOR_LATENCY.modifiers + JOINT_PAIR_ACTION_SCALE.modifiers,
+BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE = Recipe(
+  name="bam_sensor_actuator_latency_action_scale",
+  modifiers=BAM_SENSOR_ACTUATOR_LATENCY.modifiers + ACTION_SCALE.modifiers,
 )
 
 BASE_ORIENTATION_RANDOMIZATION = Recipe(
@@ -90,24 +85,38 @@ BASE_ORIENTATION_RANDOMIZATION = Recipe(
   modifiers=(add_base_orientation_randomization,),
 )
 
-JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION = Recipe(
-  name="joint_pair_action_scale_base_orientation_randomization",
-  modifiers=JOINT_PAIR_ACTION_SCALE.modifiers + BASE_ORIENTATION_RANDOMIZATION.modifiers,
+ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION = Recipe(
+  name="action_scale_base_orientation_randomization",
+  modifiers=ACTION_SCALE.modifiers + BASE_ORIENTATION_RANDOMIZATION.modifiers,
 )
 
-BAM_JOINT_PAIR_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION = Recipe(
-  name="bam_joint_pair_action_scale_base_orientation_randomization",
-  modifiers=BAM_JOINT_PAIR_ACTION_SCALE.modifiers + BASE_ORIENTATION_RANDOMIZATION.modifiers,
+BAM_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION = Recipe(
+  name="bam_action_scale_base_orientation_randomization",
+  modifiers=BAM_ACTION_SCALE.modifiers + BASE_ORIENTATION_RANDOMIZATION.modifiers,
 )
 
-BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RNDM = Recipe(
-  name="bam_sensor_actuator_latency_joint_pair_action_scale_base_orientation_randomization",
-  modifiers=(BAM_SENSOR_ACTUATOR_LATENCY_JOINT_PAIR_ACTION_SCALE.modifiers
+BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE_BASE_ORIENTATION_RANDOMIZATION = Recipe(
+  name="bam_sensor_actuator_latency_action_scale_base_orientation_randomization",
+  modifiers=(BAM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE.modifiers
              + BASE_ORIENTATION_RANDOMIZATION.modifiers),
 )
 
 
-BAM_SENSOR_LATENCY_ACTION_SCALE = Recipe(
-  name="bam_sensor_latency_action_scale",
-  modifiers=BAM_SENSOR_LATENCY.modifiers + ACTION_SCALE.modifiers,
+IDENTIFIED_PWM = Recipe(name="identified_pwm", modifiers=(add_identified_pwm_actuator,))
+IDENTIFIED_PWM_ACTION_SCALE = Recipe(
+    name="identified_pwm_action_scale", modifiers=IDENTIFIED_PWM.modifiers + ACTION_SCALE.modifiers,
+)
+IDENTIFIED_PWM_SENSOR_LATENCY_ACTION_SCALE = Recipe(
+    name="identified_pwm_sensor_latency_action_scale",
+    modifiers=IDENTIFIED_PWM_ACTION_SCALE.modifiers + SENSOR_LATENCY.modifiers,
+)
+
+
+IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY = Recipe(
+    name="identified_pwm_sensor_actuator_latency",
+    modifiers=IDENTIFIED_PWM.modifiers + SENSOR_LATENCY.modifiers + ACTUATOR_LATENCY.modifiers,
+)
+IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY_ACTION_SCALE = Recipe(
+    name="identified_pwm_sensor_actuator_latency_action_scale",
+    modifiers=IDENTIFIED_PWM_SENSOR_ACTUATOR_LATENCY.modifiers + ACTION_SCALE.modifiers,
 )

@@ -1,16 +1,24 @@
-"""Use smaller policy joint-position offsets than the baseline."""
+"""One uniform policy joint-position offset scale for all MiniPawo joints."""
+
+import math
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 from mjlab.envs.mdp.actions import JointPositionActionCfg
 
-ACTION_SCALE = 0.5
+# EDIT THIS: radians of position offset per raw policy action unit.
+# Shared by every ActionScale recipe, including legacy task-name aliases.
+ACTION_SCALE = 0.25
+
 
 def add_action_scale(cfg: ManagerBasedRlEnvCfg) -> None:
-  """Scale each raw action by 0.25 rad, keeping the default-pose offset.
+  """Replace the joint_pos scale with one scalar, preserving HOME offsets.
 
-  This multiplies actions; it does not clip their values or change joint limits.
-  The same scale is used in training and playback.
+  Training and playback use the same scale. Zero removes all policy position
+  offsets. Scaling does not clip actions/targets or change servo gains.
   """
+  if not isinstance(ACTION_SCALE, (int, float)) or not math.isfinite(ACTION_SCALE) or ACTION_SCALE < 0:
+    raise ValueError("ACTION_SCALE must be finite and nonnegative")
   action = cfg.actions["joint_pos"]
-  assert isinstance(action, JointPositionActionCfg)
-  action.scale = ACTION_SCALE
+  if not isinstance(action, JointPositionActionCfg):
+    raise TypeError("Action scaling requires a JointPositionActionCfg")
+  action.scale = float(ACTION_SCALE)
