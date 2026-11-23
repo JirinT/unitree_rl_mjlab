@@ -1,0 +1,14 @@
+{
+    "configuration": "default",
+    "documentId": "ee009634f66c0d92e29247f6",
+    "documentMicroversion": "359086730473c11b0a95077f",
+    "documentVersion": "f356e266bddaa3f89aad1114",
+    "elementId": "8e05c3cd3e9a86cfb3450f9a",
+    "fullConfiguration": "default",
+    "id": "M/D4UAvRrla5PJghi",
+    "isStandardContent": false,
+    "name": "lidar head <1>",
+    "partId": "JQD",
+    "suppressed": false,
+    "type": "Part"
+}

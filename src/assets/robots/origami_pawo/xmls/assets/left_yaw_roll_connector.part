@@ -1,0 +1,13 @@
+{
+    "configuration": "default",
+    "documentId": "ad366fd061a14d1af64019ab",
+    "documentMicroversion": "2e1ad0549e15bf36cf6cf649",
+    "elementId": "35c2bcc0b5899a2fb7271aa8",
+    "fullConfiguration": "default",
+    "id": "MJdpJs0GhjKmT6Jb8",
+    "isStandardContent": false,
+    "name": "left_yaw_roll_connector <2>",
+    "partId": "KFfD",
+    "suppressed": false,
+    "type": "Part"
+}

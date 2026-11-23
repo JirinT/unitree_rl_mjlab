@@ -1,0 +1,266 @@
+<?xml version="1.0" ?>
+<!-- Generated using onshape-to-robot -->
+<!-- Onshape document_id: ad366fd061a14d1af64019ab / workspace_id: f7ef4ce8d2e43811a18f8809 -->
+<mujoco model="origami_pawo">
+  <compiler angle="radian" meshdir="assets" autolimits="true"/>
+  <default>
+    <default class="origami_pawo">
+      <joint frictionloss="0.1" armature="0.005"/>
+      <position kp="50" dampratio="1"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+    </default>
+  </default>
+  <worldbody>
+    <!-- Link torso -->
+    <body name="torso" pos="0 0 0" quat="1 0 0 0" childclass="origami_pawo">
+      <freejoint name="torso_freejoint"/>
+      <site name="imu" pos="-0.0496005 0.000409201 0.463295" size="0.01" type="sphere" rgba="0 1 0 1"/>
+      <inertial pos="-0.0496005 0.000409201 0.463295" mass="3.03616" fullinertia="0.0166552 0.0581297 0.0598866 -0.000568309 0.0112242 2.33459e-05"/>
+      <!-- Part actuator -->
+      <geom type="mesh" class="visual" pos="0.231475 -0.153124 0.361745" quat="0 -0.707107 -0 -0.707107" mesh="actuator" material="actuator_material"/>
+      <geom type="mesh" class="collision" pos="0.231475 -0.153124 0.361745" quat="0 -0.707107 -0 -0.707107" mesh="actuator" material="actuator_material"/>
+      <!-- Part actuator_2 -->
+      <geom type="mesh" class="visual" pos="0.156853 -0.195 0.569406" quat="0.5 0.5 0.5 0.5" mesh="actuator" material="actuator_material"/>
+      <geom type="mesh" class="collision" pos="0.156853 -0.195 0.569406" quat="0.5 0.5 0.5 0.5" mesh="actuator" material="actuator_material"/>
+      <!-- Part torso -->
+      <geom type="mesh" class="visual" pos="-0.00630324 -0.000615353 -0.00325163" quat="0.707107 -0 0 0.707107" mesh="torso" material="torso_material"/>
+      <geom type="mesh" class="collision" pos="-0.00630324 -0.000615353 -0.00325163" quat="0.707107 -0 0 0.707107" mesh="torso" material="torso_material"/>
+      <!-- Part actuator_3 -->
+      <geom type="mesh" class="visual" pos="0.156853 -0.0109997 0.569406" quat="0.5 0.5 0.5 0.5" mesh="actuator" material="actuator_material"/>
+      <geom type="mesh" class="collision" pos="0.156853 -0.0109997 0.569406" quat="0.5 0.5 0.5 0.5" mesh="actuator" material="actuator_material"/>
+      <!-- Part greenworksacu_step -->
+      <geom type="mesh" class="visual" pos="-0.00319331 -0.00134881 -0.00401274" quat="0.707107 -0 -0 0.707107" mesh="greenworksacu_step" material="greenworksacu_step_material"/>
+      <geom type="mesh" class="collision" pos="-0.00319331 -0.00134881 -0.00401274" quat="0.707107 -0 -0 0.707107" mesh="greenworksacu_step" material="greenworksacu_step_material"/>
+      <!-- Link neck -->
+      <body name="neck" pos="0.123475 0.0218758 0.464745" quat="0 -0 0.707107 -0.707107">
+        <!-- Joint from torso to neck -->
+        <joint axis="0 0 -1" name="torso_neck" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="-0.0342435 -0.26684 0.0138336" mass="0.453712" fullinertia="0.00530038 0.00127723 0.00571084 -0.00046492 5.08005e-05 0.000376443"/>
+        <!-- Part lidar_head -->
+        <geom type="mesh" class="visual" pos="-0.0365704 -0.352005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="lidar_head" material="lidar_head_material"/>
+        <geom type="mesh" class="collision" pos="-0.0365704 -0.352005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="lidar_head" material="lidar_head_material"/>
+        <!-- Part module_3 -->
+        <geom type="mesh" class="visual" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_3" material="module_3_material"/>
+        <geom type="mesh" class="collision" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_3" material="module_3_material"/>
+        <!-- Part neck -->
+        <geom type="mesh" class="visual" pos="0.129675 0.467983 0.0201263" quat="0.5 0.5 0.5 -0.5" mesh="neck" material="neck_material"/>
+        <geom type="mesh" class="collision" pos="0.129675 0.467983 0.0201263" quat="0.5 0.5 0.5 -0.5" mesh="neck" material="neck_material"/>
+        <!-- Part ear2 -->
+        <geom type="mesh" class="visual" pos="-0.0811349 -0.261043 0.0194118" quat="0.326506 0.627211 0.326506 -0.627211" mesh="ear2" material="ear2_material"/>
+        <geom type="mesh" class="collision" pos="-0.0811349 -0.261043 0.0194118" quat="0.326506 0.627211 0.326506 -0.627211" mesh="ear2" material="ear2_material"/>
+        <!-- Part module_2 -->
+        <geom type="mesh" class="visual" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_2" material="module_2_material"/>
+        <geom type="mesh" class="collision" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_2" material="module_2_material"/>
+        <!-- Part module_4 -->
+        <geom type="mesh" class="visual" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_4" material="module_4_material"/>
+        <geom type="mesh" class="collision" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module_4" material="module_4_material"/>
+        <!-- Part ear -->
+        <geom type="mesh" class="visual" pos="-0.0817552 -0.260609 0.0194118" quat="0.326506 0.627211 0.326506 -0.627211" mesh="ear" material="ear_material"/>
+        <geom type="mesh" class="collision" pos="-0.0817552 -0.260609 0.0194118" quat="0.326506 0.627211 0.326506 -0.627211" mesh="ear" material="ear_material"/>
+        <!-- Part frame -->
+        <geom type="mesh" class="visual" pos="-0.10737 -0.315005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="frame" material="frame_material"/>
+        <geom type="mesh" class="collision" pos="-0.10737 -0.315005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="frame" material="frame_material"/>
+        <!-- Part head -->
+        <geom type="mesh" class="visual" pos="-0.10757 -0.315005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="head" material="head_material"/>
+        <geom type="mesh" class="collision" pos="-0.10757 -0.315005 0.0194118" quat="0.5 0.5 0.5 -0.5" mesh="head" material="head_material"/>
+        <!-- Part module -->
+        <geom type="mesh" class="visual" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module" material="module_material"/>
+        <geom type="mesh" class="collision" pos="-0.10757 -0.315205 0.0194946" quat="0.5 0.5 0.5 -0.5" mesh="module" material="module_material"/>
+      </body>
+      <!-- Link right_yaw_roll_connector -->
+      <body name="right_yaw_roll_connector" pos="0.0488528 -0.0919997 0.394406" quat="0.707107 -0 -0 0.707107">
+        <!-- Joint from torso to right_yaw_roll_connector -->
+        <joint axis="0 0 1" name="right_hip_yaw" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="2.21e-10 0.00814146 -0.0318776" mass="0.0306759" fullinertia="2.22469e-05 2.34143e-05 1.0409e-05 0 -0 4.17554e-06"/>
+        <!-- Part right_yaw_roll_connector -->
+        <geom type="mesh" class="visual" pos="0.0981472 0.0534997 -0.400657" quat="1 0 0 0" mesh="right_yaw_roll_connector" material="right_yaw_roll_connector_material"/>
+        <geom type="mesh" class="collision" pos="0.0981472 0.0534997 -0.400657" quat="1 0 0 0" mesh="right_yaw_roll_connector" material="right_yaw_roll_connector_material"/>
+        <!-- Link right_roll_motor_case -->
+        <body name="right_roll_motor_case" pos="0 0.023 -0.062" quat="0.707107 0.707107 0 0">
+          <!-- Joint from right_yaw_roll_connector to right_roll_motor_case -->
+          <joint axis="0 0 1" name="right_hip_roll" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="-0.000928907 8.25408e-05 -0.0163033" mass="0.45891" fullinertia="0.000244743 0.000265452 0.000425929 1.9606e-08 -2.02469e-06 6.35124e-07"/>
+          <!-- Part right_roll_motor_case -->
+          <geom type="mesh" class="visual" pos="0.0991472 -0.338657 -0.0324997" quat="0.707107 -0.707107 -0 0" mesh="right_roll_motor_case" material="right_roll_motor_case_material"/>
+          <geom type="mesh" class="collision" pos="0.0991472 -0.338657 -0.0324997" quat="0.707107 -0.707107 -0 0" mesh="right_roll_motor_case" material="right_roll_motor_case_material"/>
+          <!-- Part actuator_4 -->
+          <geom type="mesh" class="visual" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 -0 0" mesh="actuator" material="actuator_material"/>
+          <geom type="mesh" class="collision" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 -0 0" mesh="actuator" material="actuator_material"/>
+          <!-- Link right_thigh -->
+          <body name="right_thigh" pos="-0.054 0 -0.0220848" quat="0.5 0.5 0.5 0.5">
+            <!-- Joint from right_roll_motor_case to right_thigh -->
+            <joint axis="0 0 1" name="right_hip_pitch" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="-0.0597074 -0.000141194 -0.0168776" mass="0.943385" fullinertia="0.000515202 0.00372336 0.00403529 -1.22962e-05 -1.47365e-07 -2.55735e-06"/>
+            <!-- Part actuator_5 -->
+            <geom type="mesh" class="visual" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+            <geom type="mesh" class="collision" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+            <!-- Part right_thigh -->
+            <geom type="mesh" class="visual" pos="-0.336568 0.000254903 0.148889" quat="0 -0.707107 -0 -0.707107" mesh="right_thigh" material="right_thigh_material"/>
+            <geom type="mesh" class="collision" pos="-0.336568 0.000254903 0.148889" quat="0 -0.707107 -0 -0.707107" mesh="right_thigh" material="right_thigh_material"/>
+            <!-- Part actuator_6 -->
+            <geom type="mesh" class="visual" pos="-0.222 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+            <geom type="mesh" class="collision" pos="-0.222 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+            <!-- Link right_calf -->
+            <body name="right_calf" pos="-0.119 0 -0" quat="0 1 0 0">
+              <!-- Joint from right_thigh to right_calf -->
+              <joint axis="0 0 -1" name="right_knee" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="-0.070334 0.00359605 -0.00379073" mass="0.0520432" fullinertia="1.46588e-05 0.000115776 0.000125043 -4.02192e-06 -2.52117e-07 1.97991e-07"/>
+              <!-- Part right_calf -->
+              <geom type="mesh" class="visual" pos="-0.216727 1.46139e-05 -0.149498" quat="0.707107 -0 0.707107 0" mesh="right_calf" material="right_calf_material"/>
+              <geom type="mesh" class="collision" pos="-0.216727 1.46139e-05 -0.149498" quat="0.707107 -0 0.707107 0" mesh="right_calf" material="right_calf_material"/>
+              <!-- Link right_foot -->
+              <body name="right_foot" pos="-0.15 -0 -0" quat="0 1 0 -0">
+                <!-- Joint from right_calf to right_foot -->
+                <joint axis="0 0 1" name="right_ankle" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="-0.00578383 0.00295968 -0.0172407" mass="0.510441" fullinertia="0.000461273 0.000394139 0.000751841 6.95381e-05 -1.87889e-05 1.30601e-05"/>
+                <!-- Part right_foot -->
+                <geom type="mesh" class="visual" pos="-0.0663271 -0.000341208 0.151498" quat="0 -0.707107 0 -0.707107" mesh="right_foot" material="right_foot_material"/>
+                <geom type="mesh" class="collision" pos="-0.0663271 -0.000341208 0.151498" quat="0 -0.707107 0 -0.707107" mesh="right_foot" material="right_foot_material"/>
+                <!-- Part actuator_7 -->
+                <geom type="mesh" class="visual" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 0" mesh="actuator" material="actuator_material"/>
+                <geom type="mesh" class="collision" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 0" mesh="actuator" material="actuator_material"/>
+                <site name="right_foot_site" type="cylinder" size="0.02 0.095" pos="-0.045 0.026 -0.022" euler="1.5708 0 0" rgba="0 1 0 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <!-- Link left_yaw_roll_connector -->
+      <body name="left_yaw_roll_connector" pos="0.0488528 0.0920003 0.394406" quat="0.707107 -0 -0 0.707107">
+        <!-- Joint from torso to left_yaw_roll_connector -->
+        <joint axis="0 0 1" name="left_hip_yaw" type="hinge" range="-3.14 3.14"/>
+        <inertial pos="2.21e-10 0.00814146 -0.0318776" mass="0.0306759" fullinertia="2.22469e-05 2.34143e-05 1.0409e-05 0 -0 4.17554e-06"/>
+        <!-- Part left_yaw_roll_connector -->
+        <geom type="mesh" class="visual" pos="-0.0919911 0.0534997 -0.400657" quat="1 0 0 0" mesh="left_yaw_roll_connector" material="left_yaw_roll_connector_material"/>
+        <geom type="mesh" class="collision" pos="-0.0919911 0.0534997 -0.400657" quat="1 0 0 0" mesh="left_yaw_roll_connector" material="left_yaw_roll_connector_material"/>
+        <!-- Link left_roll_motor_case -->
+        <body name="left_roll_motor_case" pos="-0 0.023 -0.062" quat="0.707107 0.707107 0 -0">
+          <!-- Joint from left_yaw_roll_connector to left_roll_motor_case -->
+          <joint axis="0 0 1" name="left_hip_roll" type="hinge" range="-3.14 3.14"/>
+          <inertial pos="0.000502603 8.25406e-05 -0.0163033" mass="0.45891" fullinertia="0.000244743 0.000265732 0.000426209 7.3322e-08 1.76497e-06 6.35125e-07"/>
+          <!-- Part actuator_8 -->
+          <geom type="mesh" class="visual" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+          <geom type="mesh" class="collision" pos="-0.103 0.108 -0.175" quat="0.707107 -0.707107 0 -0" mesh="actuator" material="actuator_material"/>
+          <!-- Part left_roll_motor_case -->
+          <geom type="mesh" class="visual" pos="-0.0929911 -0.338657 -0.0324997" quat="0.707107 -0.707107 0 -0" mesh="left_roll_motor_case" material="left_roll_motor_case_material"/>
+          <geom type="mesh" class="collision" pos="-0.0929911 -0.338657 -0.0324997" quat="0.707107 -0.707107 0 -0" mesh="left_roll_motor_case" material="left_roll_motor_case_material"/>
+          <!-- Link left_thigh -->
+          <body name="left_thigh" pos="0.054 0 -0.0220848" quat="0 -0.707107 0 0.707107">
+            <!-- Joint from left_roll_motor_case to left_thigh -->
+            <joint axis="0 0 -1" name="left_hip_pitch" type="hinge" range="-3.14 3.14"/>
+            <inertial pos="0.000141194 0.0592926 -0.0168776" mass="0.943385" fullinertia="0.00372336 0.000515202 0.00403529 -1.25696e-05 2.55735e-06 -1.47365e-07"/>
+            <!-- Part actuator_9 -->
+            <geom type="mesh" class="visual" pos="-0.108 0.016 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+            <geom type="mesh" class="collision" pos="-0.108 0.016 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+            <!-- Part left_thigh -->
+            <geom type="mesh" class="visual" pos="-0.000254903 0.336568 0.142732" quat="0.5 0.5 0.5 -0.5" mesh="left_thigh" material="left_thigh_material"/>
+            <geom type="mesh" class="collision" pos="-0.000254903 0.336568 0.142732" quat="0.5 0.5 0.5 -0.5" mesh="left_thigh" material="left_thigh_material"/>
+            <!-- Part actuator_10 -->
+            <geom type="mesh" class="visual" pos="-0.108 -0.103 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+            <geom type="mesh" class="collision" pos="-0.108 -0.103 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+            <!-- Link left_calf -->
+            <body name="left_calf" pos="-0 0.119 0" quat="0 -1 0 0">
+              <!-- Joint from left_thigh to left_calf -->
+              <joint axis="0 0 1" name="left_knee" type="hinge" range="-3.14 3.14"/>
+              <inertial pos="0.00359605 -0.0703339 -0.00379073" mass="0.0520432" fullinertia="0.000115776 1.46588e-05 0.000125043 -4.02192e-06 1.97991e-07 -2.52119e-07"/>
+              <!-- Part left_calf -->
+              <geom type="mesh" class="visual" pos="1.46139e-05 -0.216727 -0.143342" quat="0.5 -0.5 -0.5 -0.5" mesh="left_calf" material="left_calf_material"/>
+              <geom type="mesh" class="collision" pos="1.46139e-05 -0.216727 -0.143342" quat="0.5 -0.5 -0.5 -0.5" mesh="left_calf" material="left_calf_material"/>
+              <!-- Link left_foot -->
+              <body name="left_foot" pos="-0 -0.15 -0" quat="0 1 0 0">
+                <!-- Joint from left_calf to left_foot -->
+                <joint axis="0 0 -1" name="left_ankle" type="hinge" range="-3.14 3.14"/>
+                <inertial pos="-0.00295962 0.00540054 -0.0172407" mass="0.510441" fullinertia="0.000396326 0.000461271 0.000754026 7.00071e-05 -1.30589e-05 1.87123e-05"/>
+                <!-- Part actuator_11 -->
+                <geom type="mesh" class="visual" pos="-0.108 -0.103 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+                <geom type="mesh" class="collision" pos="-0.108 -0.103 -0.175" quat="0.5 -0.5 -0.5 0.5" mesh="actuator" material="actuator_material"/>
+                <!-- Part left_foot -->
+                <geom type="mesh" class="visual" pos="0.000341208 0.0663271 0.145342" quat="0.5 0.5 0.5 -0.5" mesh="left_foot" material="left_foot_material"/>
+                <geom type="mesh" class="collision" pos="0.000341208 0.0663271 0.145342" quat="0.5 0.5 0.5 -0.5" mesh="left_foot" material="left_foot_material"/>
+                <site name="left_foot_site" type="cylinder" size="0.02 0.095" pos="-0.025 0.045 -0.022" euler="0 1.5708 0" rgba="0 1 0 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <asset>
+    <mesh file="torso.stl"/>
+    <mesh file="module_3.stl"/>
+    <mesh file="module_4.stl"/>
+    <mesh file="neck.stl"/>
+    <mesh file="greenworksacu_step.stl"/>
+    <mesh file="left_roll_motor_case.stl"/>
+    <mesh file="head.stl"/>
+    <mesh file="module.stl"/>
+    <mesh file="left_foot.stl"/>
+    <mesh file="ear.stl"/>
+    <mesh file="right_yaw_roll_connector.stl"/>
+    <mesh file="right_roll_motor_case.stl"/>
+    <mesh file="actuator.stl"/>
+    <mesh file="right_calf.stl"/>
+    <mesh file="left_yaw_roll_connector.stl"/>
+    <mesh file="right_thigh.stl"/>
+    <mesh file="left_calf.stl"/>
+    <mesh file="ear2.stl"/>
+    <mesh file="right_foot.stl"/>
+    <mesh file="left_thigh.stl"/>
+    <mesh file="lidar_head.stl"/>
+    <mesh file="module_2.stl"/>
+    <mesh file="frame.stl"/>
+    <material name="actuator_material" rgba="0.627451 0.627451 0.627451 1"/>
+    <material name="torso_material" rgba="0.917647 0.917647 0.917647 1"/>
+    <material name="greenworksacu_step_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="lidar_head_material" rgba="0.301961 0.301961 0.301961 1"/>
+    <material name="module_3_material" rgba="0.301961 0.301961 0.301961 1"/>
+    <material name="neck_material" rgba="0 0 0 1"/>
+    <material name="ear2_material" rgba="0 0 0 1"/>
+    <material name="module_2_material" rgba="0.301961 0.301961 0.301961 1"/>
+    <material name="module_4_material" rgba="0.301961 0.301961 0.301961 1"/>
+    <material name="ear_material" rgba="0 0 0 1"/>
+    <material name="frame_material" rgba="0 0 0 1"/>
+    <material name="head_material" rgba="0.901961 0.901961 0.901961 1"/>
+    <material name="module_material" rgba="0.301961 0.301961 0.301961 1"/>
+    <material name="right_yaw_roll_connector_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="right_roll_motor_case_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="right_thigh_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="right_calf_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="right_foot_material" rgba="1 1 1 1"/>
+    <material name="left_yaw_roll_connector_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="left_roll_motor_case_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="left_thigh_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="left_calf_material" rgba="0.227451 0.227451 0.227451 1"/>
+    <material name="left_foot_material" rgba="1 1 1 1"/>
+  </asset>
+
+  <!-- <actuator>
+    <position class="origami_pawo" name="left_hip_yaw" joint="left_hip_yaw" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="left_hip_roll" joint="left_hip_roll" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="left_hip_pitch" joint="left_hip_pitch" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="left_knee" joint="left_knee" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="left_ankle" joint="left_ankle" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="right_hip_yaw" joint="right_hip_yaw" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="right_hip_roll" joint="right_hip_roll" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="right_hip_pitch" joint="right_hip_pitch" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="right_knee" joint="right_knee" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="right_ankle" joint="right_ankle" forcerange="-10.0 10.0" inheritrange="1"/>
+    <position class="origami_pawo" name="torso_neck" joint="torso_neck" forcerange="-10.0 10.0" inheritrange="1"/>
+  </actuator> -->
+
+  <sensor>
+    <gyro name="imu_ang_vel" site="imu"/>
+    <velocimeter name="imu_lin_vel" site="imu"/>
+    <accelerometer name="imu_lin_acc" site="imu"/>
+    <subtreeangmom name="root_angmom" body="torso"/>
+    <touch name="sensor_l_foot" site="left_foot_site"/>
+    <touch name="sensor_r_foot" site="right_foot_site"/>
+  </sensor>
+
+  <equality/>
+</mujoco>
