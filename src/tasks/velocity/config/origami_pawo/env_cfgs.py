@@ -5,7 +5,7 @@ from dataclasses import replace
 
 from mjlab.envs import ManagerBasedRlEnvCfg
 
-from src.assets.robots.mini_pawo.minipawo_constants import (
+from src.assets.robots.origami_pawo.origami_pawo_constants import (
   ORIGAMI_PAWO_BUILTIN_ACTUATOR_LEG,
 )
 from .baseline_cfg import origami_pawo_flat_env_cfg as make_baseline_flat_cfg
