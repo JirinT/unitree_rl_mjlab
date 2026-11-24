@@ -172,6 +172,8 @@ ORIGAMI_PAWO_ACTION_RANGE_RAD = 1.0  # ~ 57 deg, Can be adjusted in the modifier
 ORIGAMI_PAWO_ACTION_SCALE: dict[str, float] = {}
 for name in ORIGAMI_PAWO_LEG_JOINTS:
   ORIGAMI_PAWO_ACTION_SCALE[name] = ORIGAMI_PAWO_ACTION_RANGE_RAD
+# The policy controls the neck with the same offset scale as the legs.
+ORIGAMI_PAWO_ACTION_SCALE["torso_neck"] = ORIGAMI_PAWO_ACTION_RANGE_RAD
 
 
 if __name__ == "__main__":
