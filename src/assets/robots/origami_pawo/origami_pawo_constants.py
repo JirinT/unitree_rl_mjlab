@@ -56,16 +56,16 @@ ORIGAMI_PAWO_HEAD_JOINTS = {
 
 ORIGAMI_PAWO_BUILTIN_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
     target_names_expr=ORIGAMI_PAWO_LEG_JOINTS,
-    stiffness=50.0,
-    damping=2.,
+    stiffness=20.0,
+    damping=1.28,
     effort_limit=10.0,
     armature=0.005,
 )
 
 ORIGAMI_PAWO_BUILTIN_ACTUATOR_HEAD = BuiltinPositionActuatorCfg(
     target_names_expr=ORIGAMI_PAWO_HEAD_JOINTS,
-    stiffness=50.0,
-    damping=2.,
+    stiffness=20.0,
+    damping=1.28,
     effort_limit=10.0,
     armature=0.005,
 )
