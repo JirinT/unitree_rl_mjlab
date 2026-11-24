@@ -50,9 +50,9 @@ ORIGAMI_PAWO_LEG_JOINTS = (
     ".*ankle",
 )
 
-ORIGAMI_PAWO_HEAD_JOINTS = {
-  "torso_neck"
-}
+ORIGAMI_PAWO_HEAD_JOINTS = (
+  "torso_neck",
+)
 
 ORIGAMI_PAWO_BUILTIN_ACTUATOR_LEG = BuiltinPositionActuatorCfg(
     target_names_expr=ORIGAMI_PAWO_LEG_JOINTS,
